@@ -1,6 +1,6 @@
 {
  "corte": "2026-09",
- "generado": "2026-10-24T16:57:58Z",
+ "generado": "2026-10-24T17:04:44Z",
  "delitos": [
   {
    "codigo": 0,
@@ -144,6 +144,45 @@
    "nota": null,
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 1201,
+   "nombre": "Homicidio culposo en accidente de tránsito",
+   "corto": "En accidente de tránsito",
+   "padre": 1200,
+   "color": "#B82386",
+   "icono": 1200,
+   "ci_desde": "2015-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 1202,
+   "nombre": "Homicidio culposo con arma (de fuego o blanca)",
+   "corto": "Con arma (de fuego o blanca)",
+   "padre": 1200,
+   "color": "#B82386",
+   "icono": 1200,
+   "ci_desde": "2015-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 1203,
+   "nombre": "Homicidio culposo con otro elemento o no especificado",
+   "corto": "Con otro elemento o no especificado",
+   "padre": 1200,
+   "color": "#B82386",
+   "icono": 1200,
+   "ci_desde": "2015-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 2000,
