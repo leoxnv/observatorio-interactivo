@@ -1,6 +1,6 @@
 {
  "corte": "2026-09",
- "generado": "2026-10-24T16:30:59Z",
+ "generado": "2026-10-24T16:43:05Z",
  "delitos": [
   {
    "codigo": 0,
@@ -94,6 +94,32 @@
    "mpal": true
   },
   {
+   "codigo": 1112,
+   "nombre": "Tentativa de homicidio doloso",
+   "corto": "Tentativa de homicidio doloso (desde 2026)",
+   "padre": 1009,
+   "color": "#5E2750",
+   "icono": 1100,
+   "ci_desde": "2026-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 1122,
+   "nombre": "Tentativa de feminicidio",
+   "corto": "Tentativa de feminicidio (desde 2026)",
+   "padre": 1009,
+   "color": "#5E2750",
+   "icono": 1100,
+   "ci_desde": "2026-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
    "codigo": 1200,
    "nombre": "Homicidio culposo",
    "corto": null,
@@ -146,6 +172,45 @@
    "mpal": true
   },
   {
+   "codigo": 3002,
+   "nombre": "Extorsión presencial",
+   "corto": "Presencial (desde 2026)",
+   "padre": 3000,
+   "color": "#2D3E97",
+   "icono": 3000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 3003,
+   "nombre": "Extorsión por otros medios",
+   "corto": "Por otros medios (desde 2026)",
+   "padre": 3000,
+   "color": "#2D3E97",
+   "icono": 3000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 3001,
+   "nombre": "Tentativa de extorsión",
+   "corto": "Tentativa, no incluida en el total (desde 2026)",
+   "padre": 3000,
+   "color": "#2D3E97",
+   "icono": 3000,
+   "ci_desde": "2026-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
    "codigo": 4001,
    "nombre": "Robo con violencia",
    "corto": null,
@@ -172,6 +237,32 @@
    "mpal": true
   },
   {
+   "codigo": 4101,
+   "nombre": "Robo de vehículo con violencia",
+   "corto": "Con violencia",
+   "padre": 4100,
+   "color": "#006284",
+   "icono": 4100,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 4102,
+   "nombre": "Robo de vehículo sin violencia",
+   "corto": "Sin violencia",
+   "padre": 4100,
+   "color": "#006284",
+   "icono": 4100,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
    "codigo": 4200,
    "nombre": "Robo a casa habitación",
    "corto": null,
@@ -183,6 +274,32 @@
    "nota": null,
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 4201,
+   "nombre": "Robo a casa habitación con violencia",
+   "corto": "Con violencia",
+   "padre": 4200,
+   "color": "#0597C7",
+   "icono": 4200,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 4202,
+   "nombre": "Robo a casa habitación sin violencia",
+   "corto": "Sin violencia",
+   "padre": 4200,
+   "color": "#0597C7",
+   "icono": 4200,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 4300,
@@ -198,6 +315,32 @@
    "mpal": true
   },
   {
+   "codigo": 4301,
+   "nombre": "Robo de negocio con violencia",
+   "corto": "Con violencia",
+   "padre": 4300,
+   "color": "#00715A",
+   "icono": 4300,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 4302,
+   "nombre": "Robo de negocio sin violencia",
+   "corto": "Sin violencia",
+   "padre": 4300,
+   "color": "#00715A",
+   "icono": 4300,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
    "codigo": 4400,
    "nombre": "Robo a transeúnte total",
    "corto": null,
@@ -209,6 +352,32 @@
    "nota": null,
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 4401,
+   "nombre": "Robo a transeúnte con violencia",
+   "corto": "Con violencia",
+   "padre": 4400,
+   "color": "#176B19",
+   "icono": 4400,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 4402,
+   "nombre": "Robo a transeúnte sin violencia",
+   "corto": "Sin violencia",
+   "padre": 4400,
+   "color": "#176B19",
+   "icono": 4400,
+   "ci_desde": "1997-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 4410,
@@ -248,6 +417,32 @@
    "nota": null,
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 4941,
+   "nombre": "Robo en transporte público con violencia",
+   "corto": "Con violencia",
+   "padre": 4940,
+   "color": "#00A19A",
+   "icono": 4940,
+   "ci_desde": "2015-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 4942,
+   "nombre": "Robo en transporte público sin violencia",
+   "corto": "Sin violencia",
+   "padre": 4940,
+   "color": "#00A19A",
+   "icono": 4940,
+   "ci_desde": "2015-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 5000,
