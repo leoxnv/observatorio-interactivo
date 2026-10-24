@@ -1,6 +1,6 @@
 {
  "corte": "2026-09",
- "generado": "2026-10-24T16:43:05Z",
+ "generado": "2026-10-24T16:57:58Z",
  "delitos": [
   {
    "codigo": 0,
@@ -81,6 +81,19 @@
    "mpal": true
   },
   {
+   "codigo": 1121,
+   "nombre": "Feminicidio con arma de fuego",
+   "corto": "Con arma de fuego",
+   "padre": 1120,
+   "color": "#BC003A",
+   "icono": 1120,
+   "ci_desde": "2015-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
    "codigo": 1009,
    "nombre": "Otros delitos contra la vida y la integridad corporal",
    "corto": null,
@@ -144,6 +157,58 @@
    "nota": "Incluye el fuero federal desde 2015.",
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 2001,
+   "nombre": "Secuestro extorsivo",
+   "corto": "Extorsivo (fuero común, desde 2026)",
+   "padre": 2000,
+   "color": "#6E15B2",
+   "icono": 2000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 2002,
+   "nombre": "Secuestro exprés",
+   "corto": "Exprés (fuero común, desde 2026)",
+   "padre": 2000,
+   "color": "#6E15B2",
+   "icono": 2000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 2003,
+   "nombre": "Secuestro con calidad de rehén",
+   "corto": "Con calidad de rehén (fuero común, desde 2026)",
+   "padre": 2000,
+   "color": "#6E15B2",
+   "icono": 2000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 2004,
+   "nombre": "Secuestro para causar daño",
+   "corto": "Para causar daño (fuero común, desde 2026)",
+   "padre": 2000,
+   "color": "#6E15B2",
+   "icono": 2000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 2009,
@@ -261,6 +326,32 @@
    "nota": null,
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 4103,
+   "nombre": "Robo de coche de 4 ruedas",
+   "corto": "Coche de 4 ruedas (desde 2026)",
+   "padre": 4100,
+   "color": "#006284",
+   "icono": 4100,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 4104,
+   "nombre": "Robo de motocicleta",
+   "corto": "Motocicleta (desde 2026)",
+   "padre": 4100,
+   "color": "#006284",
+   "icono": 4100,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 4200,
@@ -458,6 +549,19 @@
    "mpal": true
   },
   {
+   "codigo": 5100,
+   "nombre": "Violación a la intimidad sexual",
+   "corto": null,
+   "padre": null,
+   "color": "#D6336C",
+   "icono": 5000,
+   "ci_desde": "2026-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
    "codigo": 6000,
    "nombre": "Violencia familiar",
    "corto": null,
@@ -495,6 +599,32 @@
    "nota": null,
    "nota_v": null,
    "mpal": true
+  },
+  {
+   "codigo": 8001,
+   "nombre": "Narcomenudeo: posesión simple",
+   "corto": "Posesión simple (desde 2026)",
+   "padre": 8000,
+   "color": "#884624",
+   "icono": 8000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 8002,
+   "nombre": "Narcomenudeo con fines de venta",
+   "corto": "Con fines de venta (desde 2026)",
+   "padre": 8000,
+   "color": "#884624",
+   "icono": 8000,
+   "ci_desde": "2026-01",
+   "v_desde": null,
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
   },
   {
    "codigo": 9000,
