@@ -1,159 +1,331 @@
 {
  "corte": "2026-09",
- "generado": "2026-10-24T14:12:38Z",
+ "generado": "2026-10-24T16:22:02Z",
  "delitos": [
   {
    "codigo": 0,
    "nombre": "Total de delitos",
+   "corto": null,
+   "padre": null,
    "color": "#C32E26",
+   "icono": 0,
    "ci_desde": "1997-01",
    "v_desde": "2014-01",
    "nota": null,
-   "nota_v": "El universo de víctimas cambia con cada metodología: en 2014 (CIEISP) cubre pocos delitos; en 2015–2025 (SISDEL), los delitos contra la vida, la libertad y algunos más; desde 2026 (RNID), todos. El total de víctimas no es comparable entre esos periodos."
+   "nota_v": "El universo de víctimas cambia con cada metodología: en 2014 (CIEISP) cubre pocos delitos; en 2015–2025 (SISDEL), los delitos contra la vida, la libertad y algunos más; desde 2026 (RNID), todos. El total de víctimas no es comparable entre esos periodos.",
+   "mpal": true
   },
   {
    "codigo": 1100,
    "nombre": "Homicidio doloso (incl. feminicidio)",
+   "corto": null,
+   "padre": null,
    "color": "#81284F",
+   "icono": 1100,
    "ci_desde": "1997-01",
    "v_desde": "2014-01",
    "nota": "Antes de 2015 el SESNSP no separaba el feminicidio; la serie 1997–2014 es homicidio doloso a secas, con los feminicidios dentro.",
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 1110,
+   "nombre": "Homicidio doloso sin feminicidio",
+   "corto": "Sin feminicidio",
+   "padre": 1100,
+   "color": "#81284F",
+   "icono": 1100,
+   "ci_desde": "1997-01",
+   "v_desde": "2014-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 1130,
+   "nombre": "Homicidio doloso de mujeres",
+   "corto": "De mujeres",
+   "padre": 1100,
+   "color": "#81284F",
+   "icono": 1100,
+   "ci_desde": null,
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": false
+  },
+  {
+   "codigo": 1101,
+   "nombre": "Homicidio doloso con arma de fuego (incl. feminicidio)",
+   "corto": "Con arma de fuego",
+   "padre": 1100,
+   "color": "#81284F",
+   "icono": 1100,
+   "ci_desde": "1997-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 1120,
    "nombre": "Feminicidio",
+   "corto": null,
+   "padre": null,
    "color": "#BC003A",
+   "icono": 1120,
    "ci_desde": "2015-01",
    "v_desde": "2015-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 1009,
+   "nombre": "Otros delitos contra la vida y la integridad corporal",
+   "corto": null,
+   "padre": null,
+   "color": "#5E2750",
+   "icono": 1100,
+   "ci_desde": "2015-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 1200,
    "nombre": "Homicidio culposo",
+   "corto": null,
+   "padre": null,
    "color": "#B82386",
+   "icono": 1200,
    "ci_desde": "1997-01",
    "v_desde": "2014-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 2000,
    "nombre": "Secuestro",
+   "corto": null,
+   "padre": null,
    "color": "#6E15B2",
+   "icono": 2000,
    "ci_desde": "1997-01",
    "v_desde": "2014-01",
    "nota": "Incluye el fuero federal desde 2015.",
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 2009,
+   "nombre": "Otros delitos contra la libertad personal",
+   "corto": null,
+   "padre": null,
+   "color": "#4B1A7A",
+   "icono": 2000,
+   "ci_desde": "2015-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 3000,
    "nombre": "Extorsión",
+   "corto": null,
+   "padre": null,
    "color": "#2D3E97",
+   "icono": 3000,
    "ci_desde": "1997-01",
    "v_desde": "2014-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 4001,
    "nombre": "Robo con violencia",
+   "corto": null,
+   "padre": null,
    "color": "#283A78",
+   "icono": 4001,
    "ci_desde": "1997-01",
    "v_desde": "2026-01",
    "nota": "En 1997–2014 (CIEISP) el robo con violencia incluye robo en carreteras y bancario; el universo no es idéntico al posterior.",
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 4100,
    "nombre": "Robo de vehículo",
+   "corto": null,
+   "padre": null,
    "color": "#006284",
+   "icono": 4100,
    "ci_desde": "1997-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 4200,
    "nombre": "Robo a casa habitación",
+   "corto": null,
+   "padre": null,
    "color": "#0597C7",
+   "icono": 4200,
    "ci_desde": "1997-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 4300,
    "nombre": "Robo de negocio",
+   "corto": null,
+   "padre": null,
    "color": "#00715A",
+   "icono": 4300,
    "ci_desde": "1997-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 4400,
    "nombre": "Robo a transeúnte total",
+   "corto": null,
+   "padre": null,
    "color": "#176B19",
+   "icono": 4400,
    "ci_desde": "1997-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 4410,
+   "nombre": "Robo a transeúnte en espacio abierto o vía pública",
+   "corto": "En espacio abierto o vía pública",
+   "padre": 4400,
+   "color": "#176B19",
+   "icono": 4400,
+   "ci_desde": "2015-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 4420,
+   "nombre": "Robo en transporte (público y privado)",
+   "corto": "En transporte (público y privado)",
+   "padre": 4400,
+   "color": "#176B19",
+   "icono": 4400,
+   "ci_desde": "2015-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 4940,
    "nombre": "Robo en transporte público",
+   "corto": null,
+   "padre": null,
    "color": "#00A19A",
+   "icono": 4940,
    "ci_desde": "2015-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 5000,
    "nombre": "Violación",
+   "corto": null,
+   "padre": null,
    "color": "#C32E26",
+   "icono": 5000,
    "ci_desde": "1997-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 6000,
    "nombre": "Violencia familiar",
+   "corto": null,
+   "padre": null,
    "color": "#FFA500",
+   "icono": 6000,
    "ci_desde": "2015-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 7000,
    "nombre": "Trata de personas",
+   "corto": null,
+   "padre": null,
    "color": "#9B17AE",
+   "icono": 7000,
    "ci_desde": "2015-01",
    "v_desde": "2015-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 8000,
    "nombre": "Narcomenudeo",
+   "corto": null,
+   "padre": null,
    "color": "#884624",
+   "icono": 8000,
    "ci_desde": "2015-01",
    "v_desde": "2026-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
   },
   {
    "codigo": 9000,
    "nombre": "Lesiones dolosas",
+   "corto": null,
+   "padre": null,
    "color": "#DB6015",
+   "icono": 9000,
    "ci_desde": "1997-01",
    "v_desde": "2015-01",
    "nota": null,
-   "nota_v": null
+   "nota_v": null,
+   "mpal": true
+  },
+  {
+   "codigo": 9001,
+   "nombre": "Lesiones dolosas con arma de fuego",
+   "corto": "Con arma de fuego",
+   "padre": 9000,
+   "color": "#DB6015",
+   "icono": 9000,
+   "ci_desde": "1997-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null,
+   "mpal": true
   }
  ],
  "entidades": [

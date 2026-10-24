@@ -76,8 +76,19 @@ const indicador = () => INDICADORES.find((i) => i.value === q.indicator) || INDI
 const fmt = (v) => (v == null ? "-" : indicador().key === "t" ? NF2.format(v) : NF0.format(v));
 const iconoDelito = (code, clase = "") => {
   const d = delito(code);
-  return h("div", { class: `icon icon_${d.codigo} ${clase}`.trim(), style: { backgroundColor: d.color, backgroundImage: `url(${RAIZ}assets/${d.codigo}.svg)` } });
+  return h("div", { class: `icon icon_${d.codigo} ${clase}`.trim(), style: { backgroundColor: d.color, backgroundImage: `url(${RAIZ}assets/${d.icono ?? d.codigo}.svg)` } });
 };
+const principales = () => META.delitos.filter((d) => !d.padre);
+const componentes = (code) => META.delitos.filter((d) => d.padre === code);
+/**
+ * Algunos delitos solo existen en una unidad: el homicidio de mujeres es un
+ * conteo de víctimas, y el SESNSP no publica víctimas de varios robos. Si la
+ * unidad elegida no existe para el delito, se cambia a la que sí.
+ */
+function ajustarUnidad(d) {
+  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  else if (unidad().key === "ci" && !d.ci_desde) q.unit = "victims";
+}
 
 // ── Datos ───────────────────────────────────────────────────────────────────
 function cargar(ruta) {
@@ -93,7 +104,9 @@ const cargarDelito = (code) => cargar(`datos/delito/${code}.json`);
 const cargarEntidad = (e) => cargar(`datos/entidad/${e}.json`);
 // Nivel municipal: todo partido por estado, para bajar solo lo que se ve.
 const cargarIndiceMpal = (e) => cargar(`datos/mpal/${e}/indice.json`);
-const cargarDelitoMpal = (e, code) => cargar(`datos/mpal/${e}/delito/${code}.json`);
+// Hay delitos sin serie municipal (el homicidio de mujeres): vacío, sin pedirlo.
+const cargarDelitoMpal = (e, code) => (delito(code).mpal ? cargar(`datos/mpal/${e}/delito/${code}.json`) : Promise.resolve({ ci: null, v: null }));
+const avisoSinMunicipal = (d) => (d.mpal ? null : h("p", { class: "text-center aviso-datos" }, `El SESNSP no publica ${d.nombre.toLowerCase()} a nivel municipal; se muestra solo el total del estado.`));
 const cargarMunicipio = (e, m) => cargar(`datos/mpal/${e}/municipio/${m}.json`);
 const cargarMapaMpal = (e) => cargar(`datos/mpal/${e}/mapa.json`);
 const entidadPorSlug = (sl) => META.entidades.find((x) => x.codigo > 0 && x.slug === sl);
@@ -159,7 +172,7 @@ function periodoActual(lista) {
 // ── URL ─────────────────────────────────────────────────────────────────────
 // `states` son los municipios elegidos en /tendencia/<estado> (0 = total del
 // estado) y `municipality` el de la tabla de variación, como en la plataforma.
-const DEFAULTS = { unit: "folders", indicator: "researchFoldersRate", group: "month", crime: "0", state: "0", period: "", states: "0", municipality: "0" };
+const DEFAULTS = { unit: "folders", indicator: "researchFoldersRate", group: "month", crime: "0", state: "0", period: "", states: "0", municipality: "0", crimes: "" };
 function leerParams() {
   const p = new URLSearchParams(location.search);
   q = { ...DEFAULTS };
@@ -199,7 +212,7 @@ function selector({ titulo, opciones, valor, onCambio, deshabilitado = false }) 
       opciones.map((o) => h("button", {
         type: "button", role: "option",
         class: `select-item ${String(o.value) === String(valor) ? "active" : ""} ${o.disabled ? "disabled" : ""}`,
-        disabled: o.disabled, title: o.title,
+        disabled: o.disabled, title: o.title, style: o.nivel ? { paddingLeft: `${10 + 16 * o.nivel}px` } : null,
         onclick: () => { cerrar(); if (String(o.value) !== String(valor)) onCambio(o.value); },
       }, o.name)));
     const caja = h("div", { class: "select-contextual-wrapper open" }, h("div", { class: "title-mobile" }, titulo), lista);
@@ -213,10 +226,13 @@ function selector({ titulo, opciones, valor, onCambio, deshabilitado = false }) 
   return cont;
 }
 
-const opcionesDelito = () => META.delitos.map((d) => ({ value: d.codigo, name: d.nombre }));
+const opcionesDelito = () => META.delitos.map((d) => ({ value: d.codigo, name: d.nombre, nivel: d.padre ? 1 : 0 }));
 const opcionesUnidad = () => {
   const d = delito(q.crime);
-  return UNIDADES.map((u) => ({ ...u, disabled: u.key === "v" && !d.v_desde, title: u.key === "v" && !d.v_desde ? "El SESNSP no publica víctimas de este delito" : null }));
+  return UNIDADES.map((u) => {
+    const falta = u.key === "v" ? !d.v_desde : !d.ci_desde;
+    return { ...u, disabled: falta, title: falta ? (u.key === "v" ? "El SESNSP no publica víctimas de este delito" : "Este delito solo se publica en víctimas") : null };
+  });
 };
 const opcionesPeriodo = (lista) => lista.map((p) => ({ value: p.clave, name: p.largo }));
 const opcionesAgrupacion = (conAcumulado = true) => AGRUPACIONES.filter((g) => conAcumulado || g.n !== 0);
@@ -379,7 +395,7 @@ async function vistaInicio(raiz) {
   q.indicator = "researchFoldersRate";
   const yc = anio(CORTE);
   const listaDelitos = h("div", { class: "delitosList py-4" },
-    META.delitos.map((d) => h("a", { href: urlDe("tendencia", { ...DEFAULTS, crime: d.codigo }) }, iconoDelito(d.codigo, "mr-2 small"), d.nombre)));
+    principales().map((d) => h("a", { href: urlDe("tendencia", { ...DEFAULTS, crime: d.codigo }) }, iconoDelito(d.codigo, "mr-2 small"), d.nombre)));
   const cajaMapa = h("div", { class: "box-content home-map mb-4" });
   raiz.append(
     h("div", { class: "container-fluid" },
@@ -464,7 +480,7 @@ async function vistaTendencia(raiz) {
   if (ent) return vistaTendenciaMunicipal(raiz, ent);
   const g = agrupacion().n === 0 ? AGRUPACIONES[0] : agrupacion();
   const d = delito(q.crime);
-  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  ajustarUnidad(d);
   let estados = [...new Set(q.state.split(",").map(Number).filter((e) => e >= 0 && e <= 32))].slice(0, 10);
   if (!estados.length) estados = [0];
 
@@ -492,7 +508,7 @@ async function vistaTendencia(raiz) {
 async function vistaTendenciaMunicipal(raiz, ent) {
   const g = agrupacion().n === 0 ? AGRUPACIONES[0] : agrupacion();
   const d = delito(q.crime);
-  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  ajustarUnidad(d);
   const [indice, datEst, datMun] = await Promise.all([cargarIndiceMpal(ent.codigo), cargarDelito(d.codigo), cargarDelitoMpal(ent.codigo, d.codigo)]);
   const pos = new Map(indice.municipios.map((m, i) => [m.codigo, i]));
   let sel = [...new Set(q.states.split(",").map(Number).filter((m) => m === 0 || pos.has(m)))].slice(0, 10);
@@ -512,6 +528,7 @@ async function vistaTendenciaMunicipal(raiz, ent) {
 
   raiz.append(h("div", { class: "box-height" },
     filtrosTendencia(d, g, ent.slug),
+    avisoSinMunicipal(d),
     cuerpoTendencia({
       d, titulo: ent.nombre, subtitulo: d.nombre,
       alDescargar: () => descargarSeries(`tendencia_${ent.slug}_${d.codigo}.csv`, d, lista, series),
@@ -525,16 +542,17 @@ async function vistaTendenciaMunicipal(raiz, ent) {
 }
 
 /** Barra lateral con casillas (máx. 10), como la de la plataforma. */
-function sidebarSeleccion({ etiqueta, sel, items, alCambiar, buscador }) {
+function sidebarSeleccion({ etiqueta, sel, items, alCambiar, buscador, max = 10 }) {
   const elegidos = new Set(sel);
   const toggle = (clave) => {
     if (elegidos.has(clave)) { if (elegidos.size > 1) elegidos.delete(clave); }
-    else if (elegidos.size < 10) elegidos.add(clave);
+    else if (elegidos.size < max) elegidos.add(clave);
     alCambiar([...elegidos]);
   };
   const filas = items.map((x) => {
     const on = elegidos.has(x.clave);
     return h("div", { class: "select-item", role: "checkbox", "aria-checked": on, tabindex: 0, "data-nombre": x.nombre.toLowerCase(),
+      style: x.nivel ? { paddingLeft: `${10 + 24 * x.nivel}px` } : null,
       onclick: () => toggle(x.clave), onkeydown: (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(x.clave); } } },
       h("div", { class: `radio checkbox ${on ? "active" : ""}`, style: { background: on ? x.color : "none" } }, on ? icono("done") : null),
       h("span", { class: `radio-label ${on ? "active" : ""}` }, x.nombre));
@@ -542,7 +560,7 @@ function sidebarSeleccion({ etiqueta, sel, items, alCambiar, buscador }) {
   const sinAcentos = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   return h("div", { class: "box-content box-content-sidebar py-4", id: "sidebar" },
     h("div", {},
-      h("span", {}, h("label", { class: "mr-1" }, etiqueta), h("b", {}, String(elegidos.size)), h("br"), h("label", {}, "(Máx 10)")),
+      h("span", {}, h("label", { class: "mr-1" }, etiqueta), h("b", {}, String(elegidos.size)), h("br"), h("label", {}, `(Máx ${max})`)),
       h("br"),
       h("a", { class: "d-block link mt-2 pointer", onclick: () => alCambiar([items[0].clave]) }, "Limpiar todo")),
     h("hr", { class: "my-4" }),
@@ -675,7 +693,7 @@ function graficaLineas(cont, lista, series, g) {
 function radiosDelito(d) {
   return META.delitos.map((x) => {
     const on = x.codigo === d.codigo;
-    return h("div", { class: "select-item", role: "radio", "aria-checked": on, tabindex: 0,
+    return h("div", { class: "select-item", role: "radio", "aria-checked": on, tabindex: 0, style: x.padre ? { paddingLeft: "34px" } : null,
       onclick: () => cambiar({ crime: x.codigo }), onkeydown: (ev) => { if (ev.key === "Enter") cambiar({ crime: x.codigo }); } },
       h("div", { class: `radio ${on ? "active" : ""}`, style: { background: on ? x.color : "none" } }, on ? icono("done") : null),
       h("span", { class: `radio-label ${on ? "active" : ""}` }, x.nombre));
@@ -719,7 +737,7 @@ async function vistaMapa(raiz) {
   if (ent) return vistaMapaMunicipal(raiz, ent);
   const g = agrupacion();
   const d = delito(q.crime);
-  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  ajustarUnidad(d);
   const dat = await cargarDelito(d.codigo);
   const u = dat[unidad().key];
   const lista = periodos(g, abs(u.inicio));
@@ -744,7 +762,7 @@ async function vistaMapa(raiz) {
 async function vistaMapaMunicipal(raiz, ent) {
   const g = agrupacion();
   const d = delito(q.crime);
-  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  ajustarUnidad(d);
   const [indice, geo, dat] = await Promise.all([cargarIndiceMpal(ent.codigo), cargarMapaMpal(ent.codigo), cargarDelitoMpal(ent.codigo, d.codigo)]);
   const u = dat[unidad().key];
   const lista = u ? periodos(g, abs(u.inicio)) : periodos(g);
@@ -760,8 +778,10 @@ async function vistaMapaMunicipal(raiz, ent) {
     h("h3", {}, "Observatorios en esta entidad"),
     h("ul", {}, indice.observatorios.map((o) => h("li", {},
       o.sitio ? h("a", { class: "underline", href: /^https?:/.test(o.sitio) ? o.sitio : `https://${o.sitio}`, target: "_blank", rel: "noopener" }, o.nombre) : o.nombre)))) : null;
+  const aviso = avisoSinMunicipal(d);
+  if (aviso) aviso.textContent = `El SESNSP no publica ${d.nombre.toLowerCase()} a nivel municipal.`;
   raiz.append(vistaMapaMarco({
-    d, g, lista, per, ent, mapa, extra,
+    d, g, lista, per, ent, mapa, extra: aviso ? [aviso, extra] : extra,
     alDescargar: () => {
       const filas = indice.municipios.map((m) => ({ inegiMunicipio: m.codigo, municipio: m.nombre, entidad: ent.nombre, delito: d.nombre, unidad: unidad().name, indicador: indicador().name, periodo: per.largo, valor: redondeo(valor(m.codigo)) }));
       bajar(`mapa_${ent.slug}_${d.codigo}_${per.clave}.csv`, csvDe(filas), "text/csv;charset=utf-8");
@@ -830,21 +850,37 @@ function tablaVariacion({ columna, cx, filas }) {
       cx.conAnterior ? h("div", { class: "px-2 flex-shrink-0" }, "Var periodo anterior", h("div", { class: "d-flex justify-content-between" }, h("span", {}, "-"), h("span", {}, "+"))) : null,
       h("div", { class: "px-4" }, "Tendencia")));
 
-  const cuerpo = filas.map((f) => h("div", {
-    class: "table-item cursor", role: "link", tabindex: 0,
+  const conDesglose = filas.some((x) => x.hijos?.length);
+  const renglon = (f, hijo = false, alternar = null) => h("div", {
+    class: `table-item cursor ${hijo ? "hijo" : ""}`, role: "link", tabindex: 0, hidden: hijo,
     onclick: f.irA, onkeydown: (ev) => { if (ev.key === "Enter") f.irA(); },
   },
-    h("div", { class: "table-item-description" }, f.nombre),
+    h("div", { class: "table-item-description" },
+      // Botón para desplegar los componentes; deja su hueco aunque no haya, para alinear.
+      alternar ? h("button", { type: "button", class: "desplegar", title: "Ver componentes", "aria-expanded": "false", onclick: alternar }, icono("chevron_right"))
+        : (conDesglose && !hijo ? h("span", { class: "desplegar-hueco" }) : null),
+      f.nombre),
     h("div", { class: "table-item-values" }, h("div", {}, fmt(f.pas)), cx.conAnterior ? h("div", {}, fmt(f.ant)) : null, h("div", {}, fmt(f.act))),
     h("div", { class: "table-item-bars" }, barchart(f.vPas), cx.conAnterior ? barchart(f.vAnt) : null,
       // La minitendencia lleva a las líneas de tendencia, como en la plataforma.
       h("div", { class: "cursor", title: "Ver líneas de tendencia", onclick: (ev) => { ev.stopPropagation(); f.irATendencia(); } },
-        h("div", { class: "tendencia-char" }, h("div", { class: "text-center" }, sparkline(f.historia)))))));
+        h("div", { class: "tendencia-char" }, h("div", { class: "text-center" }, sparkline(f.historia))))));
+  const cuerpo = filas.flatMap((f) => {
+    if (!f.hijos?.length) return [renglon(f)];
+    const hijos = f.hijos.map((x) => renglon(x, true));
+    const alternar = (ev) => {
+      ev.stopPropagation();
+      const b = ev.currentTarget, abierto = b.getAttribute("aria-expanded") !== "true";
+      b.setAttribute("aria-expanded", String(abierto));
+      for (const r of hijos) r.hidden = !abierto;
+    };
+    return [renglon(f, false, alternar), ...hijos];
+  });
   return h("div", { class: "table-wrapper-mobile" }, encabezado, cuerpo);
 }
 
 function csvVariacion(cx, filas) {
-  return filas.map((f) => ({
+  return filas.flatMap((f) => [f, ...(f.hijos || [])]).map((f) => ({
     ...f.columnas, unidad: unidad().name, indicador: indicador().name,
     [cx.etPasado]: redondeo(f.pas), ...(cx.conAnterior ? { [cx.anterior?.corto ?? "anterior"]: redondeo(f.ant) } : {}), [cx.per.corto]: redondeo(f.act),
     var_anio_pasado: f.vPas == null ? null : +f.vPas.toFixed(2),
@@ -853,7 +889,7 @@ function csvVariacion(cx, filas) {
 }
 const grupoTendencia = (g) => (g.n === 0 ? "month" : g.value);
 
-// Tabla de variación por tipo de delito: una entidad (o un municipio), los 17 delitos.
+// Tabla de variación por tipo de delito: una entidad (o un municipio), todos los delitos.
 async function vistaVariacion(raiz) {
   const g = agrupacion();
   const e = Math.max(0, Math.min(32, Number(q.state.split(",")[0]) || 0));
@@ -866,9 +902,13 @@ async function vistaVariacion(raiz) {
   const lista = periodos(g, mun ? abs("2015-01") : abs("1997-01"));
   const cx = contextoVariacion(g, lista);
 
-  const filas = META.delitos.map((d) => ({
+  // Las tablas son referenciales: los componentes se despliegan bajo su
+  // delito para leerlo mejor, no para sumarlos.
+  const soloEn = (d) => (u.key === "ci" && !d.ci_desde ? " (solo en víctimas)" : u.key === "v" && !d.v_desde ? " (solo en carpetas)" : "");
+  const fila = (d) => ({
     ...valoresVariacion(serie(datos.delitos[d.codigo]?.[u.key]), cx),
-    nombre: [iconoDelito(d.codigo), h("div", { class: "table-item-name" }, d.nombre)],
+    nombre: d.padre ? h("div", { class: "table-item-name" }, (d.corto || d.nombre) + soloEn(d))
+      : [iconoDelito(d.codigo), h("div", { class: "table-item-name" }, d.nombre + soloEn(d))],
     columnas: { entidad: nombreEntidad(e), ...(mun ? { municipio: mun.nombre } : {}), delito: d.nombre },
     // Como en la plataforma: el delito abre su ranking, por entidades en el
     // nacional y por municipios con un estado elegido.
@@ -881,7 +921,8 @@ async function vistaVariacion(raiz) {
       location.href = mun ? urlDe(`tendencia/${ent.slug}`, { ...q, crime: d.codigo, states: `0,${mun.codigo}`, group: grupoTendencia(g) })
         : urlDe("tendencia", { ...q, crime: d.codigo, state: e, group: grupoTendencia(g) });
     },
-  }));
+  });
+  const filas = principales().map((d) => ({ ...fila(d), hijos: componentes(d.codigo).map(fila) }));
 
   const ancho = "col-sm-2";
   const cols = [
@@ -911,7 +952,7 @@ async function vistaVariacion(raiz) {
 async function vistaRanking(raiz, codigo) {
   const g = agrupacion();
   const d = delito(codigo);
-  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  ajustarUnidad(d);
   const u = unidad();
   const dat = await cargarDelito(d.codigo);
   const lista = periodos(g, abs(dat[u.key].inicio));
@@ -950,7 +991,7 @@ async function vistaRanking(raiz, codigo) {
 async function vistaRankingMunicipal(raiz, ent) {
   const g = agrupacion();
   const d = delito(q.crime);
-  if (unidad().key === "v" && !d.v_desde) q.unit = "folders";
+  ajustarUnidad(d);
   const u = unidad();
   const [indice, dat] = await Promise.all([cargarIndiceMpal(ent.codigo), cargarDelitoMpal(ent.codigo, d.codigo)]);
   const um = dat[u.key];
@@ -982,8 +1023,73 @@ async function vistaRankingMunicipal(raiz, ent) {
         botonRegresar("hidden-xs btn-back btn btn-black py-2 px-3 decoration-none left w-auto d-flex align-items-center"),
         h("div", { class: "w-100" }, h("h2", { class: "text-center m-0" }, `Ranking Municipal ${ent.nombre}`), h("p", { class: "text-center mb-4 mt-2" }, d.nombre)),
         iconoDelito(d.codigo, "right")),
+      d.mpal ? null : h("p", { class: "text-center aviso-datos" }, `El SESNSP no publica ${d.nombre.toLowerCase()} a nivel municipal.`),
       tablaVariacion({ columna: "Municipio", cx, filas }),
       botonDescargar(() => bajar(`ranking_${ent.slug}_${d.codigo}_${cx.per.clave}.csv`, csvDe(csvVariacion(cx, filas)), "text/csv;charset=utf-8")))))));
+}
+
+// ── Comparar delitos ────────────────────────────────────────────────────────
+// Varios delitos en una misma gráfica, para un mismo lugar. Es descriptiva:
+// muestra las series juntas, sin interpretarlas. Los delitos pueden estar
+// contenidos unos en otros (las tablas son referenciales): se comparan, no se suman.
+const COMPARACIONES = [
+  { nombre: "Feminicidio y homicidio doloso de mujeres", delitos: [1120, 1130], unit: "victims" },
+  { nombre: "Homicidio doloso y otros delitos contra la vida", delitos: [1100, 1009], unit: "folders" },
+  { nombre: "Homicidio doloso: sin feminicidio y feminicidio", delitos: [1100, 1110, 1120], unit: "folders" },
+  { nombre: "Homicidio doloso total y con arma de fuego", delitos: [1100, 1101], unit: "folders" },
+  { nombre: "Secuestro y otros delitos contra la libertad", delitos: [2000, 2009], unit: "folders" },
+  { nombre: "Robo a transeúnte: vía pública y transporte", delitos: [4400, 4410, 4420], unit: "folders" },
+];
+// Colores por orden de selección: los componentes comparten color con su
+// delito, así que aquí no sirve el color de cada delito.
+const PALETA_COMPARAR = ["#43AB34", "#E39309", "#38BDE6", "#E624EC", "#EB4337"];
+
+async function vistaComparar(raiz) {
+  const g = agrupacion().n === 0 ? AGRUPACIONES[0] : agrupacion();
+  const e = Math.max(0, Math.min(32, Number(q.state.split(",")[0]) || 0));
+  const validos = new Set(META.delitos.map((d) => d.codigo));
+  let sel = [...new Set(q.crimes.split(",").filter(Boolean).map(Number).filter((c) => validos.has(c)))].slice(0, 5);
+  if (!sel.length) { sel = COMPARACIONES[0].delitos; if (!q.crimes) q.unit = COMPARACIONES[0].unit; }
+  const datos = await cargarEntidad(e);
+  const u = unidad();
+
+  const inicios = sel.map((c) => datos.delitos[c]?.[u.key]?.inicio).filter(Boolean).map(abs);
+  const lista = periodos(g, inicios.length ? Math.min(...inicios) : abs("1997-01")).reverse();
+  const series = sel.map((c, i) => {
+    const d = delito(c), uo = datos.delitos[c]?.[u.key];
+    return { nombre: uo ? d.nombre : `${d.nombre} (no se publica en ${u.name.toLowerCase()})`, color: PALETA_COMPARAR[i], pts: lista.map((p) => suma(serie(uo), p.k0, p.k1)) };
+  });
+
+  const sugeridas = h("div", { class: "comparaciones" },
+    h("label", { class: "title-select" }, "Comparaciones sugeridas"),
+    COMPARACIONES.map((c) => {
+      const activa = c.delitos.join(",") === sel.join(",");
+      return h("button", { type: "button", class: `sugerida ${activa ? "activa" : ""}`,
+        onclick: () => cambiar({ crimes: c.delitos.join(","), unit: c.unit }) }, c.nombre);
+    }));
+
+  raiz.append(h("div", { class: "box-height" },
+    barraFiltros([
+      ["col-sm-3", selector({ titulo: "ENTIDAD", valor: e, opciones: META.entidades.map((x) => ({ value: x.codigo, name: nombreEntidad(x.codigo) })), onCambio: (v) => cambiar({ state: v }) })],
+      ["col-sm-3", selector({ titulo: "UNIDAD DE OBSERVACIÓN", opciones: UNIDADES, valor: q.unit, onCambio: (v) => cambiar({ unit: v }) })],
+      ["col-sm-3", selector({ titulo: "INDICADOR", opciones: INDICADORES, valor: q.indicator, onCambio: (v) => cambiar({ indicator: v }) })],
+      ["col-sm-3", selector({ titulo: "AGRUPACIÓN", opciones: opcionesAgrupacion(false), valor: g.value, onCambio: (v) => cambiar({ group: v }) })],
+    ]),
+    h("div", { class: "container-fluid mt-5" }, h("div", { class: "row align-items-stretch" },
+      h("div", { class: "col col-12 mt-2 col-md-9" },
+        h("div", { class: "w-100 text-center" }, h("h2", { class: "text-center" }, "Comparar delitos"), h("p", { class: "text-center" }, nombreEntidad(e))),
+        h("div", { class: "leyenda-comparar" }, series.map((se) => h("span", {}, h("i", { style: { background: se.color } }), se.nombre))),
+        h("div", { id: "multilinechart" }),
+        h("p", { class: "nota-comparar" }, "Algunos delitos están contenidos en otros (por ejemplo, el feminicidio forma parte del homicidio doloso): las series se comparan, no se suman."),
+        botonDescargar(() => descargarSeries(`comparar_${e}.csv`, { nombre: "varios" }, lista, series))),
+      h("div", { class: "col col-12 mt-2 mb-2 col-md-3" },
+        h("div", {}, sugeridas,
+          sidebarSeleccion({
+            etiqueta: "Delitos seleccionados:", sel, max: 5,
+            items: META.delitos.map((d) => ({ clave: d.codigo, nombre: d.nombre, nivel: d.padre ? 1 : 0, color: sel.includes(d.codigo) ? PALETA_COMPARAR[sel.indexOf(d.codigo)] : null })),
+            alCambiar: (nuevo) => cambiar({ crimes: nuevo.join(",") }),
+          })))))));
+  return () => graficaLineas($("#multilinechart"), lista, series, g);
 }
 
 // ── Descargar datos ─────────────────────────────────────────────────────────
@@ -1010,7 +1116,6 @@ async function vistaDescargar(raiz) {
     g.name,
     per ? per.largo : "Todos los periodos",
   ];
-  const esTodo = crime === todos && est === todos && !per && g.n === 1;
 
   async function filas() {
     const out = [];
@@ -1036,7 +1141,6 @@ async function vistaDescargar(raiz) {
     return out;
   }
   const bajarCSV = async () => {
-    if (esTodo && !busqueda) { location.href = `${RAIZ}descargas/estatal_virk.csv`; return; }
     bajar("delitosmexico.csv", csvDe(await filas()), "text/csv;charset=utf-8");
   };
   const bajarJSON = async () => bajar("delitosmexico.json", JSON.stringify(await filas()), "application/json");
@@ -1134,7 +1238,7 @@ function marcarMenu() {
   }
 }
 
-const VISTAS = { "": vistaInicio, tendencia: vistaTendencia, mapa: vistaMapa, variacion: vistaVariacion, descargar: vistaDescargar };
+const VISTAS = { "": vistaInicio, tendencia: vistaTendencia, mapa: vistaMapa, variacion: vistaVariacion, comparar: vistaComparar, descargar: vistaDescargar };
 let turno = 0;
 async function pintar() {
   const yo = ++turno;
