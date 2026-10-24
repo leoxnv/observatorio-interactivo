@@ -1,0 +1,449 @@
+{
+ "corte": "2026-09",
+ "generado": "2026-10-24T14:12:38Z",
+ "delitos": [
+  {
+   "codigo": 0,
+   "nombre": "Total de delitos",
+   "color": "#C32E26",
+   "ci_desde": "1997-01",
+   "v_desde": "2014-01",
+   "nota": null,
+   "nota_v": "El universo de víctimas cambia con cada metodología: en 2014 (CIEISP) cubre pocos delitos; en 2015–2025 (SISDEL), los delitos contra la vida, la libertad y algunos más; desde 2026 (RNID), todos. El total de víctimas no es comparable entre esos periodos."
+  },
+  {
+   "codigo": 1100,
+   "nombre": "Homicidio doloso (incl. feminicidio)",
+   "color": "#81284F",
+   "ci_desde": "1997-01",
+   "v_desde": "2014-01",
+   "nota": "Antes de 2015 el SESNSP no separaba el feminicidio; la serie 1997–2014 es homicidio doloso a secas, con los feminicidios dentro.",
+   "nota_v": null
+  },
+  {
+   "codigo": 1120,
+   "nombre": "Feminicidio",
+   "color": "#BC003A",
+   "ci_desde": "2015-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 1200,
+   "nombre": "Homicidio culposo",
+   "color": "#B82386",
+   "ci_desde": "1997-01",
+   "v_desde": "2014-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 2000,
+   "nombre": "Secuestro",
+   "color": "#6E15B2",
+   "ci_desde": "1997-01",
+   "v_desde": "2014-01",
+   "nota": "Incluye el fuero federal desde 2015.",
+   "nota_v": null
+  },
+  {
+   "codigo": 3000,
+   "nombre": "Extorsión",
+   "color": "#2D3E97",
+   "ci_desde": "1997-01",
+   "v_desde": "2014-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 4001,
+   "nombre": "Robo con violencia",
+   "color": "#283A78",
+   "ci_desde": "1997-01",
+   "v_desde": "2026-01",
+   "nota": "En 1997–2014 (CIEISP) el robo con violencia incluye robo en carreteras y bancario; el universo no es idéntico al posterior.",
+   "nota_v": null
+  },
+  {
+   "codigo": 4100,
+   "nombre": "Robo de vehículo",
+   "color": "#006284",
+   "ci_desde": "1997-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 4200,
+   "nombre": "Robo a casa habitación",
+   "color": "#0597C7",
+   "ci_desde": "1997-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 4300,
+   "nombre": "Robo de negocio",
+   "color": "#00715A",
+   "ci_desde": "1997-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 4400,
+   "nombre": "Robo a transeúnte total",
+   "color": "#176B19",
+   "ci_desde": "1997-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 4940,
+   "nombre": "Robo en transporte público",
+   "color": "#00A19A",
+   "ci_desde": "2015-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 5000,
+   "nombre": "Violación",
+   "color": "#C32E26",
+   "ci_desde": "1997-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 6000,
+   "nombre": "Violencia familiar",
+   "color": "#FFA500",
+   "ci_desde": "2015-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 7000,
+   "nombre": "Trata de personas",
+   "color": "#9B17AE",
+   "ci_desde": "2015-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 8000,
+   "nombre": "Narcomenudeo",
+   "color": "#884624",
+   "ci_desde": "2015-01",
+   "v_desde": "2026-01",
+   "nota": null,
+   "nota_v": null
+  },
+  {
+   "codigo": 9000,
+   "nombre": "Lesiones dolosas",
+   "color": "#DB6015",
+   "ci_desde": "1997-01",
+   "v_desde": "2015-01",
+   "nota": null,
+   "nota_v": null
+  }
+ ],
+ "entidades": [
+  {
+   "codigo": 0,
+   "nombre": "Nacional",
+   "region": null,
+   "color": "#43AB34",
+   "slug": "nacional",
+   "municipios": 0
+  },
+  {
+   "codigo": 1,
+   "nombre": "Aguascalientes",
+   "region": "Centro Norte",
+   "color": "#6E15B2",
+   "slug": "aguascalientes",
+   "municipios": 12
+  },
+  {
+   "codigo": 2,
+   "nombre": "Baja California",
+   "region": "Noroeste",
+   "color": "#2D3E97",
+   "slug": "baja-california",
+   "municipios": 8
+  },
+  {
+   "codigo": 3,
+   "nombre": "Baja California Sur",
+   "region": "Noroeste",
+   "color": "#414C6D",
+   "slug": "baja-california-sur",
+   "municipios": 6
+  },
+  {
+   "codigo": 4,
+   "nombre": "Campeche",
+   "region": "Sureste",
+   "color": "#AB3440",
+   "slug": "campeche",
+   "municipios": 14
+  },
+  {
+   "codigo": 5,
+   "nombre": "Coahuila",
+   "region": "Noreste",
+   "color": "#607FE5",
+   "slug": "coahuila",
+   "municipios": 39
+  },
+  {
+   "codigo": 6,
+   "nombre": "Colima",
+   "region": "Occidente",
+   "color": "#E624EC",
+   "slug": "colima",
+   "municipios": 11
+  },
+  {
+   "codigo": 7,
+   "nombre": "Chiapas",
+   "region": "Suroeste",
+   "color": "#283A78",
+   "slug": "chiapas",
+   "municipios": 125
+  },
+  {
+   "codigo": 8,
+   "nombre": "Chihuahua",
+   "region": "Noroeste",
+   "color": "#B7C221",
+   "slug": "chihuahua",
+   "municipios": 68
+  },
+  {
+   "codigo": 9,
+   "nombre": "Ciudad de México",
+   "region": "Centro Sur",
+   "color": "#884624",
+   "slug": "ciudad-de-mexico",
+   "municipios": 18
+  },
+  {
+   "codigo": 10,
+   "nombre": "Durango",
+   "region": "Noroeste",
+   "color": "#176B19",
+   "slug": "durango",
+   "municipios": 40
+  },
+  {
+   "codigo": 11,
+   "nombre": "Guanajuato",
+   "region": "Centro Norte",
+   "color": "#38BDE6",
+   "slug": "guanajuato",
+   "municipios": 47
+  },
+  {
+   "codigo": 12,
+   "nombre": "Guerrero",
+   "region": "Suroeste",
+   "color": "#E39309",
+   "slug": "guerrero",
+   "municipios": 86
+  },
+  {
+   "codigo": 13,
+   "nombre": "Hidalgo",
+   "region": "Oriente",
+   "color": "#006284",
+   "slug": "hidalgo",
+   "municipios": 85
+  },
+  {
+   "codigo": 14,
+   "nombre": "Jalisco",
+   "region": "Occidente",
+   "color": "#14CCA7",
+   "slug": "jalisco",
+   "municipios": 127
+  },
+  {
+   "codigo": 15,
+   "nombre": "Estado de México",
+   "region": "Centro Sur",
+   "color": "#EBDC13",
+   "slug": "estado-de-mexico",
+   "municipios": 126
+  },
+  {
+   "codigo": 16,
+   "nombre": "Michoacán",
+   "region": "Occidente",
+   "color": "#0597C7",
+   "slug": "michoacan",
+   "municipios": 114
+  },
+  {
+   "codigo": 17,
+   "nombre": "Morelos",
+   "region": "Centro Sur",
+   "color": "#B82386",
+   "slug": "morelos",
+   "municipios": 37
+  },
+  {
+   "codigo": 18,
+   "nombre": "Nayarit",
+   "region": "Occidente",
+   "color": "#00715A",
+   "slug": "nayarit",
+   "municipios": 21
+  },
+  {
+   "codigo": 19,
+   "nombre": "Nuevo León",
+   "region": "Noreste",
+   "color": "#2EEFBB",
+   "slug": "nuevo-leon",
+   "municipios": 52
+  },
+  {
+   "codigo": 20,
+   "nombre": "Oaxaca",
+   "region": "Suroeste",
+   "color": "#CE4D24",
+   "slug": "oaxaca",
+   "municipios": 571
+  },
+  {
+   "codigo": 21,
+   "nombre": "Puebla",
+   "region": "Oriente",
+   "color": "#EB9729",
+   "slug": "puebla",
+   "municipios": 218
+  },
+  {
+   "codigo": 22,
+   "nombre": "Querétaro",
+   "region": "Centro Norte",
+   "color": "#F366DC",
+   "slug": "queretaro",
+   "municipios": 20
+  },
+  {
+   "codigo": 23,
+   "nombre": "Quintana Roo",
+   "region": "Sureste",
+   "color": "#D61CD0",
+   "slug": "quintana-roo",
+   "municipios": 12
+  },
+  {
+   "codigo": 24,
+   "nombre": "San Luis Potosí",
+   "region": "Centro Norte",
+   "color": "#DFB613",
+   "slug": "san-luis-potosi",
+   "municipios": 60
+  },
+  {
+   "codigo": 25,
+   "nombre": "Sinaloa",
+   "region": "Noroeste",
+   "color": "#F167EC",
+   "slug": "sinaloa",
+   "municipios": 21
+  },
+  {
+   "codigo": 26,
+   "nombre": "Sonora",
+   "region": "Noroeste",
+   "color": "#68D913",
+   "slug": "sonora",
+   "municipios": 74
+  },
+  {
+   "codigo": 27,
+   "nombre": "Tabasco",
+   "region": "Sureste",
+   "color": "#13E27B",
+   "slug": "tabasco",
+   "municipios": 18
+  },
+  {
+   "codigo": 28,
+   "nombre": "Tamaulipas",
+   "region": "Noreste",
+   "color": "#9B17AE",
+   "slug": "tamaulipas",
+   "municipios": 44
+  },
+  {
+   "codigo": 29,
+   "nombre": "Tlaxcala",
+   "region": "Oriente",
+   "color": "#B8E538",
+   "slug": "tlaxcala",
+   "municipios": 61
+  },
+  {
+   "codigo": 30,
+   "nombre": "Veracruz",
+   "region": "Oriente",
+   "color": "#EF1F5F",
+   "slug": "veracruz",
+   "municipios": 214
+  },
+  {
+   "codigo": 31,
+   "nombre": "Yucatán",
+   "region": "Sureste",
+   "color": "#26D8BA",
+   "slug": "yucatan",
+   "municipios": 107
+  },
+  {
+   "codigo": 32,
+   "nombre": "Zacatecas",
+   "region": "Centro Norte",
+   "color": "#EB4337",
+   "slug": "zacatecas",
+   "municipios": 59
+  }
+ ],
+ "fuente_url": "https://www.gob.mx/sesnsp/acciones-y-programas/datos-abiertos-de-incidencia-delictiva?state=published",
+ "periodos": [
+  {
+   "desde": "1997-01",
+   "nombre": "CIEISP"
+  },
+  {
+   "desde": "2015-01",
+   "nombre": "SISDEL"
+  },
+  {
+   "desde": "2026-01",
+   "nombre": "RNID"
+  }
+ ],
+ "descargas": [
+  {
+   "archivo": "estatal_virk.csv",
+   "filas": 164637,
+   "bytes": 12372856,
+   "desde": "1997-01",
+   "hasta": "2026-09"
+  }
+ ]
+}
