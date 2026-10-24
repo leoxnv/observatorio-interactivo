@@ -11,6 +11,9 @@
 
 const RAIZ = document.body.dataset.raiz || "./";
 const RUTA = document.body.dataset.ruta || "";
+// Cambia en cada publicación: va en la dirección de cada archivo de datos para
+// que el navegador no use una copia vieja de su caché (Safari la guarda mucho).
+const VERSION = document.body.dataset.version || "";
 // "variacion/1100" es el ranking por entidades de un delito, como en la plataforma.
 const [VISTA, ARG] = RUTA.split("/");
 
@@ -93,7 +96,7 @@ function ajustarUnidad(d) {
 // ── Datos ───────────────────────────────────────────────────────────────────
 function cargar(ruta) {
   if (!cache.has(ruta)) {
-    cache.set(ruta, fetch(RAIZ + ruta).then((r) => {
+    cache.set(ruta, fetch(`${RAIZ}${ruta}?v=${VERSION}`).then((r) => {
       if (!r.ok) throw new Error(`No se pudo cargar ${ruta}`);
       return r.json();
     }));
