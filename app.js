@@ -76,6 +76,11 @@ const sinAcentos = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase
 const TRAZOS = {
   abajo: "M6 9l6 6 6-6", derecha: "M9 6l6 6-6 6", palomita: "M5 12l5 5 9-10", filtros: "M4 6h16M7 12h10M10 18h4",
   descargar: "M12 4v11M7 10l5 5 5-5M5 20h14", cerrar: "M6 6l12 12M18 6L6 18", flecha: "M5 12h14M13 6l6 6-6 6",
+  lupa: "M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM20 20l-4.8-4.8", insertar: "M8 8l-4 4 4 4M16 8l4 4-4 4",
+  libro: "M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z",
+  // Los mismos trazos del menú de vistas (index.html), para Inicio.
+  tendencia: "M3 17l5-6 4 4 8-9", mapa: "M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14",
+  variacion: "M8 20V4M4 8l4-4 4 4M16 4v16M12 16l4 4 4-4", ranking: "M5 20V11M12 20V4M19 20v-6M3 20h18", comparar: "M4 8h14l-3-3M20 16H6l3 3",
 };
 function ic(nombre, tam = 18) {
   return s("svg", { width: tam, height: tam, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": 2,
@@ -286,11 +291,12 @@ function barraFiltros(celdas, resumen) {
 }
 
 // ── Marco de cada vista ─────────────────────────────────────────────────────
-function marco({ filtros, miga, titulo, sub, princ, lateral, lateralPrimero = false }) {
+/** `ancha`: la vista es una tabla ancha; la columna lateral baja antes que en las demás. */
+function marco({ filtros, miga, titulo, sub, princ, lateral, lateralPrimero = false, ancha = false }) {
   return h("div", {}, filtros || [],
     h("div", { class: "contenido" },
       h("div", { class: "titulo" }, miga ? h("nav", { class: "miga", "aria-label": "Ruta" }, miga) : null, h("h1", {}, titulo), sub ? h("p", { class: "sub" }, sub) : null),
-      h("div", { class: `dos-col ${lateralPrimero ? "lateral-primero" : ""}` }, h("div", { class: "princ" }, princ), lateral ? h("aside", { class: "lateral" }, lateral) : null)));
+      h("div", { class: `dos-col ${lateralPrimero ? "lateral-primero" : ""} ${ancha ? "ancha" : ""}` }, h("div", { class: "princ" }, princ), lateral ? h("aside", { class: "lateral" }, lateral) : null)));
 }
 const caja = (etq, ...hijos) => h("section", { class: "caja" }, h("h2", { class: "etq" }, etq), hijos);
 const leer = (titulo, ...parrafos) => caja(titulo, parrafos.filter(Boolean).map((p) => h("p", {}, p)));
@@ -559,9 +565,12 @@ const subtituloComparacion = (cx) => `${mayus(cx.per.largo)} contra ${cx.conAnte
  */
 function tablaVariacion({ columna, cx, filas, ranking = false }) {
   const ant = cx.conAnterior;
+  // Las barras se encogen hasta su mínimo antes que el nombre; debajo de eso la
+  // vista acomoda la columna lateral abajo (.dos-col.ancha) o usa la tabla compacta.
+  const barra = ranking ? "minmax(124px,190px)" : "minmax(116px,150px)";
   const cols = ranking
-    ? ["36px", "minmax(160px,1fr)", "76px", ant ? "76px" : null, "80px", "190px", ant ? "190px" : null]
-    : ["24px", "minmax(180px,1fr)", "66px", ant ? "66px" : null, "70px", "150px", ant ? "150px" : null, "104px"];
+    ? ["36px", "minmax(140px,1fr)", "72px", ant ? "72px" : null, "76px", barra, ant ? barra : null]
+    : ["24px", "minmax(140px,1fr)", "60px", ant ? "60px" : null, "66px", barra, ant ? barra : null, "96px"];
   const plantilla = cols.filter(Boolean).join(" ");
   const enc = h("div", { class: "enc", style: { gridTemplateColumns: plantilla }, "aria-hidden": "true" },
     h("div", { class: "der" }, ranking ? "#" : ""), h("div", {}, columna),
@@ -599,11 +608,11 @@ function tablaVariacion({ columna, cx, filas, ranking = false }) {
     return [renglon(f, { alternar }), ...hijos];
   });
   tabla.append(enc, ...cuerpo);
-  // En celular cabe una variación a la vez: un botón elige cuál.
+  // En celular y tableta cabe una variación a la vez: un botón elige cuál.
   const elegir = ant ? segmento([
     h("button", { type: "button", class: "on", onclick: (ev) => { tabla.classList.remove("ver-mes"); marcar(ev); } }, `Contra ${cx.etPasado}`),
     h("button", { type: "button", onclick: (ev) => { tabla.classList.add("ver-mes"); marcar(ev); } }, `Contra ${cx.anterior?.corto ?? "anterior"}`),
-  ], "solo-movil") : null;
+  ], "solo-angosto") : null;
   function marcar(ev) { for (const b of ev.currentTarget.parentNode.children) b.classList.toggle("on", b === ev.currentTarget); }
   return [elegir, tabla];
 }
@@ -854,40 +863,237 @@ const leerGrafica = () => leer("Cómo leer esta gráfica",
 // ═══════════════════════════════════════════════════════════════════════════
 
 // ── Inicio ──────────────────────────────────────────────────────────────────
-async function vistaInicio(raiz) {
-  q.indicator = "researchFoldersRate";
-  const yc = anio(CORTE);
-  const dat = await cargarDelito(0);
-  const se = (e) => serie(dat.ci, e, "t");
-  const valores = META.entidades.map((x) => suma(se(x.codigo), yc * 12, CORTE));
-  const rango = `${MESES_LARGO[0]} a ${MESES_LARGO[mes(CORTE)]} ${yc}`;
-  const mapa = mapaCoropletico({
-    geo: geoEstados(), valor: (e) => valores[e], nombre: (e) => entidad(e).nombre, pista: "Clic para ver sus municipios",
-    etiqueta: `Total de delitos por entidad, ${rango}`,
-    onClick: (e) => { location.href = urlDe(`mapa/${entidad(e).slug}`, { group: "accumulated" }); },
+// ── Inicio ──────────────────────────────────────────────────────────────────
+// La bienvenida está en index.html (la barra de arriba se abre). Aquí va todo
+// lo que se puede hacer: preguntar con una frase, buscar, ver lo más reciente,
+// elegir una herramienta o un estado. Nada de mapa de entrada.
+const DESTACADOS = [1100, 1120, 3000, 2000, 4001, 6000];
+const fechaLarga = (k) => `${MESES_LARGO[mes(k)]} de ${anio(k)}`;
+const nombreEnFrase = (d) => d.nombre.replace(" (incl. feminicidio)", "").toLowerCase();
+
+/** Carpetas del último mes en todo el país, su cambio contra el mismo mes del año anterior y los últimos 24 meses. */
+async function cifrasNacionales() {
+  const nac = await cargarEntidad(0);
+  return principales().filter((d) => d.codigo !== 0 && nac.delitos[d.codigo]?.ci).map((d) => {
+    const se = serie(nac.delitos[d.codigo].ci, null, "c");
+    const act = suma(se, CORTE, CORTE);
+    const historia = [];
+    for (let k = CORTE - 23; k <= CORTE; k++) historia.push(suma(se, k, k));
+    return { d, act, v: variacion(act, suma(se, CORTE - 12, CORTE - 12)), historia };
   });
-  const explorar = [
-    ["Líneas de tendencia", "tendencia"], ["Mapa de incidencia", "mapa"], ["Tabla de variación", "variacion"],
-    ["Comparar delitos", "comparar"], ["Descargar datos", "descargar"],
+}
+
+/** Línea de 24 meses que llena su caja; el punto gris es el mismo mes del año anterior. */
+function chispaAncha(vals, W = 240, H = 44) {
+  const v = vals.filter((x) => x != null);
+  if (v.length < 2) return s("svg", { class: "chispa-ancha" });
+  const min = Math.min(...v), max = Math.max(...v);
+  const px = (i) => 3 + (i / (vals.length - 1)) * (W - 6), py = (x) => H - 4 - ((x - min) / (max - min || 1)) * (H - 8);
+  let dd = "", pen = false;
+  vals.forEach((x, i) => { if (x == null) { pen = false; return; } dd += `${pen ? "L" : "M"}${px(i).toFixed(1)},${py(x).toFixed(1)}`; pen = true; });
+  const n = vals.length - 1, ref = n - 12;
+  return s("svg", { class: "chispa-ancha", viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: "none", role: "img", "aria-label": "Últimos 24 meses" },
+    s("path", { d: dd, fill: "none", stroke: "var(--texto2)", "stroke-width": 1.4, "vector-effect": "non-scaling-stroke", "stroke-linejoin": "round" }),
+    vals[ref] != null ? s("circle", { cx: px(ref), cy: py(vals[ref]), r: 2.5, fill: "var(--eje)" }) : null,
+    vals[n] != null ? s("circle", { cx: px(n), cy: py(vals[n]), r: 3.2, fill: "var(--fuerte)" }) : null);
+}
+
+// Buscador: delitos y estados primero; luego municipios, los más grandes antes
+// (datos/municipios.json trae sus carpetas del último año como peso).
+let indiceBusqueda = null;
+function cargarIndiceBusqueda() {
+  if (!indiceBusqueda) {
+    const fijos = [
+      ...principales().map((d) => ({ tipo: "Delito", nombre: d.nombre, href: urlDe("tendencia", { crime: d.codigo }), peso: 1e12 })),
+      ...META.entidades.slice(1).map((e) => ({ tipo: "Estado", nombre: e.nombre, href: urlDe("variacion", { state: e.codigo }), peso: 1e12 })),
+    ];
+    indiceBusqueda = cargar("datos/municipios.json").then((x) => fijos.concat(x.municipios.map(([m, nombre, peso]) => {
+      const e = entidad(Math.floor(m / 1000));
+      return { tipo: `Municipio, ${e.nombre}`, nombre, peso, href: urlDe(`tendencia/${e.slug}`, { states: `0,${m}` }) };
+    }))).catch(() => fijos);
+  }
+  return indiceBusqueda;
+}
+function buscador() {
+  const res = h("div", { class: "buscar-res", role: "listbox", hidden: true });
+  const inp = h("input", { type: "search", autocomplete: "off", "aria-label": "Buscar un delito, un estado o un municipio",
+    placeholder: esMovil() ? "Delito, estado o municipio" : "Busca un delito, un estado o un municipio" });
+  let hallados = [], activo = 0;
+  const marcar = () => [...res.children].forEach((a, i) => a.classList.toggle("activo", i === activo));
+  inp.addEventListener("input", async () => {
+    const t = sinAcentos(inp.value.trim());
+    if (t.length < 2) { res.hidden = true; hallados = []; return; }
+    const todos = await cargarIndiceBusqueda();
+    if (sinAcentos(inp.value.trim()) !== t) return; // ya escribió otra cosa
+    const empieza = (x) => (sinAcentos(x.nombre).startsWith(t) ? 1 : 0);
+    hallados = todos.filter((x) => sinAcentos(x.nombre).includes(t)).sort((a, b) => empieza(b) - empieza(a) || b.peso - a.peso).slice(0, 8);
+    activo = 0;
+    res.replaceChildren(...(hallados.length
+      ? hallados.map((x, i) => h("a", { href: x.href, role: "option", onmouseenter: () => { activo = i; marcar(); } }, h("span", {}, x.nombre), h("small", {}, x.tipo)))
+      : [h("p", { class: "vacio" }, "Sin resultados")]));
+    marcar();
+    res.hidden = false;
+  });
+  inp.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape") { res.hidden = true; return; }
+    if (res.hidden || !hallados.length) return;
+    if (ev.key === "ArrowDown" || ev.key === "ArrowUp") {
+      ev.preventDefault();
+      activo = (activo + (ev.key === "ArrowDown" ? 1 : hallados.length - 1)) % hallados.length;
+      marcar();
+    } else if (ev.key === "Enter") { ev.preventDefault(); location.href = hallados[activo].href; }
+  });
+  inp.addEventListener("focus", () => { if (hallados.length) res.hidden = false; });
+  // Con retraso: un clic en un resultado llega después de que el campo pierde el foco.
+  inp.addEventListener("blur", () => setTimeout(() => { res.hidden = true; }, 200));
+  return h("div", { class: "buscar" }, h("label", { class: "buscar-caja" }, ic("lupa", 20), inp), res);
+}
+
+// "Quiero ver [la tendencia] de [homicidio doloso] en [todo el país]".
+const PREGUNTAS = [
+  { value: "tendencia", name: "la tendencia" },
+  { value: "mapa", name: "el mapa" },
+  { value: "ranking", name: "el ranking" },
+  { value: "variacion", name: "qué subió y qué bajó" },
+];
+/** A dónde lleva la frase. Con un estado, el mapa y el ranking van por municipio. */
+function urlPregunta(que, crime, e) {
+  const est = Number(e) && entidad(e).municipios ? entidad(e) : null;
+  if (que === "tendencia") return urlDe("tendencia", { crime, state: Number(e) ? `0,${e}` : "0" });
+  if (que === "mapa") return urlDe(est ? `mapa/${est.slug}` : "mapa", { crime, group: "accumulated" });
+  if (que === "ranking") return est ? urlDe(`ranking/${est.slug}`, { crime }) : urlDe(`variacion/${crime}`, { crime });
+  return urlDe("variacion", { state: e });
+}
+function frasePregunta() {
+  const st = { que: "tendencia", crime: "1100", state: "0" };
+  const ver = h("a", { class: "btn btn-fuerte" }, "Ver", ic("flecha", 18));
+  const menu = (clave, titulo, opciones) => {
+    const b = h("button", { type: "button", class: "frase-sel", "aria-label": titulo });
+    const mostrar = () => {
+      b.replaceChildren(opciones.find((o) => o.value === st[clave]).name, ic("abajo", 18));
+      ver.href = urlPregunta(st.que, st.crime, st.state);
+    };
+    b.addEventListener("click", () => abrirLista({ ancla: b, titulo, opciones, valor: st[clave], buscar: opciones.length > 8,
+      onElegir: (v) => { st[clave] = String(v); mostrar(); } }));
+    mostrar();
+    return b;
+  };
+  return h("div", { class: "frase" },
+    h("span", {}, "Quiero ver"), menu("que", "Qué quieres ver", PREGUNTAS),
+    h("span", {}, "de"), menu("crime", "Delito", principales().filter((d) => d.codigo).map((d) => ({ value: String(d.codigo), name: nombreEnFrase(d) }))),
+    h("span", {}, "en"), menu("state", "Lugar", [{ value: "0", name: "todo el país" }, ...META.entidades.slice(1).map((e) => ({ value: String(e.codigo), name: e.nombre }))]),
+    ver);
+}
+function consultasFrecuentes() {
+  return [
+    ["Homicidio doloso, año por año", urlDe("tendencia", { crime: 1100, group: "anual" })],
+    [`Feminicidio por estado en ${anio(CORTE)}`, urlDe("mapa", { crime: 1120, group: "accumulated" })],
+    [`Qué delitos subieron en ${MESES_LARGO[mes(CORTE)]}`, urlDe("variacion", {})],
+    ["Municipios de Guanajuato por homicidio", urlDe("ranking/guanajuato", { crime: 1100 })],
+    ["Extorsión: estados con mayor tasa", urlDe("variacion/3000", { crime: 3000 })],
   ];
-  raiz.append(marco({
-    titulo: "Incidencia delictiva en México",
-    sub: `Datos oficiales del SESNSP procesados por el Observatorio Nacional Ciudadano. Corte: ${MESES_LARGO[mes(CORTE)]} ${yc}.`,
-    princ: [
-      h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, `Total de delitos por entidad · ${rango}`),
-        h("a", { class: "texto-enlace", href: urlDe("mapa", {}) }, "Ver el mapa por delito →")),
-      mapa.svg, leyenda(mapa.cls),
-      caja("Cómo se reparten las 32 entidades",
-        distribucion({ items: META.entidades.slice(1).map((x) => ({ clave: x.codigo, nombre: x.nombre, valor: valores[x.codigo] })), cls: mapa.cls,
-          referencia: { nombre: "Nacional", valor: valores[0] }, onClick: (e) => { location.href = urlDe(`mapa/${entidad(e).slug}`, { group: "accumulated" }); } }),
-        h("p", { class: "nota" }, "Cada punto es una entidad, con el color de su grupo en el mapa. La línea punteada es la tasa nacional.")),
-    ],
-    lateral: [
-      caja("Explorar", explorar.map(([t, r]) => h("a", { class: "enlace", href: urlDe(r, {}) }, t, ic("flecha", 16)))),
-      caja("Tendencia por delito", h("div", { class: "lista-delitos" },
-        principales().map((d) => h("a", { href: urlDe("tendencia", { crime: d.codigo }) }, iconoDelito(d.codigo, true), d.nombre)))),
-    ],
-  }));
+}
+
+function herramientas() {
+  const csv = META.descargas?.[0];
+  return [
+    { ic: "tendencia", titulo: "Tendencias", href: urlDe("tendencia", {}),
+      texto: "Un delito mes a mes desde 1997. Compara hasta 10 estados o municipios y elige el periodo por sexenio.",
+      ej: ["Homicidio doloso en Guanajuato y el país", urlDe("tendencia", { crime: 1100, state: "0,11" })] },
+    { ic: "mapa", titulo: "Mapa", href: urlDe("mapa", {}),
+      texto: "Las 32 entidades o los municipios de un estado, coloreados por su tasa por cada 100 mil habitantes.",
+      ej: [`Extorsión en ${anio(CORTE)}, por estado`, urlDe("mapa", { crime: 3000, group: "accumulated" })] },
+    { ic: "variacion", titulo: "Variación", href: urlDe("variacion", {}),
+      texto: "Qué subió y qué bajó contra el periodo anterior y contra el mismo periodo del año pasado.",
+      ej: [`${mayus(MESES_LARGO[mes(CORTE)])} en Jalisco`, urlDe("variacion", { state: 14 })] },
+    { ic: "ranking", titulo: "Rankings", href: urlDe("variacion/1100", { crime: 1100 }),
+      texto: "Ordena estados o municipios de mayor a menor, por tasa o por número de casos.",
+      ej: ["Municipios de Chihuahua por homicidio", urlDe("ranking/chihuahua", { crime: 1100 })] },
+    { ic: "comparar", titulo: "Comparar delitos", href: urlDe("comparar", {}),
+      texto: "Hasta 5 delitos en la misma gráfica, con comparaciones sugeridas.",
+      ej: ["Feminicidio y homicidio doloso de mujeres", urlDe("comparar", { crimes: "1120,1130", unit: "victims" })] },
+    { ic: "descargar", titulo: "Descargar datos", href: urlDe("descargar", {}),
+      texto: "Las cifras en CSV o JSON con los filtros que elijas; los mapas en GeoJSON.",
+      ej: [`Todo el histórico estatal${csv ? ` (${Math.round(csv.bytes / 1e6)} MB)` : ""}`, urlDe("descargar", {})] },
+  ];
+}
+
+/** Miniatura de cada herramienta, dibujada con datos reales (homicidio doloso y feminicidio). */
+function miniaturas(cifras, dHom, dFem) {
+  const W = 168, H = 76, yc = anio(CORTE);
+  const anual = (dat) => { const se = serie(dat.ci, 0, "c"), out = []; for (let y = 1997; y < yc; y++) out.push(suma(se, y * 12, y * 12 + 11)); return out; };
+  const linea = (vals, color) => {
+    const max = Math.max(...vals.filter((x) => x != null));
+    let dd = "";
+    vals.forEach((x, i) => { if (x != null) dd += `${dd ? "L" : "M"}${(6 + (i / (vals.length - 1)) * (W - 12)).toFixed(1)},${(H - 8 - (x / max) * (H - 20)).toFixed(1)}`; });
+    return s("path", { d: dd, fill: "none", stroke: color, "stroke-width": 1.6, "stroke-linejoin": "round" });
+  };
+  const caja = (...hijos) => s("svg", { viewBox: `0 0 ${W} ${H}`, class: "mini", "aria-hidden": "true" }, s("rect", { width: W, height: H, fill: "var(--panel)" }), ...hijos);
+  const tasas = META.entidades.map((x) => suma(serie(dHom.ci, x.codigo, "t"), yc * 12, CORTE));
+  const cls = clasificar(tasas.slice(1).filter((v) => v != null));
+  const geo = geoEstados();
+  const top = tasas.map((v, e) => ({ v, e })).slice(1).filter((x) => x.v != null).sort((a, b) => b.v - a.v).slice(0, 6);
+  const vars = cifras.slice().sort((a, b) => b.act - a.act).slice(0, 8);
+  const hom = anual(dHom);
+  return {
+    tendencia: caja(linea(hom, "var(--fuerte)")),
+    mapa: s("svg", { viewBox: `0 0 ${geo.ancho} ${geo.alto}`, class: "mini mini-mapa", "aria-hidden": "true" },
+      Object.entries(geo.trazos).map(([e, d]) => s("path", { d, fill: cls.color(tasas[e]), stroke: "var(--fondo)", "stroke-width": 0.6, "vector-effect": "non-scaling-stroke" }))),
+    variacion: caja(s("line", { x1: W / 2, x2: W / 2, y1: 6, y2: H - 6, stroke: "var(--eje)" }),
+      vars.map((x, i) => { const v = x.v ?? 0, w = Math.min(Math.abs(v) / 40, 1) * (W / 2 - 14);
+        return s("rect", { x: v < 0 ? W / 2 - w : W / 2, y: 7 + i * 8, width: Math.max(w, 1), height: 5, fill: v < 0 ? "var(--barra-baja)" : "var(--barra-sube)" }); })),
+    ranking: caja(top.map((x, i) => s("rect", { x: 10, y: 8 + i * 10.5, width: (x.v / top[0].v) * (W - 28), height: 6, fill: i ? "var(--barra-rank)" : "var(--barra-rank-fuerte)" }))),
+    comparar: caja(linea(hom, "var(--fuerte)"), linea(anual(dFem), "var(--sube)")),
+    descargar: caja(Array.from({ length: 6 }, (_, f) => [30, 42, 34].map((w, c) => s("rect", { x: 14 + [0, 36, 84][c], y: 9 + f * 10, width: w - 4, height: 6,
+      fill: f === 0 ? "var(--fuerte)" : "var(--barra-rank)" }))),
+      s("path", { d: `M${W - 24} ${H - 40}v18m-7-7l7 7 7-7M${W - 31} ${H - 14}h14`, stroke: "var(--acento-texto)", "stroke-width": 2, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" })),
+  };
+}
+
+async function vistaInicio(raiz) {
+  const [cifras, dHom, dFem] = await Promise.all([cifrasNacionales(), cargarDelito(1100), cargarDelito(1120)]);
+  const dest = DESTACADOS.map((c) => cifras.find((x) => x.d.codigo === c)).filter(Boolean);
+  const mini = miniaturas(cifras, dHom, dFem);
+  // Si entre este mes y el del año anterior el SESNSP cambió de sistema, se avisa.
+  const cambio = (META.periodos || []).find((p) => abs(p.desde) > CORTE - 12 && abs(p.desde) <= CORTE);
+  raiz.append(h("div", { class: "contenido inicio" },
+    h("section", { class: "pregunta" },
+      h("h1", {}, "¿Qué quieres saber?"),
+      frasePregunta(),
+      h("div", { class: "buscar-fila" }, h("span", {}, "o busca directo"), buscador()),
+      h("div", { class: "frecuentes" }, h("span", { class: "etq" }, "Consultas frecuentes"),
+        h("div", {}, consultasFrecuentes().map(([t, href]) => h("a", { href }, t))))),
+    h("section", { class: "seccion" },
+      h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, `Lo más reciente · ${fechaLarga(CORTE)}, en todo el país`),
+        h("a", { class: "texto-enlace", href: urlDe("variacion", {}) }, "Los 20 delitos en la tabla de variación →")),
+      h("div", { class: "cifras" }, dest.map((x) => h("a", { class: "cifra", href: urlDe("tendencia", { crime: x.d.codigo }) },
+        h("div", { class: "cifra-cab" }, iconoDelito(x.d.codigo, true), h("span", {}, x.d.nombre)),
+        h("div", { class: "cifra-fila" }, h("b", {}, NF0.format(x.act)), h("span", { class: `pct ${claseVar(x.v)}` }, pctTexto(x.v))),
+        h("p", { class: "mut" }, x.v == null ? "carpetas" : `carpetas · ${x.v < 0 ? "menos" : "más"} que en ${mesCorto(CORTE - 12)}`),
+        chispaAncha(x.historia)))),
+      h("p", { class: "nota" }, `Carpetas de investigación en ${fechaLarga(CORTE)} en todo el país. La línea muestra los últimos 24 meses; el punto gris es ${mesCorto(CORTE - 12)}.`,
+        cambio ? ` Desde ${fechaLarga(abs(cambio.desde))} el SESNSP reporta con un sistema nuevo (${cambio.nombre}), así que la comparación con ${anio(CORTE) - 1} cruza ese cambio.` : "")),
+    h("section", { class: "seccion" },
+      h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Herramientas")),
+      h("div", { class: "vitrina" }, herramientas().map((t) => h("div", { class: "vit" },
+        h("a", { href: t.href, tabindex: "-1", "aria-hidden": "true" }, mini[t.ic]),
+        h("div", {}, h("h3", {}, h("a", { href: t.href }, t.titulo)), h("p", {}, t.texto),
+          h("a", { class: "texto-enlace", href: t.ej[1] }, t.ej[0], " →"))))),
+      h("div", { class: "herr-extra" },
+        h("button", { type: "button", class: "btn", onclick: modalInsertar }, ic("insertar", 18), "Insertar una gráfica en tu nota"),
+        h("a", { class: "btn", href: `${RAIZ}nota-metodologica/` }, ic("libro", 18), "Nota metodológica"),
+        h("a", { class: "btn", href: "https://onc.org.mx", target: "_blank", rel: "noopener" }, "Recibe el boletín mensual"))),
+    h("div", { class: "pie-inicio" },
+      h("section", { class: "seccion" },
+        h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Explora un estado"),
+          h("span", { class: "mut", style: { fontSize: "13px" } }, "Sus delitos, sus municipios y su observatorio local")),
+        h("div", { class: "estados" }, META.entidades.slice(1).map((e) => h("a", { href: urlDe("variacion", { state: e.codigo }) }, e.nombre)))),
+      h("section", { class: "seccion sobre" },
+        h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Sobre los datos")),
+        h("h3", {}, "De dónde vienen"), h("p", {}, "Carpetas de investigación y víctimas del fuero común que publica el Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública (SESNSP)."),
+        h("h3", {}, "Cada cuánto"), h("p", {}, `Cada mes, alrededor del día 20. Hoy llegan a ${fechaLarga(CORTE)}.`),
+        h("h3", {}, "Cómo se comparan"), h("p", {}, "En tasas por cada 100 mil habitantes. El SESNSP cambió de sistema en 2015 y en 2026; las gráficas marcan ambos cortes."),
+        h("a", { class: "texto-enlace", href: `${RAIZ}nota-metodologica/` }, "Nota metodológica →")))));
 }
 
 // ── Líneas de tendencia ─────────────────────────────────────────────────────
@@ -1141,6 +1347,7 @@ async function vistaVariacion(raiz) {
     titulo: e === 0 ? "Variación por tipo de delito" : `Variación por tipo de delito en ${lugar}`,
     sub: `${lugar} · ${subtituloComparacion(cx)} · ${textoIndicador().toLowerCase()}`,
     princ: tablaVariacion({ columna: "Delito", cx, filas }),
+    ancha: true,
     lateral: [
       leerTabla(e > 0 && ent.municipios && !mun ? "Haz clic en un delito para ver el ranking de sus municipios; en la flecha, para ver sus componentes." : "Haz clic en un delito para ver el ranking de entidades; en la flecha, para ver sus componentes."),
       usarDatos(() => bajarCSV(`variacion_${mun ? mun.codigo : e}_${cx.per.clave}.csv`, csvVariacion(cx, filas))),
@@ -1193,6 +1400,7 @@ async function vistaRanking(raiz, codigo) {
     titulo: `Ranking de entidades: ${d.nombre.toLowerCase()}`,
     sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${subtituloComparacion(cx)}`,
     princ: tablaVariacion({ columna: "Entidad", cx, filas, ranking: true }),
+    ancha: true,
     lateral: [
       ref ? leer("Referencia", `Nacional: ${fmt(ref.act)} por 100 mil hab. en ${cx.per.largo}. El renglón sombreado marca dónde queda en el ranking.`) : null,
       leer("Cómo leer este ranking", `Ordenado por el valor de ${cx.per.largo}. Verde: baja; rojo: sube.`, "Haz clic en una entidad para ver su tabla por tipo de delito."),
@@ -1227,6 +1435,7 @@ async function vistaRankingMunicipal(raiz, ent) {
     titulo: `Ranking municipal de ${ent.nombre}: ${d.nombre.toLowerCase()}`,
     sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${subtituloComparacion(cx)}`,
     princ: [d.mpal ? null : h("p", { class: "aviso" }, `El SESNSP no publica ${d.nombre.toLowerCase()} a nivel municipal.`), tablaVariacion({ columna: "Municipio", cx, filas, ranking: true })],
+    ancha: true,
     lateral: [
       ref ? leer("Referencia", `Total de ${ent.nombre}: ${fmt(ref.act)} por 100 mil hab. en ${cx.per.largo}. El renglón sombreado marca dónde queda.`) : null,
       leer("Cómo leer este ranking", `Ordenado por el valor de ${cx.per.largo}. Verde: baja; rojo: sube.`,

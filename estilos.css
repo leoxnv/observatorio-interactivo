@@ -13,6 +13,7 @@
   --borde-boton: #b9bfd1; --vacio: #e4e7ee; --borde-mapa: #ffffff; --rejilla: #e9ecf2; --eje: #9aa1b9;
   --globo: #1d2540; --globo-texto: #ffffff; --seleccion: #1d2540; --seleccion-texto: #ffffff;
   --barra-rank: #c9cedb; --barra-rank-fuerte: #1d2540; --logo: #2e8a22; --sombra: rgba(29, 37, 64, .16);
+  --banda: #1d2540; --banda-texto: #c9cee0;
   --fuente: Roboto, Arial, sans-serif; --fuente-marca: "Roboto Slab", Georgia, serif;
 }
 body.oscuro {
@@ -22,6 +23,7 @@ body.oscuro {
   --borde-boton: #5c6690; --vacio: #3a4366; --borde-mapa: #232a43; --rejilla: #2f3858; --eje: #7a83a8;
   --globo: #343d5e; --globo-texto: #f2f3f7; --seleccion: #e9ebf1; --seleccion-texto: #1d2338;
   --barra-rank: #3e4870; --barra-rank-fuerte: #e9ebf1; --logo: #4dbb3c; --sombra: rgba(0, 0, 0, .4);
+  --banda: #161b2d; --banda-texto: #b9bfd4;
 }
 
 /* ── Base ── */
@@ -39,7 +41,7 @@ svg text { font-family: var(--fuente); }
 :focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
 .mut { color: var(--texto2); }
 .baja { color: var(--baja); } .sube { color: var(--sube); } .igual { color: var(--texto2); }
-.solo-movil { display: none !important; }
+.solo-movil, .solo-angosto { display: none !important; }
 
 /* ── Botones ── */
 .btn { height: 40px; padding: 0 14px; border: 1px solid var(--borde-boton); border-radius: 4px; background: transparent;
@@ -119,8 +121,12 @@ body.oscuro .icono-sol { display: inline; }
 .etq-fila { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .nota { font-size: 13px; line-height: 1.55; color: var(--texto2); }
 .aviso { font-size: 14px; padding: 10px 14px; border: 1px solid var(--linea); background: var(--panel); border-radius: 4px; }
-.pie { padding: 18px 40px 24px; border-top: 1px solid var(--linea); font-size: 13px; color: var(--texto2); }
-.pie a { text-decoration: underline; }
+.pie { padding: 20px 40px 26px; border-top: 1px solid var(--linea); font-size: 13px; color: var(--texto2); display: flex; align-items: center; gap: 28px; }
+.pie p a { text-decoration: underline; }
+.pie-onc { flex-shrink: 0; display: block; }
+.pie-onc img { height: 46px; width: auto; display: block; }
+.sobre-oscuro, body.oscuro .sobre-claro { display: none !important; }
+body.oscuro .sobre-oscuro { display: block !important; }
 
 /* ── Íconos de delito ── */
 .icono-delito { width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background-repeat: no-repeat; background-position: center; background-size: 22px 22px; }
@@ -193,11 +199,89 @@ body.oscuro .icono-sol { display: inline; }
 .distribucion svg { display: block; width: 100%; height: auto; overflow: visible; }
 .distribucion circle { cursor: pointer; }
 
-/* ── Inicio ── */
-.accesos { display: grid; grid-template-columns: 1fr; }
-.lista-delitos { display: grid; grid-template-columns: 1fr; }
-.lista-delitos a { display: flex; align-items: center; gap: 10px; min-height: 40px; border-bottom: 1px solid var(--linea); font-size: 14px; }
-.lista-delitos a:hover { color: var(--acento-texto); }
+/*
+ * ── Inicio ──
+ * La barra de arriba se abre en azul marino: el logo grande, el del ONC y el
+ * lema. La bienvenida vive en index.html y solo se muestra en Inicio.
+ */
+.bienv { display: none; }
+body[data-ruta=""] .cab { background: var(--banda); color: #fff; border-bottom-color: transparent; }
+body[data-ruta=""] .cab .marca { visibility: hidden; }
+body[data-ruta=""] .cab .btn { border-color: rgba(255, 255, 255, .4); }
+body[data-ruta=""] .cab .btn:hover { border-color: #fff; }
+body[data-ruta=""] .cab .btn-ic:hover { background: rgba(255, 255, 255, .1); }
+body[data-ruta=""] .cab-sec a:not(.btn):hover, body[data-ruta=""] .cab-sec button.lnk:hover { color: #6fd25c; }
+body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 56px; align-items: center;
+  padding: 18px 40px 44px 116px; background: var(--banda); color: #fff; }
+.bienv-marca { display: flex; align-items: center; gap: 22px; padding-right: 56px; border-right: 1px solid rgba(255, 255, 255, .18); }
+.bienv-pay { width: 92px; height: 92px; flex-shrink: 0; }
+.bienv-nombre { font-family: var(--fuente-marca); font-weight: 700; font-size: 54px; line-height: 1; letter-spacing: -.015em; white-space: nowrap; }
+.bienv-onc { display: block; margin-top: 14px; }
+.bienv-onc img { height: 56px; width: auto; display: block; }
+.bienv-lema { font-family: var(--fuente-marca); font-weight: 700; font-size: 28px; line-height: 1.2; text-wrap: balance; max-width: 20em; }
+.bienv-texto p + p { color: var(--banda-texto); font-size: 17px; line-height: 1.55; margin-top: 12px; max-width: 38em; }
+.bienv-corto { display: none; }
+
+.inicio { max-width: 1200px; }
+.inicio .seccion { margin-bottom: 44px; }
+.inicio .seccion > .etq-fila { border-top: 2px solid var(--fuerte); padding-top: 12px; margin-bottom: 18px; }
+.btn-fuerte { background: var(--seleccion); color: var(--seleccion-texto); border-color: var(--seleccion); font-weight: 500; }
+.btn-fuerte:hover { opacity: .9; border-color: var(--seleccion); }
+
+/* ¿Qué quieres saber?: una frase con tres menús, el buscador y consultas hechas */
+.pregunta { padding: 4px 0 44px; }
+.pregunta h1 { font-family: var(--fuente-marca); font-weight: 700; font-size: 34px; letter-spacing: -.01em; }
+.frase { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 20px; font-size: 24px; color: var(--texto2); }
+.frase-sel { display: inline-flex; align-items: center; gap: 6px; border: 0; border-bottom: 2px solid var(--acento); background: none; padding: 2px 2px 3px; font-size: 24px; font-weight: 500; color: var(--texto); }
+.frase-sel:hover { background: var(--panel); }
+.frase .btn { height: 46px; font-size: 16px; margin-left: 8px; padding: 0 18px; }
+.buscar-fila { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
+.buscar-fila > span { font-size: 24px; color: var(--texto2); white-space: nowrap; }
+.buscar { position: relative; flex: 1; max-width: 640px; }
+.buscar-caja { display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 16px; border: 1px solid var(--borde-boton); border-radius: 4px; background: var(--fondo); color: var(--texto2); }
+.buscar-caja:focus-within { border-color: var(--texto); box-shadow: inset 0 0 0 1px var(--texto); }
+.buscar-caja input { border: 0; outline: 0; background: transparent; flex: 1; font-size: 16px; min-width: 0; color: var(--texto); }
+.buscar-res { position: absolute; left: 0; right: 0; top: 58px; background: var(--fondo); border: 1px solid var(--linea); border-radius: 4px; box-shadow: 0 8px 24px var(--sombra); z-index: 10; padding: 4px 0; }
+.buscar-res a { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 9px 16px; }
+.buscar-res a:hover, .buscar-res a.activo { background: var(--panel); }
+.buscar-res small { color: var(--texto2); font-size: 12px; white-space: nowrap; }
+.buscar-res .vacio { padding: 9px 16px; color: var(--texto2); }
+.frecuentes { display: flex; gap: 16px; align-items: baseline; margin-top: 26px; flex-wrap: wrap; }
+.frecuentes > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.frecuentes a { font-size: 14px; padding: 6px 12px; border: 1px solid var(--linea); border-radius: 4px; }
+.frecuentes a:hover { border-color: var(--texto); }
+
+/* Lo más reciente: seis cifras del mes */
+.cifras { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--linea); border-left: 1px solid var(--linea); }
+.cifra { padding: 16px 20px 14px; border-right: 1px solid var(--linea); border-bottom: 1px solid var(--linea); display: flex; flex-direction: column; gap: 4px; }
+.cifra:hover { background: var(--panel); }
+.cifra-cab { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; min-height: 28px; }
+.cifra-fila { display: flex; align-items: baseline; gap: 12px; margin-top: 6px; }
+.cifra-fila b { font-size: 30px; font-weight: 500; letter-spacing: -.01em; }
+.cifra-fila .pct { font-size: 15px; font-weight: 600; width: auto; text-align: left; }
+.cifra p { font-size: 12.5px; }
+.chispa-ancha { width: 100%; height: 44px; margin-top: 8px; display: block; }
+
+/* Herramientas, cada una con una miniatura hecha con datos reales */
+.vitrina { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; }
+.vit { display: flex; flex-direction: column; gap: 12px; }
+.vit > a:first-child { display: block; }
+.vit .mini { width: 100%; height: auto; aspect-ratio: 168 / 76; display: block; border: 1px solid var(--linea); }
+.vit .mini-mapa { background: var(--panel); padding: 8px 20px; }
+.vit h3 { font-size: 17px; font-weight: 500; margin-bottom: 4px; }
+.vit h3 a:hover { color: var(--acento-texto); }
+.vit p { font-size: 14px; color: var(--texto2); }
+.vit .texto-enlace { display: inline-block; margin-top: 6px; font-size: 14px; }
+.vit:hover .mini { border-color: var(--texto2); }
+.herr-extra { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--linea); }
+
+/* Estados y "Sobre los datos" */
+.pie-inicio { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 48px; }
+.estados { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(11, auto); grid-auto-flow: column; column-gap: 32px; }
+.estados a { padding: 8px 0; border-bottom: 1px solid var(--linea); font-size: 14px; }
+.estados a:hover { color: var(--acento-texto); }
+.sobre h3 { font-size: 15px; font-weight: 600; margin-top: 4px; }
+.sobre p { font-size: 14px; color: var(--texto2); margin-bottom: 12px; }
 
 /* ── Descargar ── */
 .formatos .fila-formato { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 52px; border-bottom: 1px solid var(--linea); }
@@ -231,8 +315,45 @@ body.oscuro .icono-sol { display: inline; }
 .vista-nota a { color: var(--acento-texto); text-decoration: underline; }
 
 /* ── Insertado en otro sitio ── */
-body.iframe .cab, body.iframe .rail, body.iframe .lateral, body.iframe .barra-movil, body.iframe .pie { display: none !important; }
+body.iframe .cab, body.iframe .rail, body.iframe .lateral, body.iframe .barra-movil, body.iframe .pie, body.iframe .bienv { display: none !important; }
 body.iframe .contenido { padding: 16px; }
+
+/*
+ * ── Pantallas medianas ──
+ * Con dos periodos, la tabla de variación pide unos 780 px. Si no caben junto
+ * a la columna lateral, la lateral baja y se reparte en columnas; en tabletas
+ * y celular la tabla pasa a su forma compacta (cifra y una variación).
+ */
+@media (max-width: 1299px) {
+  .dos-col.ancha { flex-direction: column; gap: 32px; }
+  .dos-col.ancha > .princ { width: 100%; }
+  .dos-col.ancha > .lateral { flex: none; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 40px; align-items: start; }
+}
+@media (max-width: 1099px) {
+  body[data-ruta=""] .bienv { grid-template-columns: 1fr; gap: 24px; }
+  .bienv-marca { border-right: 0; padding-right: 0; }
+  .cifras, .vitrina { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pie-inicio { grid-template-columns: 1fr; gap: 0; }
+  .dos-col { flex-direction: column; gap: 32px; }
+  .dos-col > .princ { width: 100%; }
+  .dos-col > .lateral { flex: none; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 40px; align-items: start; }
+}
+@media (max-width: 939px) {
+  .seg.solo-angosto { display: grid !important; grid-auto-flow: column; grid-auto-columns: 1fr; width: 100%; }
+  .tabla .enc { display: none; }
+  .tabla .fila { display: flex; gap: 12px; padding: 6px 0; min-height: 60px; }
+  .tabla .fila > .col-web { display: none; }
+  .tabla .fila .nombre { flex: 1; padding: 4px 0; }
+  .tabla .fila.hijo .nombre { padding-left: 34px; }
+  .var-movil { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+  .var-movil b { font-size: 16px; }
+  .var-movil span { font-size: 13px; font-weight: 500; }
+  .tabla .var-movil .vm { display: none; }
+  .tabla.ver-mes .var-movil .va { display: none; }
+  .tabla.ver-mes .var-movil .vm { display: inline; }
+  .mapa-y-panel { flex-direction: column; }
+  .mapa-y-panel > .mapa-col { flex: none; width: 100%; }
+}
 
 /* ── Celular ── */
 @media (max-width: 760px) {
@@ -273,19 +394,38 @@ body.iframe .contenido { padding: 16px; }
   .seg.envolver button { border-left: 0; border-top: 1px solid var(--linea); }
   .chip { height: 48px; width: 100%; justify-content: space-between; }
   .agregar, .agregar .btn { width: 100%; }
-  .tabla .enc { display: none; }
-  .tabla .fila { display: flex; gap: 12px; padding: 6px 0; min-height: 60px; }
-  .tabla .fila > .col-web { display: none; }
-  .tabla .fila .nombre { flex: 1; padding: 4px 0; }
-  .tabla .fila.hijo .nombre { padding-left: 34px; }
-  .var-movil { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
-  .var-movil b { font-size: 16px; }
-  .var-movil span { font-size: 13px; font-weight: 500; }
-  .tabla .var-movil .vm { display: none; }
-  .tabla.ver-mes .var-movil .va { display: none; }
-  .tabla.ver-mes .var-movil .vm { display: inline; }
-  .mapa-y-panel { flex-direction: column; }
-  .mapa-y-panel > .mapa-col { flex: none; width: 100%; }
-  .pie { padding: 16px; }
+  .pie { padding: 16px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .pie-onc img { height: 40px; }
+  body[data-ruta=""] .bienv { padding: 14px 16px 26px; gap: 16px; }
+  .bienv-marca { gap: 14px; align-items: flex-start; }
+  .bienv-pay { width: 58px; height: 58px; }
+  .bienv-nombre { font-size: 34px; }
+  .bienv-onc { margin-top: 10px; }
+  .bienv-onc img { height: 42px; }
+  .bienv-lema { font-size: 21px; }
+  .bienv-texto p + p { font-size: 15px; margin-top: 8px; }
+  .bienv-largo { display: none; }
+  .bienv-corto { display: inline; }
+  .inicio .seccion { margin-bottom: 32px; }
+  .pregunta { padding-bottom: 32px; }
+  .pregunta h1 { font-size: 26px; }
+  .frase, .frase-sel { font-size: 19px; }
+  .frase .btn { width: 100%; margin: 8px 0 0; }
+  .buscar-fila { flex-direction: column; align-items: stretch; gap: 8px; }
+  .buscar-fila > span { font-size: 19px; }
+  .frecuentes { flex-direction: column; gap: 10px; }
+  .cifra { padding: 12px 12px 10px; }
+  .cifra-cab { font-size: 13px; align-items: flex-start; line-height: 1.25; min-height: 34px; }
+  .cifra-fila { flex-direction: column; gap: 0; margin-top: 2px; }
+  .cifra-fila b { font-size: 24px; }
+  .cifra p { display: none; }
+  .chispa-ancha { height: 32px; margin-top: 4px; }
+  .vitrina { grid-template-columns: 1fr; row-gap: 20px; }
+  .vit { flex-direction: row; align-items: flex-start; gap: 14px; }
+  .vit > a:first-child { width: 120px; flex-shrink: 0; }
+  .vit .mini-mapa { padding: 4px 10px; }
+  .herr-extra { border-top: 0; padding-top: 0; margin-top: 18px; }
+  .herr-extra .btn { width: 100%; justify-content: flex-start; }
+  .estados { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(16, auto); column-gap: 16px; }
   .vista-nota { padding: 18px 16px 28px; }
 }
