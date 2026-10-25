@@ -41,6 +41,8 @@ const AGRUPACIONES = [
   { value: "semester", name: "Semestral", n: 6, letra: "S" },
   { value: "anual", name: "Anual", n: 12, letra: "A" },
   { value: "accumulated", name: "Acumulado anual", n: 0, letra: "C" },
+  // Por sexenio: promedio mensual de cada gobierno (tablas, rankings y mapas).
+  { value: "sexenio", name: "Por sexenio", n: -1, letra: "X" },
 ];
 
 const NF2 = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -159,6 +161,13 @@ function suma(se, k0, k1) {
   }
   return t;
 }
+/** Promedio mensual de los meses k0..k1; null si falta cualquiera. */
+function media(se, k0, k1) {
+  const t = suma(se, k0, k1);
+  return t == null ? null : t / (k1 - k0 + 1);
+}
+/** Valor de un periodo: la suma, o el promedio mensual si el periodo es un sexenio. */
+const valorPeriodo = (se, p) => (!p ? null : p.promedio ? media(se, p.k0, p.k1) : suma(se, p.k0, p.k1));
 const redondeo = (v) => (v == null ? null : +v.toFixed(esTasa() ? 4 : 0));
 const variacion = (a, b) => (a == null || b == null || b === 0 ? null : ((a - b) / b) * 100);
 
@@ -168,6 +177,7 @@ const variacion = (a, b) => (a == null || b == null || b === 0 ? null : ((a - b)
  * Cada uno: {k0, k1, clave, largo, corto}. `clave` va en el parámetro period.
  */
 function periodos(g, desde = abs("1997-01")) {
+  if (g.value === "sexenio") return periodosSexenio(desde);
   const out = [];
   const yc = anio(CORTE);
   if (g.n === 0) {
@@ -193,6 +203,18 @@ function periodos(g, desde = abs("1997-01")) {
   }
   return out;
 }
+/**
+ * Sexenios con datos para todo su periodo (el de curso, hasta el corte), del
+ * más reciente al más antiguo. Zedillo queda fuera: los datos empiezan en 1997.
+ */
+function periodosSexenio(desde) {
+  return SEXENIOS.filter((x) => x.k0 >= Math.max(desde, abs("1997-01")) && x.k0 <= CORTE).map((x) => {
+    const curso = x.k1 > CORTE, k1 = Math.min(x.k1, CORTE), n = k1 - x.k0 + 1;
+    const rango = `${mesCorto(x.k0)}–${mesCorto(k1)}`;
+    return { k0: x.k0, k1, n, curso, sexenio: x, promedio: true, clave: x.clave, corto: x.nombre,
+      largo: curso ? `sexenio de ${x.nombre} (${n} meses, ${rango})` : `sexenio de ${x.nombre} (${rango})` };
+  }).reverse();
+}
 /** El periodo elegido en la URL, o el más reciente. */
 const periodoActual = (lista) => lista.find((p) => p.clave === q.period) || lista[0];
 const mayus = (t) => t.charAt(0).toUpperCase() + t.slice(1);
@@ -201,7 +223,7 @@ const mayus = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 // `states` son los municipios elegidos en /tendencia/<estado> (0 = total del
 // estado) y `municipality` el de la tabla de variación, como en la plataforma.
 // `desde` y `hasta` (AAAA-MM) guardan el tramo elegido en las gráficas.
-const DEFAULTS = { unit: "folders", indicator: "researchFoldersRate", group: "month", crime: "0", state: "0", period: "", states: "0", municipality: "0", crimes: "", desde: "", hasta: "" };
+const DEFAULTS = { unit: "folders", indicator: "researchFoldersRate", group: "month", crime: "0", state: "0", period: "", states: "0", municipality: "0", crimes: "", desde: "", hasta: "", sexenios: "" };
 function leerParams() {
   const p = new URLSearchParams(location.search);
   q = { ...DEFAULTS };
@@ -278,7 +300,9 @@ const opcionesUnidad = () => {
   });
 };
 const opcionesPeriodo = (lista) => lista.map((p) => ({ value: p.clave, name: mayus(p.largo) }));
-const opcionesAgrupacion = (conAcumulado = true) => AGRUPACIONES.filter((g) => conAcumulado || g.n !== 0);
+// Tendencia y Comparar no usan el acumulado ni el sexenio; Descargar, no el sexenio.
+const opcionesAgrupacion = (conAcumulado = true, conSexenio = conAcumulado) =>
+  AGRUPACIONES.filter((g) => (conAcumulado || g.n !== 0) && (conSexenio || g.value !== "sexenio"));
 const opcionesEntidad = () => META.entidades.map((x) => ({ value: x.codigo, name: nombreEntidad(x.codigo) }));
 
 /** Barra de filtros arriba; en celular, un resumen con botón que la despliega. */
@@ -541,6 +565,7 @@ function chispa(vals) {
  * mismo periodo del año pasado y el periodo inmediato anterior.
  */
 function contextoVariacion(g, lista) {
+  if (g.value === "sexenio") return contextoSexenio(lista);
   const per = periodoActual(lista);
   const idx = lista.indexOf(per);
   const anterior = lista[idx + 1];
@@ -551,13 +576,62 @@ function contextoVariacion(g, lista) {
   const historia = lista.slice(idx).filter((p) => anio(p.k0) >= 2015).reverse();
   return { per, anterior, conAnterior, pasado, etPasado, historia };
 }
-function valoresVariacion(se, cx) {
-  const act = suma(se, cx.per.k0, cx.per.k1);
-  const pas = suma(se, cx.pasado.k0, cx.pasado.k1);
-  const ant = cx.anterior ? suma(se, cx.anterior.k0, cx.anterior.k1) : null;
-  return { act, pas, ant, vPas: variacion(act, pas), vAnt: variacion(act, ant), historia: cx.historia.map((p) => suma(se, p.k0, p.k1)) };
+/**
+ * Por sexenio: el elegido contra el anterior y el de antes, en promedio
+ * mensual porque no duran lo mismo (López Obrador, 70 meses). Si el elegido va
+ * en curso, se comparan sus N meses con los primeros N de cada uno.
+ */
+function contextoSexenio(lista) {
+  const per = periodoActual(lista);
+  const i = SEXENIOS.indexOf(per.sexenio);
+  const ventana = (x) => (x ? { k0: x.k0, k1: per.curso ? x.k0 + per.n - 1 : x.k1, corto: x.nombre, promedio: true } : null);
+  const pasado = ventana(SEXENIOS[i - 1]), anterior = ventana(SEXENIOS[i - 2]);
+  const historia = SEXENIOS.slice(0, i + 1).filter((x) => x.k0 >= abs("1997-01")).map((x) => (x === per.sexenio ? per : ventana(x)));
+  return {
+    per, pasado, anterior, conAnterior: !!anterior, etPasado: pasado?.corto ?? "", historia,
+    sexenio: true, cronologico: true,
+    etiquetas: { pas: "Contra el sexenio anterior", ant: "Contra dos sexenios antes" },
+    csv: { pas: "var_sexenio_anterior", ant: "var_dos_sexenios_antes" },
+  };
 }
-const subtituloComparacion = (cx) => `${mayus(cx.per.largo)} contra ${cx.conAnterior && cx.anterior ? `${cx.anterior.corto} y ` : ""}${cx.etPasado}`;
+function valoresVariacion(se, cx) {
+  const act = valorPeriodo(se, cx.per);
+  const pas = valorPeriodo(se, cx.pasado);
+  const ant = cx.anterior ? valorPeriodo(se, cx.anterior) : null;
+  return { act, pas, ant, vPas: variacion(act, pas), vAnt: variacion(act, ant), historia: cx.historia.map((p) => valorPeriodo(se, p)) };
+}
+function subtituloComparacion(cx) {
+  if (!cx.sexenio) return `${mayus(cx.per.largo)} contra ${cx.conAnterior && cx.anterior ? `${cx.anterior.corto} y ` : ""}${cx.etPasado}`;
+  const otros = [cx.pasado?.corto, cx.anterior?.corto].filter(Boolean).join(" y ");
+  return `${mayus(cx.per.largo)} contra ${cx.per.curso ? `los primeros ${cx.per.n} meses de ${otros}` : `el sexenio completo de ${otros}`} · promedio mensual`;
+}
+/** Cambios de sistema del SESNSP entre los periodos que se comparan (o dentro de ellos). */
+function cambiosEntre(...pers) {
+  const ps = pers.filter(Boolean);
+  if (!ps.length) return [];
+  const k0 = Math.min(...ps.map((p) => p.k0)), k1 = Math.max(...ps.map((p) => p.k1));
+  return METODOLOGIAS.filter((mt) => mt.k > k0 && mt.k <= k1);
+}
+/** Avisos de la comparación por sexenio: datos que faltan y cambios de sistema. */
+function avisosSexenio(cx, filas) {
+  if (!cx.sexenio) return [];
+  const todas = filas.flatMap((f) => [f, ...(f.hijos || [])]);
+  const faltan = todas.some((f) => f.act != null && (f.pas == null || (cx.anterior && f.ant == null)));
+  const cambios = cambiosEntre(cx.per, cx.pasado, cx.anterior);
+  return [
+    faltan ? h("p", { class: "aviso" }, "n.d.: no hay datos para todo ese sexenio. El SESNSP publica víctimas desde 2014, varios delitos desde 2015 o 2026 y lo municipal desde 2015; la serie empieza en 1997, así que Zedillo queda incompleto.") : null,
+    cambios.length ? h("p", { class: "aviso" }, `La comparación cruza ${cambios.length > 1 ? "dos cambios" : "un cambio"} de sistema del SESNSP (${cambios.map((c) => c.largo).join(" y ")}): parte de la diferencia puede deberse a cómo se registran los delitos.`) : null,
+  ].filter(Boolean);
+}
+/** "en septiembre 2026", o "en el sexenio de …, promedio mensual". */
+const enPeriodo = (cx) => (cx.sexenio ? `el ${cx.per.largo}, promedio mensual` : cx.per.largo);
+/** Texto de "Cómo leer" para la comparación por sexenio. */
+const leerSexenio = (cx) => (cx.sexenio ? [
+  `Por sexenio: promedio mensual de cada gobierno, porque no duran lo mismo. ${cx.per.curso
+    ? `El de ${cx.per.corto} va en curso: se comparan sus ${cx.per.n} meses con los primeros ${cx.per.n} de los anteriores.`
+    : "Se compara el sexenio completo con los anteriores completos."}`,
+  cx.per.curso && cx.per.n % 12 ? `Como ${cx.per.n} meses no son años completos, las ventanas abarcan meses del año distintos y la estacionalidad puede mover un poco la comparación.` : null,
+] : []);
 
 /**
  * Tabla de variación o de ranking. Cada fila: {nombre (nodo), act, pas, ant,
@@ -572,11 +646,13 @@ function tablaVariacion({ columna, cx, filas, ranking = false }) {
     ? ["36px", "minmax(140px,1fr)", "72px", ant ? "72px" : null, "76px", barra, ant ? barra : null]
     : ["24px", "minmax(140px,1fr)", "60px", ant ? "60px" : null, "66px", barra, ant ? barra : null, "96px"];
   const plantilla = cols.filter(Boolean).join(" ");
+  // Por sexenio, las cifras van en orden cronológico (el de antes, el anterior, el elegido).
+  const ordenar = (pas, an) => (cx.cronologico ? [an, pas] : [pas, an]);
   const enc = h("div", { class: "enc", style: { gridTemplateColumns: plantilla }, "aria-hidden": "true" },
     h("div", { class: "der" }, ranking ? "#" : ""), h("div", {}, columna),
-    h("div", { class: "der" }, mayus(cx.etPasado)), ant ? h("div", { class: "der" }, mayus(cx.anterior?.corto ?? "")) : null,
+    ordenar(h("div", { class: "der" }, mayus(cx.etPasado)), ant ? h("div", { class: "der" }, mayus(cx.anterior?.corto ?? "")) : null),
     h("div", { class: "der", style: { color: "var(--texto)", fontWeight: 500 } }, mayus(cx.per.corto)),
-    h("div", { class: "cen" }, "Contra año anterior"), ant ? h("div", { class: "cen" }, "Contra periodo anterior") : null,
+    h("div", { class: "cen" }, cx.etiquetas?.pas ?? "Contra año anterior"), ant ? h("div", { class: "cen" }, cx.etiquetas?.ant ?? "Contra periodo anterior") : null,
     ranking ? null : h("div", { class: "cen" }, "Tendencia"));
   const tabla = h("div", { class: "tabla", role: "table", "aria-label": columna });
   const renglon = (f, { hijo = false, alternar = null } = {}) => h("div", {
@@ -588,7 +664,7 @@ function tablaVariacion({ columna, cx, filas, ranking = false }) {
       : alternar ? h("button", { type: "button", class: "desplegar", "aria-label": "Ver componentes", "aria-expanded": "false", onclick: alternar }, ic("derecha", 16))
         : h("span"),
     h("div", { class: "nombre" }, f.nombre),
-    h("div", { class: "num col-web" }, fmt(f.pas)), ant ? h("div", { class: "num col-web" }, fmt(f.ant)) : null,
+    ordenar(h("div", { class: "num col-web" }, fmt(f.pas)), ant ? h("div", { class: "num col-web" }, fmt(f.ant)) : null),
     h("div", { class: "num fuerte col-web" }, fmt(f.act)),
     celdaVar(f.vPas), ant ? celdaVar(f.vAnt) : null,
     ranking ? null : h("div", { class: "chispa col-web", title: "Ver líneas de tendencia",
@@ -621,21 +697,23 @@ function csvVariacion(cx, filas) {
   return filas.flatMap((f) => [f, ...(f.hijos || [])]).filter((f) => !f.ref).map((f) => ({
     ...f.columnas, unidad: unidad().name, indicador: indicador().name,
     [cx.etPasado]: redondeo(f.pas), ...(cx.conAnterior ? { [cx.anterior?.corto ?? "anterior"]: redondeo(f.ant) } : {}), [cx.per.corto]: redondeo(f.act),
-    var_anio_pasado: f.vPas == null ? null : +f.vPas.toFixed(2),
-    ...(cx.conAnterior ? { var_periodo_anterior: f.vAnt == null ? null : +f.vAnt.toFixed(2) } : {}),
+    ...(cx.sexenio ? { medida: "promedio mensual" } : {}),
+    [cx.csv?.pas ?? "var_anio_pasado"]: f.vPas == null ? null : +f.vPas.toFixed(2),
+    ...(cx.conAnterior ? { [cx.csv?.ant ?? "var_periodo_anterior"]: f.vAnt == null ? null : +f.vAnt.toFixed(2) } : {}),
   }));
 }
-const grupoTendencia = (g) => (g.n === 0 ? "month" : g.value);
+const grupoTendencia = (g) => (g.n <= 0 ? "month" : g.value);
 
 // ── Gráfica de líneas con selector de periodo ───────────────────────────────
 // Sexenios para los atajos del periodo (meses absolutos, inicio y fin).
+// López Obrador duró 70 meses: la reforma de 2014 adelantó el cambio de gobierno a octubre.
 const SEXENIOS = [
-  { nombre: "Zedillo", k0: abs("1994-12"), k1: abs("2000-11") },
-  { nombre: "Fox", k0: abs("2000-12"), k1: abs("2006-11") },
-  { nombre: "Calderón", k0: abs("2006-12"), k1: abs("2012-11") },
-  { nombre: "Peña Nieto", k0: abs("2012-12"), k1: abs("2018-11") },
-  { nombre: "López Obrador", k0: abs("2018-12"), k1: abs("2024-09") },
-  { nombre: "Sheinbaum", k0: abs("2024-10"), k1: Infinity },
+  { nombre: "Zedillo", clave: "zedillo", k0: abs("1994-12"), k1: abs("2000-11") },
+  { nombre: "Fox", clave: "fox", k0: abs("2000-12"), k1: abs("2006-11") },
+  { nombre: "Calderón", clave: "calderon", k0: abs("2006-12"), k1: abs("2012-11") },
+  { nombre: "Peña Nieto", clave: "pena-nieto", k0: abs("2012-12"), k1: abs("2018-11") },
+  { nombre: "López Obrador", clave: "lopez-obrador", k0: abs("2018-12"), k1: abs("2024-09") },
+  { nombre: "Sheinbaum", clave: "sheinbaum", k0: abs("2024-10"), k1: Infinity },
 ];
 // Cambios de metodología del SESNSP, marcados en las gráficas.
 const METODOLOGIAS = [{ k: abs("2015-01"), largo: "2015 · SISDEL", corto: "SISDEL" }, { k: abs("2026-01"), largo: "2026 · RNID", corto: "RNID" }];
@@ -668,6 +746,19 @@ function graficaPeriodo(cont, lista, series) {
   ];
   const atajos = segmento(botones, "envolver");
   atajos.setAttribute("aria-label", "Periodo de la gráfica");
+  // Líneas verticales al inicio de cada sexenio; se prenden aquí y quedan en la URL.
+  const lineas = h("button", { type: "button", class: "btn conmutar", onclick: () => {
+    q.sexenios = q.sexenios ? "" : "1";
+    marcarLineas();
+    history.replaceState(null, "", urlActual());
+    dibujar();
+  } });
+  const marcarLineas = () => {
+    lineas.classList.toggle("on", !!q.sexenios);
+    lineas.setAttribute("aria-pressed", String(!!q.sexenios));
+    lineas.replaceChildren(h("span", { class: "marca-op" }, q.sexenios ? ic("palomita", 14) : null), "Líneas de sexenio");
+  };
+  marcarLineas();
 
   const svg = s("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Gráfica de líneas" });
   const plot = s("g", { class: "eje" });
@@ -727,6 +818,9 @@ function graficaPeriodo(cont, lista, series) {
   function dibujar() {
     plot.replaceChildren();
     const X = (i) => M.l + (i1 === i0 ? 0 : ((i - i0) / (i1 - i0)) * (W - M.l - M.r));
+    // Con sexenios, sus nombres van arriba en una o dos filas, para que no se encimen.
+    const sexenios = q.sexenios ? acomodarSexenios(X) : null;
+    M.t = sexenios ? 34 + 18 * sexenios.filas : 34;
     let min = Infinity, max = -Infinity;
     for (const se of series) for (let i = i0; i <= i1; i++) { const v = se.pts[i]; if (v != null) { min = Math.min(min, v); max = Math.max(max, v); } }
     if (!isFinite(min)) { min = 0; max = 1; }
@@ -745,6 +839,12 @@ function graficaPeriodo(cont, lista, series) {
       if (mes(p.k0) !== 0 || anio(p.k0) % cada !== 0) continue;
       plot.append(s("line", { x1: X(i), x2: X(i), y1: H - M.b, y2: H - M.b + 5, stroke: "var(--eje)" }),
         s("text", { x: X(i), y: H - 8, "text-anchor": "middle" }, String(anio(p.k0))));
+    }
+    if (sexenios) {
+      for (const xi of sexenios.lineas) plot.append(s("line", { x1: xi, x2: xi, y1: 8, y2: H - M.b, stroke: "var(--fuerte)", "stroke-opacity": 0.45 }));
+      for (const e of sexenios.etiquetas) {
+        plot.append(s("text", { x: e.x, y: M.t - 30 - 18 * e.fila, "text-anchor": e.anchor, "font-weight": 500, fill: "var(--texto)" }, e.texto));
+      }
     }
     // Cambios de metodología del SESNSP dentro del tramo.
     for (const mt of METODOLOGIAS) {
@@ -785,6 +885,34 @@ function graficaPeriodo(cont, lista, series) {
     zona.addEventListener("pointermove", mover);
     zona.addEventListener("pointerdown", mover);
     zona.addEventListener("pointerleave", () => { tip.ocultar(); guia.setAttribute("visibility", "hidden"); puntos.forEach((p) => p.setAttribute("visibility", "hidden")); });
+  }
+
+  /**
+   * Líneas al inicio de cada sexenio dentro del tramo y sus nombres; el que ya
+   * iba en curso al empezar el tramo se nombra en la orilla izquierda. Cada
+   * nombre va en la primera de dos filas donde no choque; si no cabe, se omite.
+   */
+  function acomodarSexenios(X) {
+    const nombre = (x) => (movil ? x.nombre.split(" ")[0] : x.nombre);
+    const ancho = (txt) => txt.length * 6.8;
+    const inicios = SEXENIOS.map((x) => ({ x, i: lista.findIndex((p) => p.k0 <= x.k0 && x.k0 <= p.k1) })).filter((o) => o.i > i0 && o.i <= i1);
+    const primero = SEXENIOS.find((x) => x.k0 <= lista[i0].k0 && lista[i0].k0 <= x.k1);
+    const pedidas = [
+      ...(primero ? [{ texto: nombre(primero), x: X(i0) + 2, anchor: "start" }] : []),
+      ...inicios.map(({ x, i }) => (X(i) + 5 + ancho(nombre(x)) > W - M.r
+        ? { texto: nombre(x), x: X(i) - 5, anchor: "end" } : { texto: nombre(x), x: X(i) + 5, anchor: "start" })),
+    ];
+    const ocupado = [[], []];
+    const etiquetas = [];
+    // Las más recientes primero: si algo no cabe, que sea lo más antiguo.
+    for (const e of pedidas.reverse()) {
+      const a = e.anchor === "end" ? e.x - ancho(e.texto) : e.x, b = a + ancho(e.texto);
+      const fila = ocupado.findIndex((f) => f.every(([fa, fb]) => b + 8 < fa || a > fb + 8));
+      if (fila < 0) continue;
+      ocupado[fila].push([a, b]);
+      etiquetas.push({ ...e, fila });
+    }
+    return { lineas: inicios.map(({ i }) => X(i)), etiquetas, filas: 1 + Math.max(0, ...etiquetas.map((e) => e.fila)) };
   }
 
   function guardar() {
@@ -828,7 +956,7 @@ function graficaPeriodo(cont, lista, series) {
 
   pintarBarra();
   dibujar();
-  cont.replaceChildren(h("div", { class: "periodo" }, atajos, h("div", { class: "grafica" }, svg), barraCont));
+  cont.replaceChildren(h("div", { class: "periodo" }, h("div", { class: "periodo-cab" }, atajos, lineas), h("div", { class: "grafica" }, svg), barraCont));
 }
 
 /** Botones de las series elegidas (con ×) y "+ Agregar" con buscador. */
@@ -991,6 +1119,7 @@ function consultasFrecuentes() {
     [`Qué delitos subieron en ${MESES_LARGO[mes(CORTE)]}`, urlDe("variacion", {})],
     ["Municipios de Guanajuato por homicidio", urlDe("ranking/guanajuato", { crime: 1100 })],
     ["Extorsión: estados con mayor tasa", urlDe("variacion/3000", { crime: 3000 })],
+    ["Este sexenio contra los anteriores", urlDe("variacion", { group: "sexenio" })],
   ];
 }
 
@@ -1114,7 +1243,7 @@ function filtrosTendencia(d, g, explorar) {
 async function vistaTendencia(raiz) {
   const ent = ARG ? entidadPorSlug(ARG) : null;
   if (ent) return vistaTendenciaMunicipal(raiz, ent);
-  const g = agrupacion().n === 0 ? AGRUPACIONES[0] : agrupacion();
+  const g = agrupacion().n <= 0 ? AGRUPACIONES[0] : agrupacion();
   const d = delito(q.crime);
   ajustarUnidad(d);
   let estados = [...new Set(q.state.split(",").map(Number).filter((e) => e >= 0 && e <= 32))].slice(0, 10);
@@ -1143,7 +1272,7 @@ async function vistaTendencia(raiz) {
 
 // /tendencia/<estado>: el total del estado y sus municipios (hasta 10).
 async function vistaTendenciaMunicipal(raiz, ent) {
-  const g = agrupacion().n === 0 ? AGRUPACIONES[0] : agrupacion();
+  const g = agrupacion().n <= 0 ? AGRUPACIONES[0] : agrupacion();
   const d = delito(q.crime);
   ajustarUnidad(d);
   const [indice, datEst, datMun] = await Promise.all([cargarIndiceMpal(ent.codigo), cargarDelito(d.codigo), cargarDelitoMpal(ent.codigo, d.codigo)]);
@@ -1192,8 +1321,8 @@ function filtrosMapa(d, g, lista, per, ent) {
     selector({ titulo: "Agrupación", opciones: opcionesAgrupacion(), valor: g.value, onCambio: (v) => cambiar({ group: v, period: "" }) }),
   ], [`${ent ? ent.nombre : "Nacional"} · ${per.corto}`, `${d.nombre} · ${esTasa() ? "tasa" : unidad().corto.toLowerCase()}`]);
 }
-const leerMapa = (extra) => leer("Cómo leer este mapa",
-  "Entre más intenso el rojo, mayor el valor. Los colores agrupan valores parecidos (cortes naturales).", extra);
+const leerMapa = (...extra) => leer("Cómo leer este mapa",
+  "Entre más intenso el rojo, mayor el valor. Los colores agrupan valores parecidos (cortes naturales).", ...extra);
 
 async function vistaMapa(raiz) {
   const ent = ARG ? entidadPorSlug(ARG) : null;
@@ -1205,7 +1334,7 @@ async function vistaMapa(raiz) {
   const u = dat[unidad().key];
   const lista = periodos(g, abs(u.inicio));
   const per = periodoActual(lista);
-  const valores = META.entidades.map((x) => suma(serie(u, x.codigo), per.k0, per.k1));
+  const valores = META.entidades.map((x) => valorPeriodo(serie(u, x.codigo), per));
   const irA = (e) => { location.href = urlDe(`mapa/${entidad(e).slug}`, { ...q }); };
   // Como en la plataforma: el estado abre su mapa por municipios.
   const mapa = mapaCoropletico({ geo: geoEstados(), valor: (e) => valores[e], nombre: (e) => entidad(e).nombre,
@@ -1216,7 +1345,7 @@ async function vistaMapa(raiz) {
   raiz.append(marco({
     filtros: filtrosMapa(d, g, lista, per, null),
     titulo: `${d.nombre} por entidad`,
-    sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${per.largo}`,
+    sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${per.largo}${per.promedio ? " · promedio mensual" : ""}`,
     princ: [
       mapa.svg, leyenda(mapa.cls),
       caja("Cómo se reparten las 32 entidades",
@@ -1225,7 +1354,7 @@ async function vistaMapa(raiz) {
     ],
     lateral: [
       caja(esTasa() ? "Mayor tasa" : "Mayor número", listaMayor(items, 10, ref, urlDe(`variacion/${d.codigo}`, { ...q, crime: d.codigo }))),
-      leerMapa("Haz clic en un estado para ver sus municipios."),
+      leerMapa("Haz clic en un estado para ver sus municipios.", per.promedio ? "Por sexenio, cada estado muestra el promedio mensual del gobierno elegido (en curso, hasta el último mes con datos)." : null),
       usarDatos(() => bajarCSV(`mapa_${d.codigo}_${per.clave}.csv`, META.entidades.map((x) => ({ inegiEntidad: x.codigo, entidad: x.nombre, delito: d.nombre, unidad: unidad().name, indicador: indicador().name, periodo: per.largo, valor: redondeo(valores[x.codigo]) })))),
     ],
   }));
@@ -1241,14 +1370,14 @@ async function vistaMapaMunicipal(raiz, ent) {
   const lista = u ? periodos(g, abs(u.inicio)) : periodos(g);
   const per = periodoActual(lista);
   const pos = new Map(indice.municipios.map((m, i) => [m.codigo, i]));
-  const valor = (m) => (u && pos.has(m) ? suma(serie(u, pos.get(m)), per.k0, per.k1) : null);
+  const valor = (m) => (u && pos.has(m) ? valorPeriodo(serie(u, pos.get(m)), per) : null);
   const nombre = (m) => (pos.has(m) ? indice.municipios[pos.get(m)].nombre : String(m));
   const irTendencia = (m) => { location.href = urlDe(`tendencia/${ent.slug}`, { ...q, states: `0,${m}`, group: grupoTendencia(g), ...sinTramo }); };
   const mapa = mapaCoropletico({ geo, valor, nombre, etiqueta: `${d.nombre} en ${ent.nombre} por municipio`, pista: "Clic para ver su tendencia", onClick: irTendencia });
 
   // Ranking municipal junto al mapa: por tasa o por número, con las dos columnas.
-  const tasaDe = (m) => (u && pos.has(m) ? suma(serie(u, pos.get(m), "t"), per.k0, per.k1) : null);
-  const numDe = (m) => (u && pos.has(m) ? suma(serie(u, pos.get(m), "c"), per.k0, per.k1) : null);
+  const tasaDe = (m) => (u && pos.has(m) ? valorPeriodo(serie(u, pos.get(m), "t"), per) : null);
+  const numDe = (m) => (u && pos.has(m) ? valorPeriodo(serie(u, pos.get(m), "c"), per) : null);
   const muns = indice.municipios.filter((m) => m.mapa !== false).map((m) => ({ m, tasa: tasaDe(m.codigo), num: numDe(m.codigo) }));
   const panel = h("div", { class: "panel-col" });
   let orden = "tasa";
@@ -1268,12 +1397,12 @@ async function vistaMapaMunicipal(raiz, ent) {
   }
   pintarPanel();
   const uEst = datEst[unidad().key];
-  const tasaEst = suma(serie(uEst, ent.codigo, "t"), per.k0, per.k1), tasaNac = suma(serie(uEst, 0, "t"), per.k0, per.k1);
+  const tasaEst = valorPeriodo(serie(uEst, ent.codigo, "t"), per), tasaNac = valorPeriodo(serie(uEst, 0, "t"), per);
   raiz.append(marco({
     filtros: filtrosMapa(d, g, lista, per, ent),
     miga: miga({ texto: "Nacional", href: urlDe("mapa", { ...q }) }, { texto: ent.nombre }),
     titulo: `${d.nombre} en ${ent.nombre}, por municipio`,
-    sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${per.largo}`,
+    sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${per.largo}${per.promedio ? " · promedio mensual" : ""}`,
     princ: [
       avisoSinMunicipal(d),
       h("div", { class: "mapa-y-panel" }, h("div", { class: "mapa-col" }, mapa.svg, leyenda(mapa.cls)), panel),
@@ -1306,8 +1435,9 @@ async function vistaVariacion(raiz) {
   const mun = indice?.municipios.find((m) => m.codigo === Number(q.municipality)) || null;
   const datos = mun ? await cargarMunicipio(e, mun.codigo) : await cargarEntidad(e);
   const u = unidad();
-  // Lo municipal arranca en 2015; ofrecer periodos anteriores dejaría la tabla vacía.
-  const lista = periodos(g, mun ? abs("2015-01") : abs("1997-01"));
+  // Lo municipal arranca en 2015 y las víctimas en 2014; ofrecer periodos
+  // anteriores dejaría la tabla vacía (por sexenio, Peña y antes en víctimas).
+  const lista = periodos(g, mun ? abs("2015-01") : g.value === "sexenio" && u.key === "v" ? abs("2014-01") : abs("1997-01"));
   const cx = contextoVariacion(g, lista);
 
   // Las tablas son referenciales: los componentes se despliegan bajo su
@@ -1346,10 +1476,10 @@ async function vistaVariacion(raiz) {
     miga: mun ? miga({ texto: ent.nombre, href: urlDe("variacion", { ...q, municipality: "0" }) }, { texto: mun.nombre }) : null,
     titulo: e === 0 ? "Variación por tipo de delito" : `Variación por tipo de delito en ${lugar}`,
     sub: `${lugar} · ${subtituloComparacion(cx)} · ${textoIndicador().toLowerCase()}`,
-    princ: tablaVariacion({ columna: "Delito", cx, filas }),
+    princ: [avisosSexenio(cx, filas), tablaVariacion({ columna: "Delito", cx, filas })],
     ancha: true,
     lateral: [
-      leerTabla(e > 0 && ent.municipios && !mun ? "Haz clic en un delito para ver el ranking de sus municipios; en la flecha, para ver sus componentes." : "Haz clic en un delito para ver el ranking de entidades; en la flecha, para ver sus componentes."),
+      leerTabla(e > 0 && ent.municipios && !mun ? "Haz clic en un delito para ver el ranking de sus municipios; en la flecha, para ver sus componentes." : "Haz clic en un delito para ver el ranking de entidades; en la flecha, para ver sus componentes.", ...leerSexenio(cx)),
       usarDatos(() => bajarCSV(`variacion_${mun ? mun.codigo : e}_${cx.per.clave}.csv`, csvVariacion(cx, filas))),
     ],
   }));
@@ -1399,11 +1529,11 @@ async function vistaRanking(raiz, codigo) {
     miga: miga({ texto: "Variación", href: urlDe("variacion", { ...q, state: "0" }) }, { texto: "Ranking de entidades" }),
     titulo: `Ranking de entidades: ${d.nombre.toLowerCase()}`,
     sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${subtituloComparacion(cx)}`,
-    princ: tablaVariacion({ columna: "Entidad", cx, filas, ranking: true }),
+    princ: [avisosSexenio(cx, filas), tablaVariacion({ columna: "Entidad", cx, filas, ranking: true })],
     ancha: true,
     lateral: [
-      ref ? leer("Referencia", `Nacional: ${fmt(ref.act)} por 100 mil hab. en ${cx.per.largo}. El renglón sombreado marca dónde queda en el ranking.`) : null,
-      leer("Cómo leer este ranking", `Ordenado por el valor de ${cx.per.largo}. Verde: baja; rojo: sube.`, "Haz clic en una entidad para ver su tabla por tipo de delito."),
+      ref ? leer("Referencia", `Nacional: ${fmt(ref.act)} por 100 mil hab. en ${enPeriodo(cx)}. El renglón sombreado marca dónde queda en el ranking.`) : null,
+      leer("Cómo leer este ranking", `Ordenado por el valor de ${enPeriodo(cx)}. Verde: baja; rojo: sube.`, ...leerSexenio(cx), "Haz clic en una entidad para ver su tabla por tipo de delito."),
       usarDatos(() => bajarCSV(`ranking_${d.codigo}_${cx.per.clave}.csv`, csvVariacion(cx, filas))),
     ],
   }));
@@ -1434,11 +1564,11 @@ async function vistaRankingMunicipal(raiz, ent) {
     miga: miga({ texto: "Variación", href: urlDe("variacion", { ...q, state: ent.codigo, municipality: "0" }) }, { texto: ent.nombre }, { texto: "Ranking municipal" }),
     titulo: `Ranking municipal de ${ent.nombre}: ${d.nombre.toLowerCase()}`,
     sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${subtituloComparacion(cx)}`,
-    princ: [d.mpal ? null : h("p", { class: "aviso" }, `El SESNSP no publica ${d.nombre.toLowerCase()} a nivel municipal.`), tablaVariacion({ columna: "Municipio", cx, filas, ranking: true })],
+    princ: [d.mpal ? null : h("p", { class: "aviso" }, `El SESNSP no publica ${d.nombre.toLowerCase()} a nivel municipal.`), avisosSexenio(cx, filas), tablaVariacion({ columna: "Municipio", cx, filas, ranking: true })],
     ancha: true,
     lateral: [
-      ref ? leer("Referencia", `Total de ${ent.nombre}: ${fmt(ref.act)} por 100 mil hab. en ${cx.per.largo}. El renglón sombreado marca dónde queda.`) : null,
-      leer("Cómo leer este ranking", `Ordenado por el valor de ${cx.per.largo}. Verde: baja; rojo: sube.`,
+      ref ? leer("Referencia", `Total de ${ent.nombre}: ${fmt(ref.act)} por 100 mil hab. en ${enPeriodo(cx)}. El renglón sombreado marca dónde queda.`) : null,
+      leer("Cómo leer este ranking", `Ordenado por el valor de ${enPeriodo(cx)}. Verde: baja; rojo: sube.`, ...leerSexenio(cx),
         "En municipios con poca población, unas cuantas carpetas producen tasas muy altas.", "Haz clic en un municipio para ver su tabla por tipo de delito."),
       usarDatos(() => bajarCSV(`ranking_${ent.slug}_${d.codigo}_${cx.per.clave}.csv`, csvVariacion(cx, filas))),
     ],
@@ -1459,7 +1589,7 @@ const COMPARACIONES = [
 ];
 
 async function vistaComparar(raiz) {
-  const g = agrupacion().n === 0 ? AGRUPACIONES[0] : agrupacion();
+  const g = agrupacion().n <= 0 ? AGRUPACIONES[0] : agrupacion();
   const e = Math.max(0, Math.min(32, Number(q.state.split(",")[0]) || 0));
   const validos = new Set(META.delitos.map((d) => d.codigo));
   let sel = [...new Set(q.crimes.split(",").filter(Boolean).map(Number).filter((c) => validos.has(c)))].slice(0, 5);
@@ -1507,7 +1637,7 @@ async function vistaComparar(raiz) {
 
 // ── Descargar datos ─────────────────────────────────────────────────────────
 async function vistaDescargar(raiz) {
-  const g = agrupacion();
+  const g = agrupacion().value === "sexenio" ? AGRUPACIONES[0] : agrupacion();
   const todos = "todos";
   const crime = q.crime === todos ? todos : delito(q.crime).codigo;
   const est = q.state === todos ? todos : Math.max(0, Math.min(32, Number(q.state) || 0));
@@ -1575,7 +1705,7 @@ async function vistaDescargar(raiz) {
           } }),
         selector({ titulo: "Delito", valor: crime, opciones: [{ value: todos, name: "Todos los delitos" }, ...opcionesDelito()], onCambio: (v) => cambiar({ crime: v }) }),
         selector({ titulo: "Entidad", valor: est, opciones: [{ value: todos, name: "Todas las entidades" }, ...opcionesEntidad()], onCambio: (v) => cambiar({ state: v }) }),
-        selector({ titulo: "Agrupación", valor: g.value, opciones: opcionesAgrupacion(), onCambio: (v) => cambiar({ group: v, period: "" }) }),
+        selector({ titulo: "Agrupación", valor: g.value, opciones: opcionesAgrupacion(true, false), onCambio: (v) => cambiar({ group: v, period: "" }) }),
         selector({ titulo: "Periodo", valor: per ? per.clave : todos, opciones: [{ value: todos, name: "Todos los periodos" }, ...opcionesPeriodo(lista)], onCambio: (v) => cambiar({ period: v }) }),
         h("button", { type: "button", class: "enlace", onclick: () => cambiar({ crime: todos, state: todos, group: "month", period: todos }) }, "Limpiar filtros", ic("cerrar", 16))),
     ],
