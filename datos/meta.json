@@ -1,6 +1,6 @@
 {
  "corte": "2026-09",
- "generado": "2026-10-25T22:41:17Z",
+ "generado": "2026-10-25T23:23:57Z",
  "delitos": [
   {
    "codigo": 0,
@@ -973,6 +973,3414 @@
    "nombre": "RNID"
   }
  ],
+ "gobiernos": {
+  "1": [
+   {
+    "nombre": "Granados",
+    "clave": "granados",
+    "inicio": "1992-12",
+    "desde": "1992-12-01",
+    "hasta": "1998-11-30",
+    "titulares": [
+     {
+      "nombre": "Otto Granados Roldán",
+      "tipo": "constitucional",
+      "desde": "1992-12-01",
+      "hasta": "1998-11-30"
+     }
+    ],
+    "fin": "1998-11"
+   },
+   {
+    "nombre": "Felipe González",
+    "clave": "felipe-gonzalez",
+    "inicio": "1998-12",
+    "desde": "1998-12-01",
+    "hasta": "2004-11-30",
+    "titulares": [
+     {
+      "nombre": "Felipe González González",
+      "tipo": "constitucional",
+      "desde": "1998-12-01",
+      "hasta": "2004-08-23"
+     },
+     {
+      "nombre": "Juan José León Rubio",
+      "tipo": "interino",
+      "desde": "2004-08-24",
+      "hasta": "2004-11-30"
+     }
+    ],
+    "fin": "2004-11"
+   },
+   {
+    "nombre": "Reynoso",
+    "clave": "reynoso",
+    "inicio": "2004-12",
+    "desde": "2004-12-01",
+    "hasta": "2010-11-30",
+    "titulares": [
+     {
+      "nombre": "Luis Armando Reynoso Femat",
+      "tipo": "constitucional",
+      "desde": "2004-12-01",
+      "hasta": "2010-11-30"
+     }
+    ],
+    "fin": "2010-11"
+   },
+   {
+    "nombre": "Lozano",
+    "clave": "lozano",
+    "inicio": "2010-12",
+    "desde": "2010-12-01",
+    "hasta": "2016-11-30",
+    "titulares": [
+     {
+      "nombre": "Carlos Lozano de la Torre",
+      "tipo": "constitucional",
+      "desde": "2010-12-01",
+      "hasta": "2016-11-30"
+     }
+    ],
+    "fin": "2016-11"
+   },
+   {
+    "nombre": "Orozco",
+    "clave": "orozco",
+    "inicio": "2016-12",
+    "desde": "2016-12-01",
+    "hasta": "2022-09-30",
+    "titulares": [
+     {
+      "nombre": "Martín Orozco Sandoval",
+      "tipo": "constitucional",
+      "desde": "2016-12-01",
+      "hasta": "2022-09-30"
+     }
+    ],
+    "fin": "2022-09"
+   },
+   {
+    "nombre": "Tere Jiménez",
+    "clave": "tere-jimenez",
+    "inicio": "2022-10",
+    "desde": "2022-10-01",
+    "hasta": "2027-09-30",
+    "titulares": [
+     {
+      "nombre": "María Teresa Jiménez Esquivel",
+      "tipo": "constitucional",
+      "desde": "2022-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "2": [
+   {
+    "nombre": "Terán",
+    "clave": "teran",
+    "inicio": "1995-11",
+    "desde": "1995-11-01",
+    "hasta": "2001-10-31",
+    "titulares": [
+     {
+      "nombre": "Héctor Terán Terán",
+      "tipo": "constitucional",
+      "desde": "1995-11-01",
+      "hasta": "1998-10-04"
+     },
+     {
+      "nombre": "Alejandro González Alcocer",
+      "tipo": "sustituto",
+      "desde": "1998-10-05",
+      "hasta": "2001-10-31"
+     }
+    ],
+    "fin": "2001-10"
+   },
+   {
+    "nombre": "Elorduy",
+    "clave": "elorduy",
+    "inicio": "2001-11",
+    "desde": "2001-11-01",
+    "hasta": "2007-10-31",
+    "titulares": [
+     {
+      "nombre": "Eugenio Elorduy Walther",
+      "tipo": "constitucional",
+      "desde": "2001-11-01",
+      "hasta": "2007-10-31"
+     }
+    ],
+    "fin": "2007-10"
+   },
+   {
+    "nombre": "Osuna",
+    "clave": "osuna",
+    "inicio": "2007-11",
+    "desde": "2007-11-01",
+    "hasta": "2013-10-31",
+    "titulares": [
+     {
+      "nombre": "José Guadalupe Osuna Millán",
+      "tipo": "constitucional",
+      "desde": "2007-11-01",
+      "hasta": "2013-10-31"
+     }
+    ],
+    "fin": "2013-10"
+   },
+   {
+    "nombre": "Vega",
+    "clave": "vega",
+    "inicio": "2013-11",
+    "desde": "2013-11-01",
+    "hasta": "2019-10-31",
+    "titulares": [
+     {
+      "nombre": "Francisco Vega de Lamadrid",
+      "tipo": "constitucional",
+      "desde": "2013-11-01",
+      "hasta": "2019-10-31"
+     }
+    ],
+    "fin": "2019-10"
+   },
+   {
+    "nombre": "Bonilla",
+    "clave": "bonilla",
+    "inicio": "2019-11",
+    "desde": "2019-11-01",
+    "hasta": "2021-10-31",
+    "titulares": [
+     {
+      "nombre": "Jaime Bonilla Valdez",
+      "tipo": "constitucional",
+      "desde": "2019-11-01",
+      "hasta": "2021-10-31"
+     }
+    ],
+    "fin": "2021-10"
+   },
+   {
+    "nombre": "Marina del Pilar",
+    "clave": "marina-del-pilar",
+    "inicio": "2021-11",
+    "desde": "2021-11-01",
+    "hasta": "2027-10-31",
+    "titulares": [
+     {
+      "nombre": "Marina del Pilar Ávila Olmeda",
+      "tipo": "constitucional",
+      "desde": "2021-11-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-10"
+   }
+  ],
+  "3": [
+   {
+    "nombre": "Mercado",
+    "clave": "mercado",
+    "inicio": "1993-04",
+    "desde": "1993-04-05",
+    "hasta": "1999-04-04",
+    "titulares": [
+     {
+      "nombre": "Guillermo Mercado Romero",
+      "tipo": "constitucional",
+      "desde": "1993-04-05",
+      "hasta": "1999-04-04"
+     }
+    ],
+    "fin": "1999-03"
+   },
+   {
+    "nombre": "Cota",
+    "clave": "cota",
+    "inicio": "1999-04",
+    "desde": "1999-04-05",
+    "hasta": "2005-04-04",
+    "titulares": [
+     {
+      "nombre": "Leonel Cota Montaño",
+      "tipo": "constitucional",
+      "desde": "1999-04-05",
+      "hasta": "2005-04-04"
+     }
+    ],
+    "fin": "2005-03"
+   },
+   {
+    "nombre": "Agúndez",
+    "clave": "agundez",
+    "inicio": "2005-04",
+    "desde": "2005-04-05",
+    "hasta": "2011-04-04",
+    "titulares": [
+     {
+      "nombre": "Narciso Agúndez Montaño",
+      "tipo": "constitucional",
+      "desde": "2005-04-05",
+      "hasta": "2011-04-04"
+     }
+    ],
+    "fin": "2011-03"
+   },
+   {
+    "nombre": "Covarrubias",
+    "clave": "covarrubias",
+    "inicio": "2011-04",
+    "desde": "2011-04-05",
+    "hasta": "2015-09-09",
+    "titulares": [
+     {
+      "nombre": "Marcos Covarrubias Villaseñor",
+      "tipo": "constitucional",
+      "desde": "2011-04-05",
+      "hasta": "2015-09-09"
+     }
+    ],
+    "fin": "2015-08"
+   },
+   {
+    "nombre": "Mendoza Davis",
+    "clave": "mendoza-davis",
+    "inicio": "2015-09",
+    "desde": "2015-09-10",
+    "hasta": "2021-09-09",
+    "titulares": [
+     {
+      "nombre": "Carlos Mendoza Davis",
+      "tipo": "constitucional",
+      "desde": "2015-09-10",
+      "hasta": "2021-09-09"
+     }
+    ],
+    "fin": "2021-08"
+   },
+   {
+    "nombre": "Castro Cosío",
+    "clave": "castro-cosio",
+    "inicio": "2021-09",
+    "desde": "2021-09-10",
+    "hasta": "2027-09-09",
+    "titulares": [
+     {
+      "nombre": "Víctor Manuel Castro Cosío",
+      "tipo": "constitucional",
+      "desde": "2021-09-10",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-08"
+   }
+  ],
+  "4": [
+   {
+    "nombre": "Salomón Azar",
+    "clave": "salomon-azar",
+    "inicio": "1991-09",
+    "desde": "1991-09-16",
+    "hasta": "1997-09-15",
+    "titulares": [
+     {
+      "nombre": "Jorge Salomón Azar García",
+      "tipo": "constitucional",
+      "desde": "1991-09-16",
+      "hasta": "1997-09-15"
+     }
+    ],
+    "fin": "1997-08"
+   },
+   {
+    "nombre": "González Curi",
+    "clave": "gonzalez-curi",
+    "inicio": "1997-09",
+    "desde": "1997-09-16",
+    "hasta": "2003-09-15",
+    "titulares": [
+     {
+      "nombre": "José Antonio González Curi",
+      "tipo": "constitucional",
+      "desde": "1997-09-16",
+      "hasta": "2003-09-15"
+     }
+    ],
+    "fin": "2003-08"
+   },
+   {
+    "nombre": "Hurtado",
+    "clave": "hurtado",
+    "inicio": "2003-09",
+    "desde": "2003-09-16",
+    "hasta": "2009-09-15",
+    "titulares": [
+     {
+      "nombre": "Jorge Carlos Hurtado Valdez",
+      "tipo": "constitucional",
+      "desde": "2003-09-16",
+      "hasta": "2009-09-15"
+     }
+    ],
+    "fin": "2009-08"
+   },
+   {
+    "nombre": "Ortega Bernés",
+    "clave": "ortega-bernes",
+    "inicio": "2009-09",
+    "desde": "2009-09-16",
+    "hasta": "2015-09-15",
+    "titulares": [
+     {
+      "nombre": "Fernando Ortega Bernés",
+      "tipo": "constitucional",
+      "desde": "2009-09-16",
+      "hasta": "2015-09-15"
+     }
+    ],
+    "fin": "2015-08"
+   },
+   {
+    "nombre": "Moreno",
+    "clave": "moreno",
+    "inicio": "2015-09",
+    "desde": "2015-09-16",
+    "hasta": "2021-09-14",
+    "titulares": [
+     {
+      "nombre": "Alejandro Moreno Cárdenas",
+      "tipo": "constitucional",
+      "desde": "2015-09-16",
+      "hasta": "2019-06-12"
+     },
+     {
+      "nombre": "Carlos Miguel Aysa González",
+      "tipo": "sustituto",
+      "desde": "2019-06-13",
+      "hasta": "2021-09-14"
+     }
+    ],
+    "fin": "2021-08"
+   },
+   {
+    "nombre": "Layda Sansores",
+    "clave": "layda-sansores",
+    "inicio": "2021-09",
+    "desde": "2021-09-15",
+    "hasta": "2027-09-14",
+    "titulares": [
+     {
+      "nombre": "Layda Sansores San Román",
+      "tipo": "constitucional",
+      "desde": "2021-09-15",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-08"
+   }
+  ],
+  "5": [
+   {
+    "nombre": "Montemayor",
+    "clave": "montemayor",
+    "inicio": "1993-12",
+    "desde": "1993-12-01",
+    "hasta": "1999-11-30",
+    "titulares": [
+     {
+      "nombre": "Rogelio Montemayor Seguy",
+      "tipo": "constitucional",
+      "desde": "1993-12-01",
+      "hasta": "1999-11-30"
+     }
+    ],
+    "fin": "1999-11"
+   },
+   {
+    "nombre": "Martínez",
+    "clave": "martinez",
+    "inicio": "1999-12",
+    "desde": "1999-12-01",
+    "hasta": "2005-11-30",
+    "titulares": [
+     {
+      "nombre": "Enrique Martínez y Martínez",
+      "tipo": "constitucional",
+      "desde": "1999-12-01",
+      "hasta": "2005-11-30"
+     }
+    ],
+    "fin": "2005-11"
+   },
+   {
+    "nombre": "Humberto Moreira",
+    "clave": "humberto-moreira",
+    "inicio": "2005-12",
+    "desde": "2005-12-01",
+    "hasta": "2011-11-30",
+    "titulares": [
+     {
+      "nombre": "Humberto Moreira Valdés",
+      "tipo": "constitucional",
+      "desde": "2005-12-01",
+      "hasta": "2011-01-03"
+     },
+     {
+      "nombre": "Jorge Juan Torres López",
+      "tipo": "interino",
+      "desde": "2011-01-04",
+      "hasta": "2011-11-30"
+     }
+    ],
+    "fin": "2011-11"
+   },
+   {
+    "nombre": "Rubén Moreira",
+    "clave": "ruben-moreira",
+    "inicio": "2011-12",
+    "desde": "2011-12-01",
+    "hasta": "2017-11-30",
+    "titulares": [
+     {
+      "nombre": "Rubén Moreira Valdez",
+      "tipo": "constitucional",
+      "desde": "2011-12-01",
+      "hasta": "2017-11-30"
+     }
+    ],
+    "fin": "2017-11"
+   },
+   {
+    "nombre": "Riquelme",
+    "clave": "riquelme",
+    "inicio": "2017-12",
+    "desde": "2017-12-01",
+    "hasta": "2023-11-30",
+    "titulares": [
+     {
+      "nombre": "Miguel Ángel Riquelme Solís",
+      "tipo": "constitucional",
+      "desde": "2017-12-01",
+      "hasta": "2023-11-30"
+     }
+    ],
+    "fin": "2023-11"
+   },
+   {
+    "nombre": "Manolo Jiménez",
+    "clave": "manolo-jimenez",
+    "inicio": "2023-12",
+    "desde": "2023-12-01",
+    "hasta": "2029-11-30",
+    "titulares": [
+     {
+      "nombre": "Manolo Jiménez Salinas",
+      "tipo": "constitucional",
+      "desde": "2023-12-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2029-11"
+   }
+  ],
+  "6": [
+   {
+    "nombre": "De la Madrid",
+    "clave": "de-la-madrid",
+    "inicio": "1991-11",
+    "desde": "1991-11-01",
+    "hasta": "1997-10-31",
+    "titulares": [
+     {
+      "nombre": "Carlos de la Madrid Virgen",
+      "tipo": "constitucional",
+      "desde": "1991-11-01",
+      "hasta": "1997-10-31"
+     }
+    ],
+    "fin": "1997-10"
+   },
+   {
+    "nombre": "Moreno Peña",
+    "clave": "moreno-pena",
+    "inicio": "1997-11",
+    "desde": "1997-11-01",
+    "hasta": "2003-10-31",
+    "titulares": [
+     {
+      "nombre": "Fernando Moreno Peña",
+      "tipo": "constitucional",
+      "desde": "1997-11-01",
+      "hasta": "2003-10-31"
+     }
+    ],
+    "fin": "2003-10"
+   },
+   {
+    "nombre": "Cavazos",
+    "clave": "cavazos",
+    "inicio": "2003-11",
+    "desde": "2003-11-01",
+    "hasta": "2009-10-31",
+    "titulares": [
+     {
+      "nombre": "Carlos Flores Dueñas",
+      "tipo": "interino",
+      "desde": "2003-11-01",
+      "hasta": "2003-12-31"
+     },
+     {
+      "nombre": "Gustavo Alberto Vázquez Montes",
+      "tipo": "constitucional",
+      "desde": "2004-01-01",
+      "hasta": "2005-02-24"
+     },
+     {
+      "nombre": "Arnoldo Ochoa González",
+      "tipo": "interino",
+      "desde": "2005-02-25",
+      "hasta": "2005-05-04"
+     },
+     {
+      "nombre": "Silverio Cavazos Ceballos",
+      "tipo": "constitucional",
+      "desde": "2005-05-05",
+      "hasta": "2009-10-31"
+     }
+    ],
+    "fin": "2009-10"
+   },
+   {
+    "nombre": "Anguiano",
+    "clave": "anguiano",
+    "inicio": "2009-11",
+    "desde": "2009-11-01",
+    "hasta": "2015-10-31",
+    "titulares": [
+     {
+      "nombre": "Mario Anguiano Moreno",
+      "tipo": "constitucional",
+      "desde": "2009-11-01",
+      "hasta": "2015-10-31"
+     }
+    ],
+    "fin": "2015-10"
+   },
+   {
+    "nombre": "Peralta",
+    "clave": "peralta",
+    "inicio": "2015-11",
+    "desde": "2015-11-01",
+    "hasta": "2021-10-31",
+    "titulares": [
+     {
+      "nombre": "Ramón Pérez Díaz",
+      "tipo": "interino",
+      "desde": "2015-11-01",
+      "hasta": "2016-02-10"
+     },
+     {
+      "nombre": "José Ignacio Peralta Sánchez",
+      "tipo": "constitucional",
+      "desde": "2016-02-11",
+      "hasta": "2021-10-31"
+     }
+    ],
+    "fin": "2021-10"
+   },
+   {
+    "nombre": "Indira Vizcaíno",
+    "clave": "indira-vizcaino",
+    "inicio": "2021-11",
+    "desde": "2021-11-01",
+    "hasta": "2027-10-31",
+    "titulares": [
+     {
+      "nombre": "Indira Vizcaíno Silva",
+      "tipo": "constitucional",
+      "desde": "2021-11-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-10"
+   }
+  ],
+  "7": [
+   {
+    "nombre": "Albores",
+    "clave": "albores",
+    "inicio": "1994-12",
+    "desde": "1994-12-08",
+    "hasta": "2000-12-07",
+    "titulares": [
+     {
+      "nombre": "Eduardo Robledo Rincón",
+      "tipo": "constitucional",
+      "desde": "1994-12-08",
+      "hasta": "1995-02-14"
+     },
+     {
+      "nombre": "Julio César Ruiz Ferro",
+      "tipo": "interino",
+      "desde": "1995-02-15",
+      "hasta": "1998-01-06"
+     },
+     {
+      "nombre": "Roberto Albores Guillén",
+      "tipo": "sustituto",
+      "desde": "1998-01-07",
+      "hasta": "2000-12-07"
+     }
+    ],
+    "fin": "2000-11"
+   },
+   {
+    "nombre": "Salazar",
+    "clave": "salazar",
+    "inicio": "2000-12",
+    "desde": "2000-12-08",
+    "hasta": "2006-12-07",
+    "titulares": [
+     {
+      "nombre": "Pablo Salazar Mendiguchía",
+      "tipo": "constitucional",
+      "desde": "2000-12-08",
+      "hasta": "2006-12-07"
+     }
+    ],
+    "fin": "2006-11"
+   },
+   {
+    "nombre": "Sabines",
+    "clave": "sabines",
+    "inicio": "2006-12",
+    "desde": "2006-12-08",
+    "hasta": "2012-12-07",
+    "titulares": [
+     {
+      "nombre": "Juan Sabines Guerrero",
+      "tipo": "constitucional",
+      "desde": "2006-12-08",
+      "hasta": "2012-12-07"
+     }
+    ],
+    "fin": "2012-11"
+   },
+   {
+    "nombre": "Velasco",
+    "clave": "velasco",
+    "inicio": "2012-12",
+    "desde": "2012-12-08",
+    "hasta": "2018-12-07",
+    "titulares": [
+     {
+      "nombre": "Manuel Velasco Coello",
+      "tipo": "constitucional",
+      "desde": "2012-12-08",
+      "hasta": "2018-12-07"
+     }
+    ],
+    "fin": "2018-11"
+   },
+   {
+    "nombre": "Escandón",
+    "clave": "escandon",
+    "inicio": "2018-12",
+    "desde": "2018-12-08",
+    "hasta": "2024-12-07",
+    "titulares": [
+     {
+      "nombre": "Rutilio Escandón Cadenas",
+      "tipo": "constitucional",
+      "desde": "2018-12-08",
+      "hasta": "2024-12-07"
+     }
+    ],
+    "fin": "2024-11"
+   },
+   {
+    "nombre": "Eduardo Ramírez",
+    "clave": "eduardo-ramirez",
+    "inicio": "2024-12",
+    "desde": "2024-12-08",
+    "hasta": "2030-12-07",
+    "titulares": [
+     {
+      "nombre": "Eduardo Ramírez Aguilar",
+      "tipo": "constitucional",
+      "desde": "2024-12-08",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-11"
+   }
+  ],
+  "8": [
+   {
+    "nombre": "Barrio",
+    "clave": "barrio",
+    "inicio": "1992-10",
+    "desde": "1992-10-04",
+    "hasta": "1998-10-03",
+    "titulares": [
+     {
+      "nombre": "Francisco Barrio Terrazas",
+      "tipo": "constitucional",
+      "desde": "1992-10-04",
+      "hasta": "1998-10-03"
+     }
+    ],
+    "fin": "1998-09"
+   },
+   {
+    "nombre": "Patricio Martínez",
+    "clave": "patricio-martinez",
+    "inicio": "1998-10",
+    "desde": "1998-10-04",
+    "hasta": "2004-10-03",
+    "titulares": [
+     {
+      "nombre": "Patricio Martínez García",
+      "tipo": "constitucional",
+      "desde": "1998-10-04",
+      "hasta": "2004-10-03"
+     }
+    ],
+    "fin": "2004-09"
+   },
+   {
+    "nombre": "Reyes Baeza",
+    "clave": "reyes-baeza",
+    "inicio": "2004-10",
+    "desde": "2004-10-04",
+    "hasta": "2010-10-03",
+    "titulares": [
+     {
+      "nombre": "José Reyes Baeza Terrazas",
+      "tipo": "constitucional",
+      "desde": "2004-10-04",
+      "hasta": "2010-10-03"
+     }
+    ],
+    "fin": "2010-09"
+   },
+   {
+    "nombre": "César Duarte",
+    "clave": "cesar-duarte",
+    "inicio": "2010-10",
+    "desde": "2010-10-04",
+    "hasta": "2016-10-03",
+    "titulares": [
+     {
+      "nombre": "César Duarte Jáquez",
+      "tipo": "constitucional",
+      "desde": "2010-10-04",
+      "hasta": "2016-10-03"
+     }
+    ],
+    "fin": "2016-09"
+   },
+   {
+    "nombre": "Corral",
+    "clave": "corral",
+    "inicio": "2016-10",
+    "desde": "2016-10-04",
+    "hasta": "2021-09-07",
+    "titulares": [
+     {
+      "nombre": "Javier Corral Jurado",
+      "tipo": "constitucional",
+      "desde": "2016-10-04",
+      "hasta": "2021-09-07"
+     }
+    ],
+    "fin": "2021-08"
+   },
+   {
+    "nombre": "Maru Campos",
+    "clave": "maru-campos",
+    "inicio": "2021-09",
+    "desde": "2021-09-08",
+    "hasta": "2027-09-07",
+    "titulares": [
+     {
+      "nombre": "María Eugenia Campos Galván",
+      "tipo": "constitucional",
+      "desde": "2021-09-08",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-08"
+   }
+  ],
+  "9": [
+   {
+    "nombre": "Espinosa",
+    "clave": "espinosa",
+    "inicio": "1994-12",
+    "desde": "1994-12-01",
+    "hasta": "1997-12-04",
+    "titulares": [
+     {
+      "nombre": "Óscar Espinosa Villarreal",
+      "tipo": "regente",
+      "desde": "1994-12-01",
+      "hasta": "1997-12-04"
+     }
+    ],
+    "fin": "1997-11"
+   },
+   {
+    "nombre": "Cárdenas",
+    "clave": "cardenas",
+    "inicio": "1997-12",
+    "desde": "1997-12-05",
+    "hasta": "2000-12-04",
+    "titulares": [
+     {
+      "nombre": "Cuauhtémoc Cárdenas Solórzano",
+      "tipo": "constitucional",
+      "desde": "1997-12-05",
+      "hasta": "1999-09-28"
+     },
+     {
+      "nombre": "Rosario Robles Berlanga",
+      "tipo": "sustituto",
+      "desde": "1999-09-29",
+      "hasta": "2000-12-04"
+     }
+    ],
+    "fin": "2000-11"
+   },
+   {
+    "nombre": "López Obrador",
+    "clave": "lopez-obrador",
+    "inicio": "2000-12",
+    "desde": "2000-12-05",
+    "hasta": "2006-12-04",
+    "titulares": [
+     {
+      "nombre": "Andrés Manuel López Obrador",
+      "tipo": "constitucional",
+      "desde": "2000-12-05",
+      "hasta": "2005-07-29"
+     },
+     {
+      "nombre": "Alejandro Encinas Rodríguez",
+      "tipo": "sustituto",
+      "desde": "2005-08-02",
+      "hasta": "2006-12-04"
+     }
+    ],
+    "fin": "2006-11"
+   },
+   {
+    "nombre": "Ebrard",
+    "clave": "ebrard",
+    "inicio": "2006-12",
+    "desde": "2006-12-05",
+    "hasta": "2012-12-04",
+    "titulares": [
+     {
+      "nombre": "Marcelo Ebrard Casaubón",
+      "tipo": "constitucional",
+      "desde": "2006-12-05",
+      "hasta": "2012-12-04"
+     }
+    ],
+    "fin": "2012-11"
+   },
+   {
+    "nombre": "Mancera",
+    "clave": "mancera",
+    "inicio": "2012-12",
+    "desde": "2012-12-05",
+    "hasta": "2018-12-04",
+    "titulares": [
+     {
+      "nombre": "Miguel Ángel Mancera Espinosa",
+      "tipo": "constitucional",
+      "desde": "2012-12-05",
+      "hasta": "2018-03-28"
+     },
+     {
+      "nombre": "José Ramón Amieva Gálvez",
+      "tipo": "sustituto",
+      "desde": "2018-03-29",
+      "hasta": "2018-12-04"
+     }
+    ],
+    "fin": "2018-11"
+   },
+   {
+    "nombre": "Sheinbaum",
+    "clave": "sheinbaum",
+    "inicio": "2018-12",
+    "desde": "2018-12-05",
+    "hasta": "2024-10-04",
+    "titulares": [
+     {
+      "nombre": "Claudia Sheinbaum Pardo",
+      "tipo": "constitucional",
+      "desde": "2018-12-05",
+      "hasta": "2023-06-15"
+     },
+     {
+      "nombre": "Martí Batres Guadarrama",
+      "tipo": "sustituto",
+      "desde": "2023-06-16",
+      "hasta": "2024-10-04"
+     }
+    ],
+    "fin": "2024-09"
+   },
+   {
+    "nombre": "Clara Brugada",
+    "clave": "clara-brugada",
+    "inicio": "2024-10",
+    "desde": "2024-10-05",
+    "hasta": "2030-10-04",
+    "titulares": [
+     {
+      "nombre": "Clara Brugada Molina",
+      "tipo": "constitucional",
+      "desde": "2024-10-05",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-09"
+   }
+  ],
+  "10": [
+   {
+    "nombre": "Silerio",
+    "clave": "silerio",
+    "inicio": "1992-09",
+    "desde": "1992-09-15",
+    "hasta": "1998-09-14",
+    "titulares": [
+     {
+      "nombre": "Maximiliano Silerio Esparza",
+      "tipo": "constitucional",
+      "desde": "1992-09-15",
+      "hasta": "1998-09-14"
+     }
+    ],
+    "fin": "1998-08"
+   },
+   {
+    "nombre": "Guerrero Mier",
+    "clave": "guerrero-mier",
+    "inicio": "1998-09",
+    "desde": "1998-09-15",
+    "hasta": "2004-09-14",
+    "titulares": [
+     {
+      "nombre": "Ángel Sergio Guerrero Mier",
+      "tipo": "constitucional",
+      "desde": "1998-09-15",
+      "hasta": "2004-09-14"
+     }
+    ],
+    "fin": "2004-08"
+   },
+   {
+    "nombre": "Hernández Deras",
+    "clave": "hernandez-deras",
+    "inicio": "2004-09",
+    "desde": "2004-09-15",
+    "hasta": "2010-09-14",
+    "titulares": [
+     {
+      "nombre": "Ismael Hernández Deras",
+      "tipo": "constitucional",
+      "desde": "2004-09-15",
+      "hasta": "2010-09-14"
+     }
+    ],
+    "fin": "2010-08"
+   },
+   {
+    "nombre": "Herrera Caldera",
+    "clave": "herrera-caldera",
+    "inicio": "2010-09",
+    "desde": "2010-09-15",
+    "hasta": "2016-09-14",
+    "titulares": [
+     {
+      "nombre": "Jorge Herrera Caldera",
+      "tipo": "constitucional",
+      "desde": "2010-09-15",
+      "hasta": "2016-09-14"
+     }
+    ],
+    "fin": "2016-08"
+   },
+   {
+    "nombre": "Rosas Aispuro",
+    "clave": "rosas-aispuro",
+    "inicio": "2016-09",
+    "desde": "2016-09-15",
+    "hasta": "2022-09-14",
+    "titulares": [
+     {
+      "nombre": "José Rosas Aispuro Torres",
+      "tipo": "constitucional",
+      "desde": "2016-09-15",
+      "hasta": "2022-09-14"
+     }
+    ],
+    "fin": "2022-08"
+   },
+   {
+    "nombre": "Villegas",
+    "clave": "villegas",
+    "inicio": "2022-09",
+    "desde": "2022-09-15",
+    "hasta": "2028-09-14",
+    "titulares": [
+     {
+      "nombre": "Esteban Villegas Villarreal",
+      "tipo": "constitucional",
+      "desde": "2022-09-15",
+      "hasta": ""
+     }
+    ],
+    "fin": "2028-08"
+   }
+  ],
+  "11": [
+   {
+    "nombre": "Fox",
+    "clave": "fox",
+    "inicio": "1995-07",
+    "desde": "1995-06-26",
+    "hasta": "2000-09-25",
+    "titulares": [
+     {
+      "nombre": "Vicente Fox Quesada",
+      "tipo": "constitucional",
+      "desde": "1995-06-26",
+      "hasta": "1999-08-07"
+     },
+     {
+      "nombre": "Ramón Martín Huerta",
+      "tipo": "sustituto",
+      "desde": "1999-08-09",
+      "hasta": "2000-09-25"
+     }
+    ],
+    "fin": "2000-09"
+   },
+   {
+    "nombre": "Romero Hicks",
+    "clave": "romero-hicks",
+    "inicio": "2000-10",
+    "desde": "2000-09-26",
+    "hasta": "2006-09-25",
+    "titulares": [
+     {
+      "nombre": "Juan Carlos Romero Hicks",
+      "tipo": "constitucional",
+      "desde": "2000-09-26",
+      "hasta": "2006-09-25"
+     }
+    ],
+    "fin": "2006-09"
+   },
+   {
+    "nombre": "Oliva",
+    "clave": "oliva",
+    "inicio": "2006-10",
+    "desde": "2006-09-26",
+    "hasta": "2012-09-25",
+    "titulares": [
+     {
+      "nombre": "Juan Manuel Oliva Ramírez",
+      "tipo": "constitucional",
+      "desde": "2006-09-26",
+      "hasta": "2012-03-28"
+     },
+     {
+      "nombre": "Héctor Germán René López Santillana",
+      "tipo": "interino",
+      "desde": "2012-03-29",
+      "hasta": "2012-09-25"
+     }
+    ],
+    "fin": "2012-09"
+   },
+   {
+    "nombre": "Márquez",
+    "clave": "marquez",
+    "inicio": "2012-10",
+    "desde": "2012-09-26",
+    "hasta": "2018-09-25",
+    "titulares": [
+     {
+      "nombre": "Miguel Márquez Márquez",
+      "tipo": "constitucional",
+      "desde": "2012-09-26",
+      "hasta": "2018-09-25"
+     }
+    ],
+    "fin": "2018-09"
+   },
+   {
+    "nombre": "Sinhue",
+    "clave": "sinhue",
+    "inicio": "2018-10",
+    "desde": "2018-09-26",
+    "hasta": "2024-09-25",
+    "titulares": [
+     {
+      "nombre": "Diego Sinhue Rodríguez Vallejo",
+      "tipo": "constitucional",
+      "desde": "2018-09-26",
+      "hasta": "2024-09-25"
+     }
+    ],
+    "fin": "2024-09"
+   },
+   {
+    "nombre": "Libia García",
+    "clave": "libia-garcia",
+    "inicio": "2024-10",
+    "desde": "2024-09-26",
+    "hasta": "2030-09-25",
+    "titulares": [
+     {
+      "nombre": "Libia Dennise García Muñoz Ledo",
+      "tipo": "constitucional",
+      "desde": "2024-09-26",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-09"
+   }
+  ],
+  "12": [
+   {
+    "nombre": "Figueroa",
+    "clave": "figueroa",
+    "inicio": "1993-04",
+    "desde": "1993-04-01",
+    "hasta": "1999-03-31",
+    "titulares": [
+     {
+      "nombre": "Rubén Figueroa Alcocer",
+      "tipo": "constitucional",
+      "desde": "1993-04-01",
+      "hasta": "1996-03-11"
+     },
+     {
+      "nombre": "Ángel Aguirre Rivero",
+      "tipo": "sustituto",
+      "desde": "1996-03-12",
+      "hasta": "1999-03-31"
+     }
+    ],
+    "fin": "1999-03"
+   },
+   {
+    "nombre": "René Juárez",
+    "clave": "rene-juarez",
+    "inicio": "1999-04",
+    "desde": "1999-04-01",
+    "hasta": "2005-03-31",
+    "titulares": [
+     {
+      "nombre": "René Juárez Cisneros",
+      "tipo": "constitucional",
+      "desde": "1999-04-01",
+      "hasta": "2005-03-31"
+     }
+    ],
+    "fin": "2005-03"
+   },
+   {
+    "nombre": "Torreblanca",
+    "clave": "torreblanca",
+    "inicio": "2005-04",
+    "desde": "2005-04-01",
+    "hasta": "2011-03-31",
+    "titulares": [
+     {
+      "nombre": "Zeferino Torreblanca Galindo",
+      "tipo": "constitucional",
+      "desde": "2005-04-01",
+      "hasta": "2011-03-31"
+     }
+    ],
+    "fin": "2011-03"
+   },
+   {
+    "nombre": "Aguirre",
+    "clave": "aguirre",
+    "inicio": "2011-04",
+    "desde": "2011-04-01",
+    "hasta": "2015-10-26",
+    "titulares": [
+     {
+      "nombre": "Ángel Aguirre Rivero",
+      "tipo": "constitucional",
+      "desde": "2011-04-01",
+      "hasta": "2014-10-26"
+     },
+     {
+      "nombre": "Salvador Rogelio Ortega Martínez",
+      "tipo": "sustituto",
+      "desde": "2014-10-27",
+      "hasta": "2015-10-26"
+     }
+    ],
+    "fin": "2015-10"
+   },
+   {
+    "nombre": "Astudillo",
+    "clave": "astudillo",
+    "inicio": "2015-11",
+    "desde": "2015-10-27",
+    "hasta": "2021-10-14",
+    "titulares": [
+     {
+      "nombre": "Héctor Astudillo Flores",
+      "tipo": "constitucional",
+      "desde": "2015-10-27",
+      "hasta": "2021-10-14"
+     }
+    ],
+    "fin": "2021-09"
+   },
+   {
+    "nombre": "Evelyn Salgado",
+    "clave": "evelyn-salgado",
+    "inicio": "2021-10",
+    "desde": "2021-10-15",
+    "hasta": "2027-10-14",
+    "titulares": [
+     {
+      "nombre": "Evelyn Salgado Pineda",
+      "tipo": "constitucional",
+      "desde": "2021-10-15",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "13": [
+   {
+    "nombre": "Murillo Karam",
+    "clave": "murillo-karam",
+    "inicio": "1993-04",
+    "desde": "1993-04-01",
+    "hasta": "1999-03-31",
+    "titulares": [
+     {
+      "nombre": "Jesús Murillo Karam",
+      "tipo": "constitucional",
+      "desde": "1993-04-01",
+      "hasta": "1998-10-27"
+     },
+     {
+      "nombre": "Humberto Lugo Gil",
+      "tipo": "interino",
+      "desde": "1998-10-28",
+      "hasta": "1999-03-31"
+     }
+    ],
+    "fin": "1999-03"
+   },
+   {
+    "nombre": "Núñez Soto",
+    "clave": "nunez-soto",
+    "inicio": "1999-04",
+    "desde": "1999-04-01",
+    "hasta": "2005-03-31",
+    "titulares": [
+     {
+      "nombre": "Manuel Ángel Núñez Soto",
+      "tipo": "constitucional",
+      "desde": "1999-04-01",
+      "hasta": "2005-03-31"
+     }
+    ],
+    "fin": "2005-03"
+   },
+   {
+    "nombre": "Osorio Chong",
+    "clave": "osorio-chong",
+    "inicio": "2005-04",
+    "desde": "2005-04-01",
+    "hasta": "2011-03-31",
+    "titulares": [
+     {
+      "nombre": "Miguel Ángel Osorio Chong",
+      "tipo": "constitucional",
+      "desde": "2005-04-01",
+      "hasta": "2011-03-31"
+     }
+    ],
+    "fin": "2011-03"
+   },
+   {
+    "nombre": "Olvera",
+    "clave": "olvera",
+    "inicio": "2011-04",
+    "desde": "2011-04-01",
+    "hasta": "2016-09-04",
+    "titulares": [
+     {
+      "nombre": "Francisco Olvera Ruiz",
+      "tipo": "constitucional",
+      "desde": "2011-04-01",
+      "hasta": "2016-09-04"
+     }
+    ],
+    "fin": "2016-08"
+   },
+   {
+    "nombre": "Fayad",
+    "clave": "fayad",
+    "inicio": "2016-09",
+    "desde": "2016-09-05",
+    "hasta": "2022-09-04",
+    "titulares": [
+     {
+      "nombre": "Omar Fayad Meneses",
+      "tipo": "constitucional",
+      "desde": "2016-09-05",
+      "hasta": "2022-09-04"
+     }
+    ],
+    "fin": "2022-08"
+   },
+   {
+    "nombre": "Menchaca",
+    "clave": "menchaca",
+    "inicio": "2022-09",
+    "desde": "2022-09-05",
+    "hasta": "2028-09-04",
+    "titulares": [
+     {
+      "nombre": "Julio Menchaca Salazar",
+      "tipo": "constitucional",
+      "desde": "2022-09-05",
+      "hasta": ""
+     }
+    ],
+    "fin": "2028-08"
+   }
+  ],
+  "14": [
+   {
+    "nombre": "Alberto Cárdenas",
+    "clave": "alberto-cardenas",
+    "inicio": "1995-03",
+    "desde": "1995-03-01",
+    "hasta": "2001-02-28",
+    "titulares": [
+     {
+      "nombre": "Alberto Cárdenas Jiménez",
+      "tipo": "constitucional",
+      "desde": "1995-03-01",
+      "hasta": "2001-02-28"
+     }
+    ],
+    "fin": "2001-02"
+   },
+   {
+    "nombre": "Ramírez Acuña",
+    "clave": "ramirez-acuna",
+    "inicio": "2001-03",
+    "desde": "2001-03-01",
+    "hasta": "2007-02-28",
+    "titulares": [
+     {
+      "nombre": "Francisco Javier Ramírez Acuña",
+      "tipo": "constitucional",
+      "desde": "2001-03-01",
+      "hasta": "2006-11-19"
+     },
+     {
+      "nombre": "Gerardo Octavio Solís Gómez",
+      "tipo": "interino",
+      "desde": "2006-11-20",
+      "hasta": "2007-02-28"
+     }
+    ],
+    "fin": "2007-02"
+   },
+   {
+    "nombre": "Emilio González",
+    "clave": "emilio-gonzalez",
+    "inicio": "2007-03",
+    "desde": "2007-03-01",
+    "hasta": "2013-02-28",
+    "titulares": [
+     {
+      "nombre": "Emilio González Márquez",
+      "tipo": "constitucional",
+      "desde": "2007-03-01",
+      "hasta": "2013-02-28"
+     }
+    ],
+    "fin": "2013-02"
+   },
+   {
+    "nombre": "Aristóteles Sandoval",
+    "clave": "aristoteles-sandoval",
+    "inicio": "2013-03",
+    "desde": "2013-03-01",
+    "hasta": "2018-12-05",
+    "titulares": [
+     {
+      "nombre": "Jorge Aristóteles Sandoval Díaz",
+      "tipo": "constitucional",
+      "desde": "2013-03-01",
+      "hasta": "2018-12-05"
+     }
+    ],
+    "fin": "2018-11"
+   },
+   {
+    "nombre": "Alfaro",
+    "clave": "alfaro",
+    "inicio": "2018-12",
+    "desde": "2018-12-06",
+    "hasta": "2024-12-05",
+    "titulares": [
+     {
+      "nombre": "Enrique Alfaro Ramírez",
+      "tipo": "constitucional",
+      "desde": "2018-12-06",
+      "hasta": "2024-12-05"
+     }
+    ],
+    "fin": "2024-11"
+   },
+   {
+    "nombre": "Lemus",
+    "clave": "lemus",
+    "inicio": "2024-12",
+    "desde": "2024-12-06",
+    "hasta": "2030-12-05",
+    "titulares": [
+     {
+      "nombre": "Pablo Lemus Navarro",
+      "tipo": "constitucional",
+      "desde": "2024-12-06",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-11"
+   }
+  ],
+  "15": [
+   {
+    "nombre": "Camacho",
+    "clave": "camacho",
+    "inicio": "1993-09",
+    "desde": "1993-09-16",
+    "hasta": "1999-09-15",
+    "titulares": [
+     {
+      "nombre": "Emilio Chuayffet Chemor",
+      "tipo": "constitucional",
+      "desde": "1993-09-16",
+      "hasta": "1995-07-02"
+     },
+     {
+      "nombre": "César Camacho Quiroz",
+      "tipo": "sustituto",
+      "desde": "1995-07-03",
+      "hasta": "1999-09-15"
+     }
+    ],
+    "fin": "1999-08"
+   },
+   {
+    "nombre": "Montiel",
+    "clave": "montiel",
+    "inicio": "1999-09",
+    "desde": "1999-09-16",
+    "hasta": "2005-09-15",
+    "titulares": [
+     {
+      "nombre": "Arturo Montiel Rojas",
+      "tipo": "constitucional",
+      "desde": "1999-09-16",
+      "hasta": "2005-09-15"
+     }
+    ],
+    "fin": "2005-08"
+   },
+   {
+    "nombre": "Peña Nieto",
+    "clave": "pena-nieto",
+    "inicio": "2005-09",
+    "desde": "2005-09-16",
+    "hasta": "2011-09-15",
+    "titulares": [
+     {
+      "nombre": "Enrique Peña Nieto",
+      "tipo": "constitucional",
+      "desde": "2005-09-16",
+      "hasta": "2011-09-15"
+     }
+    ],
+    "fin": "2011-08"
+   },
+   {
+    "nombre": "Eruviel Ávila",
+    "clave": "eruviel-avila",
+    "inicio": "2011-09",
+    "desde": "2011-09-16",
+    "hasta": "2017-09-15",
+    "titulares": [
+     {
+      "nombre": "Eruviel Ávila Villegas",
+      "tipo": "constitucional",
+      "desde": "2011-09-16",
+      "hasta": "2017-09-15"
+     }
+    ],
+    "fin": "2017-08"
+   },
+   {
+    "nombre": "Del Mazo",
+    "clave": "del-mazo",
+    "inicio": "2017-09",
+    "desde": "2017-09-16",
+    "hasta": "2023-09-15",
+    "titulares": [
+     {
+      "nombre": "Alfredo del Mazo Maza",
+      "tipo": "constitucional",
+      "desde": "2017-09-16",
+      "hasta": "2023-09-15"
+     }
+    ],
+    "fin": "2023-08"
+   },
+   {
+    "nombre": "Delfina Gómez",
+    "clave": "delfina-gomez",
+    "inicio": "2023-09",
+    "desde": "2023-09-16",
+    "hasta": "2029-09-15",
+    "titulares": [
+     {
+      "nombre": "Delfina Gómez Álvarez",
+      "tipo": "constitucional",
+      "desde": "2023-09-16",
+      "hasta": ""
+     }
+    ],
+    "fin": "2029-08"
+   }
+  ],
+  "16": [
+   {
+    "nombre": "Tinoco Rubí",
+    "clave": "tinoco-rubi",
+    "inicio": "1996-02",
+    "desde": "1996-02-15",
+    "hasta": "2002-02-14",
+    "titulares": [
+     {
+      "nombre": "Víctor Manuel Tinoco Rubí",
+      "tipo": "constitucional",
+      "desde": "1996-02-15",
+      "hasta": "2002-02-14"
+     }
+    ],
+    "fin": "2002-01"
+   },
+   {
+    "nombre": "Cárdenas Batel",
+    "clave": "cardenas-batel",
+    "inicio": "2002-02",
+    "desde": "2002-02-15",
+    "hasta": "2008-02-14",
+    "titulares": [
+     {
+      "nombre": "Lázaro Cárdenas Batel",
+      "tipo": "constitucional",
+      "desde": "2002-02-15",
+      "hasta": "2008-02-14"
+     }
+    ],
+    "fin": "2008-01"
+   },
+   {
+    "nombre": "Godoy",
+    "clave": "godoy",
+    "inicio": "2008-02",
+    "desde": "2008-02-15",
+    "hasta": "2012-02-14",
+    "titulares": [
+     {
+      "nombre": "Leonel Godoy Rangel",
+      "tipo": "constitucional",
+      "desde": "2008-02-15",
+      "hasta": "2012-02-14"
+     }
+    ],
+    "fin": "2012-01"
+   },
+   {
+    "nombre": "Vallejo",
+    "clave": "vallejo",
+    "inicio": "2012-02",
+    "desde": "2012-02-15",
+    "hasta": "2015-09-30",
+    "titulares": [
+     {
+      "nombre": "Fausto Vallejo Figueroa",
+      "tipo": "constitucional",
+      "desde": "2012-02-15",
+      "hasta": "2013-04-21"
+     },
+     {
+      "nombre": "Jesús Reyna García",
+      "tipo": "interino",
+      "desde": "2013-04-22",
+      "hasta": "2013-10-22"
+     },
+     {
+      "nombre": "Fausto Vallejo Figueroa",
+      "tipo": "constitucional",
+      "desde": "2013-10-23",
+      "hasta": "2014-06-19"
+     },
+     {
+      "nombre": "Salvador Jara Guerrero",
+      "tipo": "sustituto",
+      "desde": "2014-06-20",
+      "hasta": "2015-09-30"
+     }
+    ],
+    "fin": "2015-09"
+   },
+   {
+    "nombre": "Aureoles",
+    "clave": "aureoles",
+    "inicio": "2015-10",
+    "desde": "2015-10-01",
+    "hasta": "2021-09-30",
+    "titulares": [
+     {
+      "nombre": "Silvano Aureoles Conejo",
+      "tipo": "constitucional",
+      "desde": "2015-10-01",
+      "hasta": "2021-09-30"
+     }
+    ],
+    "fin": "2021-09"
+   },
+   {
+    "nombre": "Ramírez Bedolla",
+    "clave": "ramirez-bedolla",
+    "inicio": "2021-10",
+    "desde": "2021-10-01",
+    "hasta": "2027-09-30",
+    "titulares": [
+     {
+      "nombre": "Alfredo Ramírez Bedolla",
+      "tipo": "constitucional",
+      "desde": "2021-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "17": [
+   {
+    "nombre": "Carrillo Olea",
+    "clave": "carrillo-olea",
+    "inicio": "1994-06",
+    "desde": "1994-05-18",
+    "hasta": "2000-09-30",
+    "titulares": [
+     {
+      "nombre": "Jorge Carrillo Olea",
+      "tipo": "constitucional",
+      "desde": "1994-05-18",
+      "hasta": "1998-05-14"
+     },
+     {
+      "nombre": "Jorge Morales Barud",
+      "tipo": "sustituto",
+      "desde": "1998-05-15",
+      "hasta": "2000-09-30"
+     }
+    ],
+    "fin": "2000-09"
+   },
+   {
+    "nombre": "Estrada Cajigal",
+    "clave": "estrada-cajigal",
+    "inicio": "2000-10",
+    "desde": "2000-10-01",
+    "hasta": "2006-09-30",
+    "titulares": [
+     {
+      "nombre": "Sergio Estrada Cajigal Ramírez",
+      "tipo": "constitucional",
+      "desde": "2000-10-01",
+      "hasta": "2006-09-30"
+     }
+    ],
+    "fin": "2006-09"
+   },
+   {
+    "nombre": "Adame",
+    "clave": "adame",
+    "inicio": "2006-10",
+    "desde": "2006-10-01",
+    "hasta": "2012-09-30",
+    "titulares": [
+     {
+      "nombre": "Marco Antonio Adame Castillo",
+      "tipo": "constitucional",
+      "desde": "2006-10-01",
+      "hasta": "2012-09-30"
+     }
+    ],
+    "fin": "2012-09"
+   },
+   {
+    "nombre": "Graco Ramírez",
+    "clave": "graco-ramirez",
+    "inicio": "2012-10",
+    "desde": "2012-10-01",
+    "hasta": "2018-09-30",
+    "titulares": [
+     {
+      "nombre": "Graco Ramírez Garrido Abreu",
+      "tipo": "constitucional",
+      "desde": "2012-10-01",
+      "hasta": "2018-09-30"
+     }
+    ],
+    "fin": "2018-09"
+   },
+   {
+    "nombre": "Cuauhtémoc Blanco",
+    "clave": "cuauhtemoc-blanco",
+    "inicio": "2018-10",
+    "desde": "2018-10-01",
+    "hasta": "2024-09-30",
+    "titulares": [
+     {
+      "nombre": "Cuauhtémoc Blanco Bravo",
+      "tipo": "constitucional",
+      "desde": "2018-10-01",
+      "hasta": "2024-09-30"
+     }
+    ],
+    "fin": "2024-09"
+   },
+   {
+    "nombre": "Margarita González",
+    "clave": "margarita-gonzalez",
+    "inicio": "2024-10",
+    "desde": "2024-10-01",
+    "hasta": "2030-09-30",
+    "titulares": [
+     {
+      "nombre": "Margarita González Saravia Calderón",
+      "tipo": "constitucional",
+      "desde": "2024-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-09"
+   }
+  ],
+  "18": [
+   {
+    "nombre": "Ochoa Zaragoza",
+    "clave": "ochoa-zaragoza",
+    "inicio": "1993-10",
+    "desde": "1993-09-19",
+    "hasta": "1999-09-18",
+    "titulares": [
+     {
+      "nombre": "Rigoberto Ochoa Zaragoza",
+      "tipo": "constitucional",
+      "desde": "1993-09-19",
+      "hasta": "1999-09-18"
+     }
+    ],
+    "fin": "1999-09"
+   },
+   {
+    "nombre": "Echevarría Domínguez",
+    "clave": "echevarria-dominguez",
+    "inicio": "1999-10",
+    "desde": "1999-09-19",
+    "hasta": "2005-09-18",
+    "titulares": [
+     {
+      "nombre": "Antonio Echevarría Domínguez",
+      "tipo": "constitucional",
+      "desde": "1999-09-19",
+      "hasta": "2005-09-18"
+     }
+    ],
+    "fin": "2005-09"
+   },
+   {
+    "nombre": "Ney González",
+    "clave": "ney-gonzalez",
+    "inicio": "2005-10",
+    "desde": "2005-09-19",
+    "hasta": "2011-09-18",
+    "titulares": [
+     {
+      "nombre": "Ney González Sánchez",
+      "tipo": "constitucional",
+      "desde": "2005-09-19",
+      "hasta": "2011-09-18"
+     }
+    ],
+    "fin": "2011-09"
+   },
+   {
+    "nombre": "Sandoval",
+    "clave": "sandoval",
+    "inicio": "2011-10",
+    "desde": "2011-09-19",
+    "hasta": "2017-09-18",
+    "titulares": [
+     {
+      "nombre": "Roberto Sandoval Castañeda",
+      "tipo": "constitucional",
+      "desde": "2011-09-19",
+      "hasta": "2017-09-18"
+     }
+    ],
+    "fin": "2017-09"
+   },
+   {
+    "nombre": "Echevarría García",
+    "clave": "echevarria-garcia",
+    "inicio": "2017-10",
+    "desde": "2017-09-19",
+    "hasta": "2021-09-18",
+    "titulares": [
+     {
+      "nombre": "Antonio Echevarría García",
+      "tipo": "constitucional",
+      "desde": "2017-09-19",
+      "hasta": "2021-09-18"
+     }
+    ],
+    "fin": "2021-09"
+   },
+   {
+    "nombre": "Navarro",
+    "clave": "navarro",
+    "inicio": "2021-10",
+    "desde": "2021-09-19",
+    "hasta": "2027-09-18",
+    "titulares": [
+     {
+      "nombre": "Miguel Ángel Navarro Quintero",
+      "tipo": "constitucional",
+      "desde": "2021-09-19",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "19": [
+   {
+    "nombre": "Rizzo",
+    "clave": "rizzo",
+    "inicio": "1991-10",
+    "desde": "1991-10-04",
+    "hasta": "1997-10-03",
+    "titulares": [
+     {
+      "nombre": "Sócrates Rizzo García",
+      "tipo": "constitucional",
+      "desde": "1991-10-04",
+      "hasta": "1996-04-16"
+     },
+     {
+      "nombre": "Benjamín Clariond Reyes-Retana",
+      "tipo": "interino",
+      "desde": "1996-04-17",
+      "hasta": "1997-10-03"
+     }
+    ],
+    "fin": "1997-09"
+   },
+   {
+    "nombre": "Canales",
+    "clave": "canales",
+    "inicio": "1997-10",
+    "desde": "1997-10-04",
+    "hasta": "2003-10-03",
+    "titulares": [
+     {
+      "nombre": "Fernando Canales Clariond",
+      "tipo": "constitucional",
+      "desde": "1997-10-04",
+      "hasta": "2003-01-12"
+     },
+     {
+      "nombre": "Fernando Elizondo Barragán",
+      "tipo": "interino",
+      "desde": "2003-01-13",
+      "hasta": "2003-10-03"
+     }
+    ],
+    "fin": "2003-09"
+   },
+   {
+    "nombre": "González Parás",
+    "clave": "gonzalez-paras",
+    "inicio": "2003-10",
+    "desde": "2003-10-04",
+    "hasta": "2009-10-03",
+    "titulares": [
+     {
+      "nombre": "José Natividad González Parás",
+      "tipo": "constitucional",
+      "desde": "2003-10-04",
+      "hasta": "2009-10-03"
+     }
+    ],
+    "fin": "2009-09"
+   },
+   {
+    "nombre": "Medina",
+    "clave": "medina",
+    "inicio": "2009-10",
+    "desde": "2009-10-04",
+    "hasta": "2015-10-03",
+    "titulares": [
+     {
+      "nombre": "Rodrigo Medina de la Cruz",
+      "tipo": "constitucional",
+      "desde": "2009-10-04",
+      "hasta": "2015-10-03"
+     }
+    ],
+    "fin": "2015-09"
+   },
+   {
+    "nombre": "Jaime Rodríguez",
+    "clave": "jaime-rodriguez",
+    "inicio": "2015-10",
+    "desde": "2015-10-04",
+    "hasta": "2021-10-03",
+    "titulares": [
+     {
+      "nombre": "Jaime Heliodoro Rodríguez Calderón",
+      "tipo": "constitucional",
+      "desde": "2015-10-04",
+      "hasta": "2017-12-31"
+     },
+     {
+      "nombre": "Manuel Florentino González Flores",
+      "tipo": "interino",
+      "desde": "2018-01-01",
+      "hasta": "2018-07-01"
+     },
+     {
+      "nombre": "Jaime Heliodoro Rodríguez Calderón",
+      "tipo": "constitucional",
+      "desde": "2018-07-02",
+      "hasta": "2021-10-03"
+     }
+    ],
+    "fin": "2021-09"
+   },
+   {
+    "nombre": "Samuel García",
+    "clave": "samuel-garcia",
+    "inicio": "2021-10",
+    "desde": "2021-10-04",
+    "hasta": "2027-10-03",
+    "titulares": [
+     {
+      "nombre": "Samuel Alejandro García Sepúlveda",
+      "tipo": "constitucional",
+      "desde": "2021-10-04",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "20": [
+   {
+    "nombre": "Carrasco",
+    "clave": "carrasco",
+    "inicio": "1992-12",
+    "desde": "1992-12-01",
+    "hasta": "1998-11-30",
+    "titulares": [
+     {
+      "nombre": "Diódoro Carrasco Altamirano",
+      "tipo": "constitucional",
+      "desde": "1992-12-01",
+      "hasta": "1998-11-30"
+     }
+    ],
+    "fin": "1998-11"
+   },
+   {
+    "nombre": "José Murat",
+    "clave": "jose-murat",
+    "inicio": "1998-12",
+    "desde": "1998-12-01",
+    "hasta": "2004-11-30",
+    "titulares": [
+     {
+      "nombre": "José Murat Casab",
+      "tipo": "constitucional",
+      "desde": "1998-12-01",
+      "hasta": "2004-11-30"
+     }
+    ],
+    "fin": "2004-11"
+   },
+   {
+    "nombre": "Ulises Ruiz",
+    "clave": "ulises-ruiz",
+    "inicio": "2004-12",
+    "desde": "2004-12-01",
+    "hasta": "2010-11-30",
+    "titulares": [
+     {
+      "nombre": "Ulises Ruiz Ortiz",
+      "tipo": "constitucional",
+      "desde": "2004-12-01",
+      "hasta": "2010-11-30"
+     }
+    ],
+    "fin": "2010-11"
+   },
+   {
+    "nombre": "Gabino Cué",
+    "clave": "gabino-cue",
+    "inicio": "2010-12",
+    "desde": "2010-12-01",
+    "hasta": "2016-11-30",
+    "titulares": [
+     {
+      "nombre": "Gabino Cué Monteagudo",
+      "tipo": "constitucional",
+      "desde": "2010-12-01",
+      "hasta": "2016-11-30"
+     }
+    ],
+    "fin": "2016-11"
+   },
+   {
+    "nombre": "Alejandro Murat",
+    "clave": "alejandro-murat",
+    "inicio": "2016-12",
+    "desde": "2016-12-01",
+    "hasta": "2022-11-30",
+    "titulares": [
+     {
+      "nombre": "Alejandro Murat Hinojosa",
+      "tipo": "constitucional",
+      "desde": "2016-12-01",
+      "hasta": "2022-11-30"
+     }
+    ],
+    "fin": "2022-11"
+   },
+   {
+    "nombre": "Salomón Jara",
+    "clave": "salomon-jara",
+    "inicio": "2022-12",
+    "desde": "2022-12-01",
+    "hasta": "2028-11-30",
+    "titulares": [
+     {
+      "nombre": "Salomón Jara Cruz",
+      "tipo": "constitucional",
+      "desde": "2022-12-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2028-11"
+   }
+  ],
+  "21": [
+   {
+    "nombre": "Bartlett",
+    "clave": "bartlett",
+    "inicio": "1993-02",
+    "desde": "1993-02-01",
+    "hasta": "1999-01-31",
+    "titulares": [
+     {
+      "nombre": "Manuel Bartlett Díaz",
+      "tipo": "constitucional",
+      "desde": "1993-02-01",
+      "hasta": "1999-01-31"
+     }
+    ],
+    "fin": "1999-01"
+   },
+   {
+    "nombre": "Melquiades Morales",
+    "clave": "melquiades-morales",
+    "inicio": "1999-02",
+    "desde": "1999-02-01",
+    "hasta": "2005-01-31",
+    "titulares": [
+     {
+      "nombre": "Melquiades Morales Flores",
+      "tipo": "constitucional",
+      "desde": "1999-02-01",
+      "hasta": "2005-01-31"
+     }
+    ],
+    "fin": "2005-01"
+   },
+   {
+    "nombre": "Marín",
+    "clave": "marin",
+    "inicio": "2005-02",
+    "desde": "2005-02-01",
+    "hasta": "2011-01-31",
+    "titulares": [
+     {
+      "nombre": "Mario Marín Torres",
+      "tipo": "constitucional",
+      "desde": "2005-02-01",
+      "hasta": "2011-01-31"
+     }
+    ],
+    "fin": "2011-01"
+   },
+   {
+    "nombre": "Moreno Valle",
+    "clave": "moreno-valle",
+    "inicio": "2011-02",
+    "desde": "2011-02-01",
+    "hasta": "2017-01-31",
+    "titulares": [
+     {
+      "nombre": "Rafael Moreno Valle Rosas",
+      "tipo": "constitucional",
+      "desde": "2011-02-01",
+      "hasta": "2017-01-31"
+     }
+    ],
+    "fin": "2017-01"
+   },
+   {
+    "nombre": "Gali",
+    "clave": "gali",
+    "inicio": "2017-02",
+    "desde": "2017-02-01",
+    "hasta": "2018-12-13",
+    "titulares": [
+     {
+      "nombre": "José Antonio Gali Fayad",
+      "tipo": "constitucional",
+      "desde": "2017-02-01",
+      "hasta": "2018-12-13"
+     }
+    ],
+    "fin": "2018-11"
+   },
+   {
+    "nombre": "Barbosa",
+    "clave": "barbosa",
+    "inicio": "2018-12",
+    "desde": "2018-12-14",
+    "hasta": "2024-12-13",
+    "titulares": [
+     {
+      "nombre": "Martha Erika Alonso Hidalgo",
+      "tipo": "constitucional",
+      "desde": "2018-12-14",
+      "hasta": "2018-12-24"
+     },
+     {
+      "nombre": "Guillermo Pacheco Pulido",
+      "tipo": "interino",
+      "desde": "2019-01-21",
+      "hasta": "2019-07-31"
+     },
+     {
+      "nombre": "Luis Miguel Barbosa Huerta",
+      "tipo": "constitucional",
+      "desde": "2019-08-01",
+      "hasta": "2022-12-13"
+     },
+     {
+      "nombre": "Sergio Salomón Céspedes Peregrina",
+      "tipo": "sustituto",
+      "desde": "2022-12-15",
+      "hasta": "2024-12-13"
+     }
+    ],
+    "fin": "2024-11"
+   },
+   {
+    "nombre": "Armenta",
+    "clave": "armenta",
+    "inicio": "2024-12",
+    "desde": "2024-12-14",
+    "hasta": "2030-12-13",
+    "titulares": [
+     {
+      "nombre": "Alejandro Armenta Mier",
+      "tipo": "constitucional",
+      "desde": "2024-12-14",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-11"
+   }
+  ],
+  "22": [
+   {
+    "nombre": "Burgos",
+    "clave": "burgos",
+    "inicio": "1991-10",
+    "desde": "1991-10-01",
+    "hasta": "1997-09-30",
+    "titulares": [
+     {
+      "nombre": "Enrique Burgos García",
+      "tipo": "constitucional",
+      "desde": "1991-10-01",
+      "hasta": "1997-09-30"
+     }
+    ],
+    "fin": "1997-09"
+   },
+   {
+    "nombre": "Loyola",
+    "clave": "loyola",
+    "inicio": "1997-10",
+    "desde": "1997-10-01",
+    "hasta": "2003-09-30",
+    "titulares": [
+     {
+      "nombre": "Ignacio Loyola Vera",
+      "tipo": "constitucional",
+      "desde": "1997-10-01",
+      "hasta": "2003-09-30"
+     }
+    ],
+    "fin": "2003-09"
+   },
+   {
+    "nombre": "Garrido",
+    "clave": "garrido",
+    "inicio": "2003-10",
+    "desde": "2003-10-01",
+    "hasta": "2009-09-30",
+    "titulares": [
+     {
+      "nombre": "Francisco Garrido Patrón",
+      "tipo": "constitucional",
+      "desde": "2003-10-01",
+      "hasta": "2009-09-30"
+     }
+    ],
+    "fin": "2009-09"
+   },
+   {
+    "nombre": "Calzada",
+    "clave": "calzada",
+    "inicio": "2009-10",
+    "desde": "2009-10-01",
+    "hasta": "2015-09-30",
+    "titulares": [
+     {
+      "nombre": "José Calzada Rovirosa",
+      "tipo": "constitucional",
+      "desde": "2009-10-01",
+      "hasta": "2015-09-30"
+     }
+    ],
+    "fin": "2015-09"
+   },
+   {
+    "nombre": "Domínguez",
+    "clave": "dominguez",
+    "inicio": "2015-10",
+    "desde": "2015-10-01",
+    "hasta": "2021-09-30",
+    "titulares": [
+     {
+      "nombre": "Francisco Domínguez Servién",
+      "tipo": "constitucional",
+      "desde": "2015-10-01",
+      "hasta": "2021-09-30"
+     }
+    ],
+    "fin": "2021-09"
+   },
+   {
+    "nombre": "Kuri",
+    "clave": "kuri",
+    "inicio": "2021-10",
+    "desde": "2021-10-01",
+    "hasta": "2027-09-30",
+    "titulares": [
+     {
+      "nombre": "Mauricio Kuri González",
+      "tipo": "constitucional",
+      "desde": "2021-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "23": [
+   {
+    "nombre": "Villanueva",
+    "clave": "villanueva",
+    "inicio": "1993-04",
+    "desde": "1993-04-05",
+    "hasta": "1999-04-04",
+    "titulares": [
+     {
+      "nombre": "Mario Villanueva Madrid",
+      "tipo": "constitucional",
+      "desde": "1993-04-05",
+      "hasta": "1999-04-04"
+     }
+    ],
+    "fin": "1999-03"
+   },
+   {
+    "nombre": "Hendricks",
+    "clave": "hendricks",
+    "inicio": "1999-04",
+    "desde": "1999-04-05",
+    "hasta": "2005-04-04",
+    "titulares": [
+     {
+      "nombre": "Joaquín Hendricks Díaz",
+      "tipo": "constitucional",
+      "desde": "1999-04-05",
+      "hasta": "2005-04-04"
+     }
+    ],
+    "fin": "2005-03"
+   },
+   {
+    "nombre": "Félix González",
+    "clave": "felix-gonzalez",
+    "inicio": "2005-04",
+    "desde": "2005-04-05",
+    "hasta": "2011-04-04",
+    "titulares": [
+     {
+      "nombre": "Félix González Canto",
+      "tipo": "constitucional",
+      "desde": "2005-04-05",
+      "hasta": "2011-04-04"
+     }
+    ],
+    "fin": "2011-03"
+   },
+   {
+    "nombre": "Borge",
+    "clave": "borge",
+    "inicio": "2011-04",
+    "desde": "2011-04-05",
+    "hasta": "2016-09-24",
+    "titulares": [
+     {
+      "nombre": "Roberto Borge Angulo",
+      "tipo": "constitucional",
+      "desde": "2011-04-05",
+      "hasta": "2016-09-24"
+     }
+    ],
+    "fin": "2016-09"
+   },
+   {
+    "nombre": "Carlos Joaquín",
+    "clave": "carlos-joaquin",
+    "inicio": "2016-10",
+    "desde": "2016-09-25",
+    "hasta": "2022-09-24",
+    "titulares": [
+     {
+      "nombre": "Carlos Joaquín González",
+      "tipo": "constitucional",
+      "desde": "2016-09-25",
+      "hasta": "2022-09-24"
+     }
+    ],
+    "fin": "2022-09"
+   },
+   {
+    "nombre": "Mara Lezama",
+    "clave": "mara-lezama",
+    "inicio": "2022-10",
+    "desde": "2022-09-25",
+    "hasta": "2027-09-24",
+    "titulares": [
+     {
+      "nombre": "Mara Lezama Espinosa",
+      "tipo": "constitucional",
+      "desde": "2022-09-25",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "24": [
+   {
+    "nombre": "Sánchez Unzueta",
+    "clave": "sanchez-unzueta",
+    "inicio": "1991-10",
+    "desde": "1991-09-26",
+    "hasta": "1997-09-25",
+    "titulares": [
+     {
+      "nombre": "Horacio Sánchez Unzueta",
+      "tipo": "sustituto",
+      "desde": "",
+      "hasta": "1997-09-25"
+     }
+    ],
+    "fin": "1997-09"
+   },
+   {
+    "nombre": "Silva Nieto",
+    "clave": "silva-nieto",
+    "inicio": "1997-10",
+    "desde": "1997-09-26",
+    "hasta": "2003-09-25",
+    "titulares": [
+     {
+      "nombre": "Fernando Silva Nieto",
+      "tipo": "constitucional",
+      "desde": "1997-09-26",
+      "hasta": "2003-09-25"
+     }
+    ],
+    "fin": "2003-09"
+   },
+   {
+    "nombre": "De los Santos",
+    "clave": "de-los-santos",
+    "inicio": "2003-10",
+    "desde": "2003-09-26",
+    "hasta": "2009-09-25",
+    "titulares": [
+     {
+      "nombre": "Marcelo de los Santos Fraga",
+      "tipo": "constitucional",
+      "desde": "2003-09-26",
+      "hasta": "2009-09-25"
+     }
+    ],
+    "fin": "2009-09"
+   },
+   {
+    "nombre": "Toranzo",
+    "clave": "toranzo",
+    "inicio": "2009-10",
+    "desde": "2009-09-26",
+    "hasta": "2015-09-25",
+    "titulares": [
+     {
+      "nombre": "Fernando Toranzo Fernández",
+      "tipo": "constitucional",
+      "desde": "2009-09-26",
+      "hasta": "2015-09-25"
+     }
+    ],
+    "fin": "2015-09"
+   },
+   {
+    "nombre": "Carreras",
+    "clave": "carreras",
+    "inicio": "2015-10",
+    "desde": "2015-09-26",
+    "hasta": "2021-09-25",
+    "titulares": [
+     {
+      "nombre": "Juan Manuel Carreras López",
+      "tipo": "constitucional",
+      "desde": "2015-09-26",
+      "hasta": "2021-09-25"
+     }
+    ],
+    "fin": "2021-09"
+   },
+   {
+    "nombre": "Gallardo",
+    "clave": "gallardo",
+    "inicio": "2021-10",
+    "desde": "2021-09-26",
+    "hasta": "2027-09-25",
+    "titulares": [
+     {
+      "nombre": "José Ricardo Gallardo Cardona",
+      "tipo": "constitucional",
+      "desde": "2021-09-26",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-09"
+   }
+  ],
+  "25": [
+   {
+    "nombre": "Vega Alvarado",
+    "clave": "vega-alvarado",
+    "inicio": "1993-01",
+    "desde": "1993-01-01",
+    "hasta": "1998-12-31",
+    "titulares": [
+     {
+      "nombre": "Renato Vega Alvarado",
+      "tipo": "constitucional",
+      "desde": "1993-01-01",
+      "hasta": "1998-12-31"
+     }
+    ],
+    "fin": "1998-12"
+   },
+   {
+    "nombre": "Millán",
+    "clave": "millan",
+    "inicio": "1999-01",
+    "desde": "1999-01-01",
+    "hasta": "2004-12-31",
+    "titulares": [
+     {
+      "nombre": "Juan S. Millán Lizárraga",
+      "tipo": "constitucional",
+      "desde": "1999-01-01",
+      "hasta": "2004-12-31"
+     }
+    ],
+    "fin": "2004-12"
+   },
+   {
+    "nombre": "Aguilar Padilla",
+    "clave": "aguilar-padilla",
+    "inicio": "2005-01",
+    "desde": "2005-01-01",
+    "hasta": "2010-12-31",
+    "titulares": [
+     {
+      "nombre": "Jesús Aguilar Padilla",
+      "tipo": "constitucional",
+      "desde": "2005-01-01",
+      "hasta": "2010-12-31"
+     }
+    ],
+    "fin": "2010-12"
+   },
+   {
+    "nombre": "Malova",
+    "clave": "malova",
+    "inicio": "2011-01",
+    "desde": "2011-01-01",
+    "hasta": "2016-12-31",
+    "titulares": [
+     {
+      "nombre": "Mario López Valdez",
+      "tipo": "constitucional",
+      "desde": "2011-01-01",
+      "hasta": "2016-12-31"
+     }
+    ],
+    "fin": "2016-12"
+   },
+   {
+    "nombre": "Quirino Ordaz",
+    "clave": "quirino-ordaz",
+    "inicio": "2017-01",
+    "desde": "2017-01-01",
+    "hasta": "2021-10-31",
+    "titulares": [
+     {
+      "nombre": "Quirino Ordaz Coppel",
+      "tipo": "constitucional",
+      "desde": "2017-01-01",
+      "hasta": "2021-10-31"
+     }
+    ],
+    "fin": "2021-10"
+   },
+   {
+    "nombre": "Rocha Moya",
+    "clave": "rocha-moya",
+    "inicio": "2021-11",
+    "desde": "2021-11-01",
+    "hasta": "2027-10-31",
+    "titulares": [
+     {
+      "nombre": "Rubén Rocha Moya",
+      "tipo": "constitucional",
+      "desde": "2021-11-01",
+      "hasta": "2026-05-01"
+     },
+     {
+      "nombre": "Yeraldine Bonilla Valverde",
+      "tipo": "interino",
+      "desde": "2026-05-02",
+      "hasta": "2026-08-20"
+     },
+     {
+      "nombre": "Graciela Domínguez Nava",
+      "tipo": "interino",
+      "desde": "2026-08-25",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-10"
+   }
+  ],
+  "26": [
+   {
+    "nombre": "Beltrones",
+    "clave": "beltrones",
+    "inicio": "1991-09",
+    "desde": "1991-09-13",
+    "hasta": "1997-09-12",
+    "titulares": [
+     {
+      "nombre": "Manlio Fabio Beltrones Rivera",
+      "tipo": "constitucional",
+      "desde": "1991-09-13",
+      "hasta": "1997-09-12"
+     }
+    ],
+    "fin": "1997-08"
+   },
+   {
+    "nombre": "López Nogales",
+    "clave": "lopez-nogales",
+    "inicio": "1997-09",
+    "desde": "1997-09-13",
+    "hasta": "2003-09-12",
+    "titulares": [
+     {
+      "nombre": "Armando López Nogales",
+      "tipo": "constitucional",
+      "desde": "1997-09-13",
+      "hasta": "2003-09-12"
+     }
+    ],
+    "fin": "2003-08"
+   },
+   {
+    "nombre": "Bours",
+    "clave": "bours",
+    "inicio": "2003-09",
+    "desde": "2003-09-13",
+    "hasta": "2009-09-12",
+    "titulares": [
+     {
+      "nombre": "Eduardo Bours Castelo",
+      "tipo": "constitucional",
+      "desde": "2003-09-13",
+      "hasta": "2009-09-12"
+     }
+    ],
+    "fin": "2009-08"
+   },
+   {
+    "nombre": "Padrés",
+    "clave": "padres",
+    "inicio": "2009-09",
+    "desde": "2009-09-13",
+    "hasta": "2015-09-12",
+    "titulares": [
+     {
+      "nombre": "Guillermo Padrés Elías",
+      "tipo": "constitucional",
+      "desde": "2009-09-13",
+      "hasta": "2015-09-12"
+     }
+    ],
+    "fin": "2015-08"
+   },
+   {
+    "nombre": "Pavlovich",
+    "clave": "pavlovich",
+    "inicio": "2015-09",
+    "desde": "2015-09-13",
+    "hasta": "2021-09-12",
+    "titulares": [
+     {
+      "nombre": "Claudia Pavlovich Arellano",
+      "tipo": "constitucional",
+      "desde": "2015-09-13",
+      "hasta": "2021-09-12"
+     }
+    ],
+    "fin": "2021-08"
+   },
+   {
+    "nombre": "Durazo",
+    "clave": "durazo",
+    "inicio": "2021-09",
+    "desde": "2021-09-13",
+    "hasta": "2027-09-12",
+    "titulares": [
+     {
+      "nombre": "Alfonso Durazo Montaño",
+      "tipo": "constitucional",
+      "desde": "2021-09-13",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-08"
+   }
+  ],
+  "27": [
+   {
+    "nombre": "Madrazo",
+    "clave": "madrazo",
+    "inicio": "1995-01",
+    "desde": "1995-01-01",
+    "hasta": "2000-12-31",
+    "titulares": [
+     {
+      "nombre": "Roberto Madrazo Pintado",
+      "tipo": "constitucional",
+      "desde": "1995-01-01",
+      "hasta": "2000-12-31"
+     }
+    ],
+    "fin": "2000-12"
+   },
+   {
+    "nombre": "Andrade",
+    "clave": "andrade",
+    "inicio": "2001-01",
+    "desde": "2001-01-01",
+    "hasta": "2006-12-31",
+    "titulares": [
+     {
+      "nombre": "Enrique Priego Oropeza",
+      "tipo": "interino",
+      "desde": "2001-01-01",
+      "hasta": "2001-12-31"
+     },
+     {
+      "nombre": "Manuel Andrade Díaz",
+      "tipo": "constitucional",
+      "desde": "2002-01-01",
+      "hasta": "2006-12-31"
+     }
+    ],
+    "fin": "2006-12"
+   },
+   {
+    "nombre": "Granier",
+    "clave": "granier",
+    "inicio": "2007-01",
+    "desde": "2007-01-01",
+    "hasta": "2012-12-31",
+    "titulares": [
+     {
+      "nombre": "Andrés Granier Melo",
+      "tipo": "constitucional",
+      "desde": "2007-01-01",
+      "hasta": "2012-12-31"
+     }
+    ],
+    "fin": "2012-12"
+   },
+   {
+    "nombre": "Arturo Núñez",
+    "clave": "arturo-nunez",
+    "inicio": "2013-01",
+    "desde": "2013-01-01",
+    "hasta": "2018-12-31",
+    "titulares": [
+     {
+      "nombre": "Arturo Núñez Jiménez",
+      "tipo": "constitucional",
+      "desde": "2013-01-01",
+      "hasta": "2018-12-31"
+     }
+    ],
+    "fin": "2018-12"
+   },
+   {
+    "nombre": "Adán Augusto",
+    "clave": "adan-augusto",
+    "inicio": "2019-01",
+    "desde": "2019-01-01",
+    "hasta": "2024-09-30",
+    "titulares": [
+     {
+      "nombre": "Adán Augusto López Hernández",
+      "tipo": "constitucional",
+      "desde": "2019-01-01",
+      "hasta": "2021-08-26"
+     },
+     {
+      "nombre": "Carlos Manuel Merino Campos",
+      "tipo": "sustituto",
+      "desde": "2021-08-27",
+      "hasta": "2024-09-30"
+     }
+    ],
+    "fin": "2024-09"
+   },
+   {
+    "nombre": "Javier May",
+    "clave": "javier-may",
+    "inicio": "2024-10",
+    "desde": "2024-10-01",
+    "hasta": "2030-09-30",
+    "titulares": [
+     {
+      "nombre": "Javier May Rodríguez",
+      "tipo": "constitucional",
+      "desde": "2024-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-09"
+   }
+  ],
+  "28": [
+   {
+    "nombre": "Cavazos Lerma",
+    "clave": "cavazos-lerma",
+    "inicio": "1993-02",
+    "desde": "1993-02-05",
+    "hasta": "1999-02-04",
+    "titulares": [
+     {
+      "nombre": "Manuel Cavazos Lerma",
+      "tipo": "constitucional",
+      "desde": "1993-02-05",
+      "hasta": "1999-02-04"
+     }
+    ],
+    "fin": "1999-01"
+   },
+   {
+    "nombre": "Yarrington",
+    "clave": "yarrington",
+    "inicio": "1999-02",
+    "desde": "1999-02-05",
+    "hasta": "2005-02-04",
+    "titulares": [
+     {
+      "nombre": "Tomás Yarrington Ruvalcaba",
+      "tipo": "constitucional",
+      "desde": "1999-02-05",
+      "hasta": "2005-02-04"
+     }
+    ],
+    "fin": "2005-01"
+   },
+   {
+    "nombre": "Eugenio Hernández",
+    "clave": "eugenio-hernandez",
+    "inicio": "2005-02",
+    "desde": "2005-02-05",
+    "hasta": "2010-12-31",
+    "titulares": [
+     {
+      "nombre": "Eugenio Hernández Flores",
+      "tipo": "constitucional",
+      "desde": "2005-02-05",
+      "hasta": "2010-12-31"
+     }
+    ],
+    "fin": "2010-12"
+   },
+   {
+    "nombre": "Egidio Torre",
+    "clave": "egidio-torre",
+    "inicio": "2011-01",
+    "desde": "2011-01-01",
+    "hasta": "2016-09-30",
+    "titulares": [
+     {
+      "nombre": "Egidio Torre Cantú",
+      "tipo": "constitucional",
+      "desde": "2011-01-01",
+      "hasta": "2016-09-30"
+     }
+    ],
+    "fin": "2016-09"
+   },
+   {
+    "nombre": "Cabeza de Vaca",
+    "clave": "cabeza-de-vaca",
+    "inicio": "2016-10",
+    "desde": "2016-10-01",
+    "hasta": "2022-09-30",
+    "titulares": [
+     {
+      "nombre": "Francisco Javier García Cabeza de Vaca",
+      "tipo": "constitucional",
+      "desde": "2016-10-01",
+      "hasta": "2022-09-30"
+     }
+    ],
+    "fin": "2022-09"
+   },
+   {
+    "nombre": "Américo Villarreal",
+    "clave": "americo-villarreal",
+    "inicio": "2022-10",
+    "desde": "2022-10-01",
+    "hasta": "2028-09-30",
+    "titulares": [
+     {
+      "nombre": "Américo Villarreal Anaya",
+      "tipo": "constitucional",
+      "desde": "2022-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2028-09"
+   }
+  ],
+  "29": [
+   {
+    "nombre": "Álvarez Lima",
+    "clave": "alvarez-lima",
+    "inicio": "1993-01",
+    "desde": "1993-01-15",
+    "hasta": "1999-01-14",
+    "titulares": [
+     {
+      "nombre": "José Antonio Álvarez Lima",
+      "tipo": "constitucional",
+      "desde": "1993-01-15",
+      "hasta": "1999-01-14"
+     }
+    ],
+    "fin": "1998-12"
+   },
+   {
+    "nombre": "Sánchez Anaya",
+    "clave": "sanchez-anaya",
+    "inicio": "1999-01",
+    "desde": "1999-01-15",
+    "hasta": "2005-01-14",
+    "titulares": [
+     {
+      "nombre": "Alfonso Sánchez Anaya",
+      "tipo": "constitucional",
+      "desde": "1999-01-15",
+      "hasta": "2005-01-14"
+     }
+    ],
+    "fin": "2004-12"
+   },
+   {
+    "nombre": "Héctor Ortiz",
+    "clave": "hector-ortiz",
+    "inicio": "2005-01",
+    "desde": "2005-01-15",
+    "hasta": "2011-01-14",
+    "titulares": [
+     {
+      "nombre": "Héctor Ortiz Ortiz",
+      "tipo": "constitucional",
+      "desde": "2005-01-15",
+      "hasta": "2011-01-14"
+     }
+    ],
+    "fin": "2010-12"
+   },
+   {
+    "nombre": "González Zarur",
+    "clave": "gonzalez-zarur",
+    "inicio": "2011-01",
+    "desde": "2011-01-15",
+    "hasta": "2016-12-31",
+    "titulares": [
+     {
+      "nombre": "Mariano González Zarur",
+      "tipo": "constitucional",
+      "desde": "2011-01-15",
+      "hasta": "2016-12-31"
+     }
+    ],
+    "fin": "2016-12"
+   },
+   {
+    "nombre": "Marco Mena",
+    "clave": "marco-mena",
+    "inicio": "2017-01",
+    "desde": "2017-01-01",
+    "hasta": "2021-08-30",
+    "titulares": [
+     {
+      "nombre": "Marco Antonio Mena Rodríguez",
+      "tipo": "constitucional",
+      "desde": "2017-01-01",
+      "hasta": "2021-08-30"
+     }
+    ],
+    "fin": "2021-08"
+   },
+   {
+    "nombre": "Lorena Cuéllar",
+    "clave": "lorena-cuellar",
+    "inicio": "2021-09",
+    "desde": "2021-08-31",
+    "hasta": "2027-08-30",
+    "titulares": [
+     {
+      "nombre": "Lorena Cuéllar Cisneros",
+      "tipo": "constitucional",
+      "desde": "2021-08-31",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-08"
+   }
+  ],
+  "30": [
+   {
+    "nombre": "Chirinos",
+    "clave": "chirinos",
+    "inicio": "1992-12",
+    "desde": "1992-12-01",
+    "hasta": "1998-11-30",
+    "titulares": [
+     {
+      "nombre": "Patricio Chirinos Calero",
+      "tipo": "constitucional",
+      "desde": "1992-12-01",
+      "hasta": "1998-11-30"
+     }
+    ],
+    "fin": "1998-11"
+   },
+   {
+    "nombre": "Alemán",
+    "clave": "aleman",
+    "inicio": "1998-12",
+    "desde": "1998-12-01",
+    "hasta": "2004-11-30",
+    "titulares": [
+     {
+      "nombre": "Miguel Alemán Velasco",
+      "tipo": "constitucional",
+      "desde": "1998-12-01",
+      "hasta": "2004-11-30"
+     }
+    ],
+    "fin": "2004-11"
+   },
+   {
+    "nombre": "Fidel Herrera",
+    "clave": "fidel-herrera",
+    "inicio": "2004-12",
+    "desde": "2004-12-01",
+    "hasta": "2010-11-30",
+    "titulares": [
+     {
+      "nombre": "Fidel Herrera Beltrán",
+      "tipo": "constitucional",
+      "desde": "2004-12-01",
+      "hasta": "2010-11-30"
+     }
+    ],
+    "fin": "2010-11"
+   },
+   {
+    "nombre": "Javier Duarte",
+    "clave": "javier-duarte",
+    "inicio": "2010-12",
+    "desde": "2010-12-01",
+    "hasta": "2016-11-30",
+    "titulares": [
+     {
+      "nombre": "Javier Duarte de Ochoa",
+      "tipo": "constitucional",
+      "desde": "2010-12-01",
+      "hasta": "2016-10-11"
+     },
+     {
+      "nombre": "Flavino Ríos Alvarado",
+      "tipo": "interino",
+      "desde": "2016-10-12",
+      "hasta": "2016-11-30"
+     }
+    ],
+    "fin": "2016-11"
+   },
+   {
+    "nombre": "Yunes",
+    "clave": "yunes",
+    "inicio": "2016-12",
+    "desde": "2016-12-01",
+    "hasta": "2018-11-30",
+    "titulares": [
+     {
+      "nombre": "Miguel Ángel Yunes Linares",
+      "tipo": "constitucional",
+      "desde": "2016-12-01",
+      "hasta": "2018-11-30"
+     }
+    ],
+    "fin": "2018-11"
+   },
+   {
+    "nombre": "Cuitláhuac García",
+    "clave": "cuitlahuac-garcia",
+    "inicio": "2018-12",
+    "desde": "2018-12-01",
+    "hasta": "2024-11-30",
+    "titulares": [
+     {
+      "nombre": "Cuitláhuac García Jiménez",
+      "tipo": "constitucional",
+      "desde": "2018-12-01",
+      "hasta": "2024-11-30"
+     }
+    ],
+    "fin": "2024-11"
+   },
+   {
+    "nombre": "Rocío Nahle",
+    "clave": "rocio-nahle",
+    "inicio": "2024-12",
+    "desde": "2024-12-01",
+    "hasta": "2030-11-30",
+    "titulares": [
+     {
+      "nombre": "Rocío Nahle García",
+      "tipo": "constitucional",
+      "desde": "2024-12-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-11"
+   }
+  ],
+  "31": [
+   {
+    "nombre": "Cervera Pacheco",
+    "clave": "cervera-pacheco",
+    "inicio": "1995-08",
+    "desde": "1995-08-01",
+    "hasta": "2001-07-31",
+    "titulares": [
+     {
+      "nombre": "Víctor Cervera Pacheco",
+      "tipo": "constitucional",
+      "desde": "1995-08-01",
+      "hasta": "2001-07-31"
+     }
+    ],
+    "fin": "2001-07"
+   },
+   {
+    "nombre": "Patrón Laviada",
+    "clave": "patron-laviada",
+    "inicio": "2001-08",
+    "desde": "2001-08-01",
+    "hasta": "2007-07-31",
+    "titulares": [
+     {
+      "nombre": "Patricio Patrón Laviada",
+      "tipo": "constitucional",
+      "desde": "2001-08-01",
+      "hasta": "2007-07-31"
+     }
+    ],
+    "fin": "2007-07"
+   },
+   {
+    "nombre": "Ivonne Ortega",
+    "clave": "ivonne-ortega",
+    "inicio": "2007-08",
+    "desde": "2007-08-01",
+    "hasta": "2012-09-30",
+    "titulares": [
+     {
+      "nombre": "Ivonne Ortega Pacheco",
+      "tipo": "constitucional",
+      "desde": "2007-08-01",
+      "hasta": "2012-09-30"
+     }
+    ],
+    "fin": "2012-09"
+   },
+   {
+    "nombre": "Zapata Bello",
+    "clave": "zapata-bello",
+    "inicio": "2012-10",
+    "desde": "2012-10-01",
+    "hasta": "2018-09-30",
+    "titulares": [
+     {
+      "nombre": "Rolando Zapata Bello",
+      "tipo": "constitucional",
+      "desde": "2012-10-01",
+      "hasta": "2018-09-30"
+     }
+    ],
+    "fin": "2018-09"
+   },
+   {
+    "nombre": "Vila",
+    "clave": "vila",
+    "inicio": "2018-10",
+    "desde": "2018-10-01",
+    "hasta": "2024-09-30",
+    "titulares": [
+     {
+      "nombre": "Mauricio Vila Dosal",
+      "tipo": "constitucional",
+      "desde": "2018-10-01",
+      "hasta": "2024-09-30"
+     }
+    ],
+    "fin": "2024-09"
+   },
+   {
+    "nombre": "Díaz Mena",
+    "clave": "diaz-mena",
+    "inicio": "2024-10",
+    "desde": "2024-10-01",
+    "hasta": "2030-09-30",
+    "titulares": [
+     {
+      "nombre": "Joaquín Díaz Mena",
+      "tipo": "constitucional",
+      "desde": "2024-10-01",
+      "hasta": ""
+     }
+    ],
+    "fin": "2030-09"
+   }
+  ],
+  "32": [
+   {
+    "nombre": "Romo",
+    "clave": "romo",
+    "inicio": "1992-09",
+    "desde": "1992-09-12",
+    "hasta": "1998-09-11",
+    "titulares": [
+     {
+      "nombre": "Arturo Romo Gutiérrez",
+      "tipo": "constitucional",
+      "desde": "1992-09-12",
+      "hasta": "1998-09-11"
+     }
+    ],
+    "fin": "1998-08"
+   },
+   {
+    "nombre": "Ricardo Monreal",
+    "clave": "ricardo-monreal",
+    "inicio": "1998-09",
+    "desde": "1998-09-12",
+    "hasta": "2004-09-11",
+    "titulares": [
+     {
+      "nombre": "Ricardo Monreal Ávila",
+      "tipo": "constitucional",
+      "desde": "1998-09-12",
+      "hasta": "2004-09-11"
+     }
+    ],
+    "fin": "2004-08"
+   },
+   {
+    "nombre": "Amalia García",
+    "clave": "amalia-garcia",
+    "inicio": "2004-09",
+    "desde": "2004-09-12",
+    "hasta": "2010-09-11",
+    "titulares": [
+     {
+      "nombre": "Amalia García Medina",
+      "tipo": "constitucional",
+      "desde": "2004-09-12",
+      "hasta": "2010-09-11"
+     }
+    ],
+    "fin": "2010-08"
+   },
+   {
+    "nombre": "Miguel Alonso",
+    "clave": "miguel-alonso",
+    "inicio": "2010-09",
+    "desde": "2010-09-12",
+    "hasta": "2016-09-11",
+    "titulares": [
+     {
+      "nombre": "Miguel Alonso Reyes",
+      "tipo": "constitucional",
+      "desde": "2010-09-12",
+      "hasta": "2016-09-11"
+     }
+    ],
+    "fin": "2016-08"
+   },
+   {
+    "nombre": "Tello",
+    "clave": "tello",
+    "inicio": "2016-09",
+    "desde": "2016-09-12",
+    "hasta": "2021-09-11",
+    "titulares": [
+     {
+      "nombre": "Alejandro Tello Cristerna",
+      "tipo": "constitucional",
+      "desde": "2016-09-12",
+      "hasta": "2021-09-11"
+     }
+    ],
+    "fin": "2021-08"
+   },
+   {
+    "nombre": "David Monreal",
+    "clave": "david-monreal",
+    "inicio": "2021-09",
+    "desde": "2021-09-12",
+    "hasta": "2027-09-11",
+    "titulares": [
+     {
+      "nombre": "David Monreal Ávila",
+      "tipo": "constitucional",
+      "desde": "2021-09-12",
+      "hasta": ""
+     }
+    ],
+    "fin": "2027-08"
+   }
+  ]
+ },
  "descargas": [
   {
    "archivo": "estatal_virk.csv",
