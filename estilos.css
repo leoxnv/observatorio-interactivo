@@ -254,8 +254,11 @@ body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0,
 .buscar-res a:hover, .buscar-res a.activo { background: var(--panel); }
 .buscar-res small { color: var(--texto2); font-size: 12px; white-space: nowrap; }
 .buscar-res .vacio { padding: 9px 16px; color: var(--texto2); }
-.frecuentes { display: flex; gap: 16px; align-items: baseline; margin-top: 26px; flex-wrap: wrap; }
-.frecuentes > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.frecuentes { margin-top: 26px; }
+.frecuentes summary { list-style: none; display: flex; align-items: center; gap: 6px; }
+.frecuentes summary::-webkit-details-marker { display: none; }
+.frecuentes .frec-n, .frecuentes summary svg { display: none; }
+.frecuentes > div { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .frecuentes a { font-size: 14px; padding: 6px 12px; border: 1px solid var(--linea); border-radius: 4px; }
 .frecuentes a:hover { border-color: var(--texto); }
 
@@ -427,7 +430,12 @@ body.iframe .contenido { padding: 16px; }
   .frase .btn { width: 100%; margin: 8px 0 0; }
   .buscar-fila { flex-direction: column; align-items: stretch; gap: 8px; }
   .buscar-fila > span { font-size: 19px; }
-  .frecuentes { flex-direction: column; gap: 10px; }
+  .frecuentes { margin-top: 20px; border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+  .frecuentes summary { min-height: 48px; cursor: pointer; }
+  .frecuentes .frec-n { display: inline; font-size: 13px; color: var(--texto2); }
+  .frecuentes summary svg { display: block; margin-left: auto; color: var(--texto2); transition: transform .15s; }
+  .frecuentes[open] summary svg { transform: rotate(180deg); }
+  .frecuentes > div { flex-direction: column; align-items: flex-start; gap: 8px; margin: 2px 0 14px; }
   .cifra { padding: 12px 12px 10px; }
   .cifra-cab { font-size: 13px; align-items: flex-start; line-height: 1.25; min-height: 34px; }
   .cifra-fila { flex-direction: column; gap: 0; margin-top: 2px; }

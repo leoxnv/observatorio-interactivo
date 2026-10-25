@@ -1123,6 +1123,15 @@ function consultasFrecuentes() {
   ];
 }
 
+/** En celular las consultas frecuentes van plegadas y se abren con un toque; en computadora, abiertas. */
+function consultasPlegables() {
+  const lista = consultasFrecuentes();
+  return h("details", { class: "frecuentes", open: !esMovil() },
+    h("summary", { onclick: (ev) => { if (!esMovil()) ev.preventDefault(); } },
+      h("span", { class: "etq" }, "Consultas frecuentes"), h("span", { class: "frec-n" }, `(${lista.length})`), ic("abajo", 18)),
+    h("div", {}, lista.map(([t, href]) => h("a", { href }, t))));
+}
+
 function herramientas() {
   const csv = META.descargas?.[0];
   return [
@@ -1190,8 +1199,7 @@ async function vistaInicio(raiz) {
       h("h1", {}, "¿Qué quieres saber?"),
       frasePregunta(),
       h("div", { class: "buscar-fila" }, h("span", {}, "o busca directo"), buscador()),
-      h("div", { class: "frecuentes" }, h("span", { class: "etq" }, "Consultas frecuentes"),
-        h("div", {}, consultasFrecuentes().map(([t, href]) => h("a", { href }, t))))),
+      consultasPlegables()),
     h("section", { class: "seccion" },
       h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, `Lo más reciente · ${fechaLarga(CORTE)}, en todo el país`),
         h("a", { class: "texto-enlace", href: urlDe("variacion", {}) }, "Los 20 delitos en la tabla de variación →")),
