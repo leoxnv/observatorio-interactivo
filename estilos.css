@@ -151,6 +151,9 @@ body.oscuro .sobre-oscuro { display: block !important; }
 .desplegar { width: 28px; height: 28px; border: 0; background: none; color: var(--texto2); display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; }
 .desplegar:hover { background: var(--pista); color: var(--texto); }
 .desplegar svg { transition: transform .15s; }
+/* Los delitos sin componentes guardan el lugar de la flecha, para quedar alineados. */
+.desplegar, .desplegar-hueco { flex-shrink: 0; }
+.desplegar-hueco { width: 28px; }
 .desplegar[aria-expanded="true"] svg { transform: rotate(90deg); }
 .var { display: flex; align-items: center; gap: 10px; }
 .pista { position: relative; flex-grow: 1; height: 8px; background: var(--pista); border-radius: 1px; }
@@ -182,6 +185,8 @@ body.oscuro .sobre-oscuro { display: block !important; }
 .grafica { position: relative; width: 100%; }
 .grafica svg { display: block; }
 .grafica .eje text, .barra-periodo text { font-size: 12px; fill: var(--texto2); }
+/* Con el dedo: deslizar de lado recorre los valores; de arriba abajo, la página. */
+.grafica svg { touch-action: pan-y; }
 .barra-periodo { position: relative; user-select: none; touch-action: none; }
 .barra-periodo .fechas { position: relative; height: 22px; font-size: 13px; font-weight: 500; }
 .barra-periodo .fechas span { position: absolute; white-space: nowrap; }

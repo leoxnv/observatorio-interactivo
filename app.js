@@ -350,6 +350,45 @@ const tip = {
   ocultar() { $("#tooltip").hidden = true; },
 };
 
+/*
+ * Toques. En celular no hay "pasar el cursor": el primer toque sobre un estado,
+ * municipio o punto muestra su valor y lo marca; un segundo toque sobre el
+ * mismo abre su detalle. Con mouse o con lápiz (que sí tiene hover, como el
+ * Apple Pencil) todo sigue igual: el globo al pasar y el clic abre.
+ */
+let tocado = null;   // { el, limpiar }
+function soltarToque() {
+  if (tocado) { tocado.limpiar?.(); tocado = null; }
+  tip.ocultar();
+}
+function interactivo(el, { globo, abrir, marcar }) {
+  let tipo = "mouse";
+  el.addEventListener("pointerdown", (ev) => { tipo = ev.pointerType; });
+  el.addEventListener("pointermove", (ev) => { if (ev.pointerType !== "touch") tip.mostrar(ev, globo(false)); });
+  el.addEventListener("pointerleave", (ev) => { if (ev.pointerType !== "touch") tip.ocultar(); });
+  el.addEventListener("click", (ev) => {
+    if (tipo !== "touch") { if (abrir) { tip.ocultar(); abrir(); } return; }
+    if (tocado?.el === el && abrir) { soltarToque(); abrir(); return; }
+    soltarToque();
+    tocado = { el, limpiar: marcar?.() };
+    tip.mostrar(ev, globo(true));
+  });
+}
+/** Resalta una figura del mapa o un punto; devuelve cómo dejarla como estaba. */
+function resaltar(el, attrs) {
+  const antes = Object.fromEntries(Object.keys(attrs).map((k) => [k, el.getAttribute(k)]));
+  const lugar = el.nextSibling;
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  el.parentNode.append(el);   // al frente, para que se vea su contorno completo
+  return () => {
+    for (const [k, v] of Object.entries(antes)) (v == null ? el.removeAttribute(k) : el.setAttribute(k, v));
+    if (el.parentNode && lugar?.parentNode === el.parentNode) el.parentNode.insertBefore(el, lugar);
+  };
+}
+// Tocar fuera, o desplazarse, quita el globo.
+document.addEventListener("pointerdown", (ev) => { if (tocado && !tocado.el.contains(ev.target)) soltarToque(); }, true);
+addEventListener("scroll", () => { if (tocado) soltarToque(); }, { passive: true });
+
 // ── Descarga de archivos generados en el navegador ──────────────────────────
 function bajar(nombre, contenido, tipo) {
   const url = URL.createObjectURL(new Blob([contenido], { type: tipo }));
@@ -454,9 +493,12 @@ function mapaCoropletico({ geo, valor, nombre, onClick, etiqueta, pista }) {
   for (const clave of claves) {
     const v = valor(clave);
     const p = s("path", { d: geo.trazos[clave], fill: cls.color(v), stroke: "var(--borde-mapa)", "stroke-width": 0.8, "vector-effect": "non-scaling-stroke" });
-    p.addEventListener("pointermove", (ev) => tip.mostrar(ev, [h("b", {}, nombre(clave)), h("div", {}, `${fmt(v)}${esTasa() ? " por 100 mil hab." : ""}`), pista ? h("div", { style: { opacity: 0.8 } }, pista) : null].filter(Boolean)));
-    p.addEventListener("pointerleave", tip.ocultar);
-    if (onClick) p.addEventListener("click", () => { tip.ocultar(); onClick(clave); });
+    interactivo(p, {
+      globo: (toque) => [h("b", {}, nombre(clave)), h("div", {}, `${fmt(v)}${esTasa() ? " por 100 mil hab." : ""}`),
+        pista ? h("div", { style: { opacity: 0.8 } }, toque && onClick ? pista.replace(/^Clic para/, "Toca otra vez para") : pista) : null].filter(Boolean),
+      abrir: onClick ? () => onClick(clave) : null,
+      marcar: () => resaltar(p, { stroke: "var(--texto)", "stroke-width": 2.5 }),
+    });
     svg.append(p);
   }
   return { svg: h("div", { class: "mapa-caja" }, svg), cls };
@@ -516,9 +558,11 @@ function distribucion({ items, cls, referencia, onClick }) {
   for (const p of puestos) {
     const cy = medio + p.k * (2 * r + 1);
     const c = s("circle", { cx: p.x, cy, r, fill: cls.color(p.item.valor), stroke: "var(--texto2)", "stroke-width": 0.6 });
-    c.addEventListener("pointermove", (ev) => tip.mostrar(ev, [h("b", {}, p.item.nombre), h("div", {}, fmt(p.item.valor))]));
-    c.addEventListener("pointerleave", tip.ocultar);
-    if (onClick) c.addEventListener("click", () => { tip.ocultar(); onClick(p.item.clave); });
+    interactivo(c, {
+      globo: (toque) => [h("b", {}, p.item.nombre), h("div", {}, fmt(p.item.valor)), toque && onClick ? h("div", { style: { opacity: 0.8 } }, "Toca otra vez para abrirlo") : null].filter(Boolean),
+      abrir: onClick ? () => onClick(p.item.clave) : null,
+      marcar: () => resaltar(c, { stroke: "var(--texto)", "stroke-width": 2, r: r + 2 }),
+    });
     svg.append(c);
     if (etiquetados.some((e) => e.x === p.x && e.y === cy)) svg.append(s("text", { x: p.x, y: cy - r - 5, "text-anchor": "middle", "font-size": 12, fill: "var(--texto)" }, p.item.nombre));
   }
@@ -662,7 +706,7 @@ function tablaVariacion({ columna, cx, filas, ranking = false }) {
   },
     ranking ? h("div", { class: "rk" }, f.ref ? "" : f.rango)
       : alternar ? h("button", { type: "button", class: "desplegar", "aria-label": "Ver componentes", "aria-expanded": "false", onclick: alternar }, ic("derecha", 16))
-        : h("span"),
+        : h("span", { class: "desplegar-hueco", "aria-hidden": "true" }),
     h("div", { class: "nombre" }, f.nombre),
     ordenar(h("div", { class: "num col-web" }, fmt(f.pas)), ant ? h("div", { class: "num col-web" }, fmt(f.ant)) : null),
     h("div", { class: "num fuerte col-web" }, fmt(f.act)),
@@ -882,9 +926,14 @@ function graficaPeriodo(cont, lista, series) {
       });
       tip.mostrar(ev, filas);
     };
+    const ocultarGuia = () => { guia.setAttribute("visibility", "hidden"); puntos.forEach((p) => p.setAttribute("visibility", "hidden")); };
     zona.addEventListener("pointermove", mover);
     zona.addEventListener("pointerdown", mover);
-    zona.addEventListener("pointerleave", () => { tip.ocultar(); guia.setAttribute("visibility", "hidden"); puntos.forEach((p) => p.setAttribute("visibility", "hidden")); });
+    // Con el dedo, al soltar el valor se queda hasta tocar fuera; deslizar de lado lo recorre.
+    zona.addEventListener("pointerleave", (ev) => {
+      if (ev.pointerType === "touch") { tocado = { el: zona, limpiar: ocultarGuia }; return; }
+      tip.ocultar(); ocultarGuia();
+    });
   }
 
   /**
@@ -1413,7 +1462,8 @@ async function vistaMapaMunicipal(raiz, ent) {
     sub: `${textoIndicador()} · ${unidad().name.toLowerCase()} · ${per.largo}${per.promedio ? " · promedio mensual" : ""}`,
     princ: [
       avisoSinMunicipal(d),
-      h("div", { class: "mapa-y-panel" }, h("div", { class: "mapa-col" }, mapa.svg, leyenda(mapa.cls)), panel),
+      h("div", { class: "mapa-y-panel" }, h("div", { class: "mapa-col" }, mapa.svg, leyenda(mapa.cls),
+        geo.sin_islas ? h("p", { class: "nota" }, "No se dibujan las islas más alejadas de la costa (como las Revillagigedo), para que el estado se vea completo; sus cifras sí cuentan.") : null), panel),
     ],
     lateral: [
       leerMapa("En municipios con poca población, unas cuantas carpetas producen tasas muy altas: revisa también el número de carpetas. Haz clic en un municipio para ver su tendencia."),
