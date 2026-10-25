@@ -1585,10 +1585,30 @@ async function vistaDescargar(raiz) {
 // ═══════════════════════════════════════════════════════════════════════════
 // Marco común: tema, menú, pie
 // ═══════════════════════════════════════════════════════════════════════════
-function aplicarTema(esOscuro) {
+// ── Tema ────────────────────────────────────────────────────────────────────
+// Por omisión sigue la configuración del dispositivo (y cambia con ella);
+// quien elige claro u oscuro en el sitio lo conserva. index.html aplica lo
+// mismo antes de pintar, para que no parpadee.
+const CLAVE_TEMA = "delitosmexico-tema";
+const sistemaOscuro = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : { matches: false };
+const OPCIONES_TEMA = [
+  { value: "auto", name: "Automático, como tu dispositivo", corto: "Automático" },
+  { value: "claro", name: "Claro", corto: "Claro" },
+  { value: "oscuro", name: "Oscuro", corto: "Oscuro" },
+];
+function temaElegido() {
+  try { return localStorage.getItem(CLAVE_TEMA) || "auto"; } catch (e) { return "auto"; }
+}
+function aplicarTema() {
+  const t = temaElegido();
+  const esOscuro = t === "oscuro" || (t !== "claro" && sistemaOscuro.matches);
+  if (esOscuro === oscuro()) return;
   document.body.classList.toggle("oscuro", esOscuro);
-  try { localStorage.setItem("delitosmexico-tema", esOscuro ? "oscuro" : "claro"); } catch (e) { /* sin almacenamiento */ }
   if (META) pintar();   // mapas y series usan colores por tema
+}
+function elegirTema(t) {
+  try { if (t === "auto") localStorage.removeItem(CLAVE_TEMA); else localStorage.setItem(CLAVE_TEMA, t); } catch (e) { /* sin almacenamiento */ }
+  aplicarTema();
 }
 
 function modalInsertar() {
@@ -1614,7 +1634,9 @@ function menuMovil() {
       h("a", { class: "enlace", href: `${RAIZ}nota-metodologica/` }, "Metodología", ic("flecha", 16)),
       h("button", { type: "button", class: "enlace", onclick: () => { cerrar(); modalInsertar(); } }, "Insertar en tu sitio", h("span", { "aria-hidden": "true" }, "</>")),
       h("a", { class: "enlace", href: "https://onc.org.mx", target: "_blank", rel: "noopener" }, "Boletín del ONC", ic("flecha", 16)),
-      h("button", { type: "button", class: "enlace", onclick: () => { cerrar(); aplicarTema(!oscuro()); } }, oscuro() ? "Modo claro" : "Modo oscuro", h("span")),
+      h("div", { class: "tema-movil" }, h("span", {}, "Tema"),
+        segmento(OPCIONES_TEMA.map((o) => h("button", { type: "button", class: temaElegido() === o.value ? "on" : null,
+          "aria-pressed": String(temaElegido() === o.value), onclick: () => { cerrar(); elegirTema(o.value); } }, o.corto)))),
       h("a", { class: "enlace", href: "https://onc.org.mx", target: "_blank", rel: "noopener" }, "Observatorio Nacional Ciudadano", ic("flecha", 16))));
   document.body.append(fondo);
   fondo.querySelector("button").focus();
@@ -1626,10 +1648,12 @@ function conectarMarco() {
     if (!a) return;
     const acc = a.dataset.accion;
     if (acc === "insertar") modalInsertar();
-    if (acc === "tema") aplicarTema(!oscuro());
+    if (acc === "tema") abrirLista({ ancla: a, titulo: "Tema", opciones: OPCIONES_TEMA, valor: temaElegido(), onElegir: elegirTema });
     if (acc === "menu") menuMovil();
   });
   document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") cerrarLista(); });
+  // Si el dispositivo cambia de claro a oscuro (p. ej. al anochecer), el sitio lo sigue.
+  sistemaOscuro.addEventListener?.("change", aplicarTema);
   // Solo se repinta si cambia el ancho (en celular, la barra del navegador cambia el alto).
   let t, ancho = innerWidth;
   window.addEventListener("resize", () => {
