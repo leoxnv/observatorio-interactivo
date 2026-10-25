@@ -384,7 +384,11 @@ body.iframe .contenido { padding: 16px; }
   .solo-movil { display: inline-flex !important; }
   .seg.solo-movil { display: grid !important; }
   .solo-web { display: none !important; }
-  .cab { height: 56px; padding: 0 6px 0 16px; gap: 8px; }
+  /* El menú va a la izquierda en todas las páginas; en Inicio, el logo del ONC a
+     la derecha, para que no quede apilado sobre el de Delitos México. */
+  .cab { height: 56px; padding: 0 16px 0 6px; gap: 6px; }
+  .cab [data-accion="menu"] { order: -1; }
+  body[data-ruta=""] .cab-onc { justify-content: flex-end; }
   .marca-texto b { font-size: 18px; }
   .marca-texto span { font-size: 9px; }
   .cab-sec { display: none; }
