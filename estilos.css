@@ -181,6 +181,8 @@ body.oscuro .sobre-oscuro { display: block !important; }
 .periodo { display: flex; flex-direction: column; gap: 10px; }
 .periodo-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
 .periodo-ops { display: flex; align-items: center; gap: 10px 12px; flex-wrap: wrap; }
+.aviso-escala { margin: 6px 0 2px; }
+.aviso-escala button { border: 0; background: none; padding: 0; font: inherit; font-weight: 500; cursor: pointer; }
 .btn.conmutar .marca-op { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid var(--borde-boton); border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; }
 .btn.conmutar.on .marca-op { background: var(--seleccion); border-color: var(--seleccion); color: var(--seleccion-texto); }
 .grafica { position: relative; width: 100%; }

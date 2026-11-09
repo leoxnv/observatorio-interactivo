@@ -225,7 +225,7 @@ const mayus = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 // `states` son los municipios elegidos en /tendencia/<estado> (0 = total del
 // estado) y `municipality` el de la tabla de variación, como en la plataforma.
 // `desde` y `hasta` (AAAA-MM) guardan el tramo elegido en las gráficas.
-const DEFAULTS = { unit: "folders", indicator: "researchFoldersRate", group: "month", crime: "0", state: "0", period: "", states: "0", municipality: "0", crimes: "", desde: "", hasta: "", sexenios: "", gobierno: "" };
+const DEFAULTS = { unit: "folders", indicator: "researchFoldersRate", group: "month", crime: "0", state: "0", period: "", states: "0", municipality: "0", crimes: "", desde: "", hasta: "", sexenios: "", gobierno: "", escala: "" };
 function leerParams() {
   const p = new URLSearchParams(location.search);
   q = { ...DEFAULTS };
@@ -234,6 +234,7 @@ function leerParams() {
   if (!UNIDADES.some((u) => u.value === q.unit)) q.unit = "folders";
   if (!INDICADORES.some((i) => i.value === q.indicator)) q.indicator = "researchFoldersRate";
   if (q.gobierno !== "estatal") q.gobierno = "";
+  if (q.escala !== "separadas") q.escala = "";
   q.iframe = p.get("iframe") === "1";
 }
 function urlDe(ruta, params) {
@@ -856,6 +857,24 @@ function graficaPeriodo(cont, lista, series, e = 0) {
   const cualGobierno = conGobiernoEstatal(e) ? segmento([["", "Federales"], ["estatal", "Estatales"]].map(([v, t]) =>
     h("button", { type: "button", class: q.gobierno === v ? "on" : "", "aria-pressed": String(q.gobierno === v), onclick: () => { if (q.gobierno !== v) cambiar({ gobierno: v }); } }, t))) : null;
   cualGobierno?.setAttribute("aria-label", `Sexenios federales o gobiernos de ${entidad(e).nombre}`);
+  // Series de tamaños muy distintos: juntas, la chica se ve plana; separadas,
+  // cada una va en su gráfica con su propia escala (escala=separadas en la URL).
+  // El botón solo aparece cuando hace falta: una serie 10 veces menor que otra.
+  const maxDe = (se) => se.pts.reduce((m, v) => (v != null && (m == null || v > m) ? v : m), null);
+  const maximos = series.map((se) => [se, maxDe(se)]).filter(([, m]) => m > 0).sort((a, b) => a[1] - b[1]);
+  const veces = maximos.length > 1 ? maximos[maximos.length - 1][1] / maximos[0][1] : 1;
+  const separadas = () => series.length > 1 && q.escala === "separadas";
+  const botonesEscala = [["", "Juntas"], ["separadas", "Separadas"]].map(([v, t]) =>
+    h("button", { type: "button", "data-escala": v, onclick: () => elegirEscala(v) }, t));
+  const escala = series.length > 1 && (veces >= 10 || separadas()) ? segmento(botonesEscala) : null;
+  escala?.setAttribute("aria-label", "Series juntas con una escala, o separadas, cada una con la suya");
+  const marcarEscala = () => botonesEscala.forEach((b) => {
+    const on = b.dataset.escala === q.escala;
+    b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on));
+  });
+  const elegirEscala = (v) => { q.escala = v; history.replaceState(null, "", urlActual()); marcarEscala(); dibujar(); };
+  marcarEscala();
+  const avisoEscala = h("p", { class: "nota aviso-escala", hidden: true });
 
   const svg = s("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Gráfica de líneas" });
   const plot = s("g", { class: "eje" });
@@ -919,27 +938,52 @@ function graficaPeriodo(cont, lista, series, e = 0) {
     // Con sexenios, sus nombres van arriba en una o dos filas, para que no se encimen.
     const sexenios = q.sexenios ? acomodarSexenios(X) : null;
     M.t = sexenios ? 34 + 18 * sexenios.filas : 34;
-    let min = Infinity, max = -Infinity;
-    for (const se of series) for (let i = i0; i <= i1; i++) { const v = se.pts[i]; if (v != null) { min = Math.min(min, v); max = Math.max(max, v); } }
-    if (!isFinite(min)) { min = 0; max = 1; }
-    const esc = escalaY(min, max, movil ? 4 : 6);
-    const Y = (v) => H - M.b - ((v - esc.y0) / (esc.y1 - esc.y0)) * (H - M.t - M.b);
-    for (const v of esc.ticks) {
-      plot.append(s("line", { x1: M.l, x2: W - M.r, y1: Y(v), y2: Y(v), stroke: "var(--rejilla)" }),
-        s("text", { x: M.l - 8, y: Y(v) + 4, "text-anchor": "end" }, fmtEje(v, esc.paso)));
+    // Juntas: una gráfica y una escala. Separadas: una gráfica por serie, cada
+    // una con su escala, apiladas sobre el mismo eje de tiempo.
+    const separar = separadas();
+    const extremos = (lst) => {
+      let mn = Infinity, mx = -Infinity;
+      for (const se of lst) for (let i = i0; i <= i1; i++) { const v = se.pts[i]; if (v != null) { mn = Math.min(mn, v); mx = Math.max(mx, v); } }
+      return isFinite(mn) ? [mn, mx] : null;
+    };
+    const ETQ = 22, SEP = 18;   // renglón con el nombre de cada serie y espacio entre gráficas
+    const alto = separar ? (movil ? 110 : Math.max(120, Math.min(170, (H - M.t - M.b) / series.length))) : H - M.t - M.b;
+    const paneles = (separar ? series.map((se) => [se]) : [series]).map((lst, j) => {
+      const top = M.t + (separar ? j * (alto + ETQ + SEP) + ETQ : 0), bot = top + alto;
+      const esc = escalaY(...(extremos(lst) || [0, 1]), separar ? 3 : movil ? 4 : 6);
+      return { lst, top, bot, esc, Y: (v) => bot - ((v - esc.y0) / (esc.y1 - esc.y0)) * alto };
+    });
+    const arriba = paneles[0].top, abajo = paneles[paneles.length - 1].bot, total = abajo + M.b;
+    svg.setAttribute("height", total); svg.setAttribute("viewBox", `0 0 ${W} ${total}`);
+    const yDe = new Map();
+    for (const pa of paneles) {
+      for (const v of pa.esc.ticks) {
+        plot.append(s("line", { x1: M.l, x2: W - M.r, y1: pa.Y(v), y2: pa.Y(v), stroke: "var(--rejilla)" }),
+          s("text", { x: M.l - 8, y: pa.Y(v) + 4, "text-anchor": "end" }, fmtEje(v, pa.esc.paso)));
+      }
+      plot.append(s("line", { x1: M.l, x2: W - M.r, y1: pa.bot, y2: pa.bot, stroke: "var(--eje)" }));
+      if (separar) {
+        const se = pa.lst[0];
+        plot.append(s("line", { x1: M.l, x2: M.l + 16, y1: pa.top - 12, y2: pa.top - 12, stroke: se.color, "stroke-width": 3 }),
+          s("text", { x: M.l + 22, y: pa.top - 8, "font-weight": 500, fill: "var(--texto)" }, se.nombre));
+      }
+      for (const se of pa.lst) yDe.set(se, pa.Y);
     }
-    plot.append(s("line", { x1: M.l, x2: W - M.r, y1: H - M.b, y2: H - M.b, stroke: "var(--eje)" }));
+    // Líneas verticales: en la primera gráfica desde "desde"; en las demás solo
+    // dentro de su gráfica, para no cruzar el nombre de cada serie.
+    const vertical = (x, desde, attrs) => paneles.forEach((pa, j) =>
+      plot.append(s("line", { x1: x, x2: x, y1: j ? pa.top : desde, y2: pa.bot, ...attrs })));
     // Marcas del eje X: años, más espaciados mientras más largo el tramo.
     const anios = anio(lista[i1].k1) - anio(lista[i0].k0) + 1;
     const cada = [1, 2, 5, 10].find((c) => anios / c <= (W - M.l) / (movil ? 70 : 64)) || 10;
     for (let i = i0; i <= i1; i++) {
       const p = lista[i];
       if (mes(p.k0) !== 0 || anio(p.k0) % cada !== 0) continue;
-      plot.append(s("line", { x1: X(i), x2: X(i), y1: H - M.b, y2: H - M.b + 5, stroke: "var(--eje)" }),
-        s("text", { x: X(i), y: H - 8, "text-anchor": "middle" }, String(anio(p.k0))));
+      plot.append(s("line", { x1: X(i), x2: X(i), y1: abajo, y2: abajo + 5, stroke: "var(--eje)" }),
+        s("text", { x: X(i), y: total - 8, "text-anchor": "middle" }, String(anio(p.k0))));
     }
     if (sexenios) {
-      for (const xi of sexenios.lineas) plot.append(s("line", { x1: xi, x2: xi, y1: 8, y2: H - M.b, stroke: "var(--fuerte)", "stroke-opacity": 0.45 }));
+      for (const xi of sexenios.lineas) vertical(xi, 8, { stroke: "var(--fuerte)", "stroke-opacity": 0.45 });
       for (const e of sexenios.etiquetas) {
         plot.append(s("text", { x: e.x, y: M.t - 30 - 18 * e.fila, "text-anchor": e.anchor, "font-weight": 500, fill: "var(--texto)" }, e.texto));
       }
@@ -949,10 +993,11 @@ function graficaPeriodo(cont, lista, series, e = 0) {
       const i = lista.findIndex((p) => p.k0 <= mt.k && mt.k <= p.k1);
       if (i <= i0 || i > i1) continue;
       const der = X(i) > W * 0.7;
-      plot.append(s("line", { x1: X(i), x2: X(i), y1: M.t - 6, y2: H - M.b, stroke: "var(--texto2)", "stroke-dasharray": "3 4" }),
-        s("text", { x: X(i) + (der ? -6 : 6), y: M.t - 12, "text-anchor": der ? "end" : "start" }, movil ? mt.corto : mt.largo));
+      vertical(X(i), M.t - 6, { stroke: "var(--texto2)", "stroke-dasharray": "3 4" });
+      plot.append(s("text", { x: X(i) + (der ? -6 : 6), y: M.t - 12, "text-anchor": der ? "end" : "start" }, movil ? mt.corto : mt.largo));
     }
     series.forEach((se) => {
+      const Y = yDe.get(se);
       let dd = "", pen = false;
       for (let i = i0; i <= i1; i++) {
         const v = se.pts[i];
@@ -962,9 +1007,9 @@ function graficaPeriodo(cont, lista, series, e = 0) {
       }
       plot.append(s("path", { d: dd, fill: "none", stroke: se.color, "stroke-width": 2, "stroke-linejoin": "round" }));
     });
-    const guia = s("line", { y1: M.t, y2: H - M.b, stroke: "var(--texto)", visibility: "hidden" });
+    const guia = s("line", { y1: arriba, y2: abajo, stroke: "var(--texto)", visibility: "hidden" });
     const puntos = series.map((se) => s("circle", { r: 4, fill: se.color, stroke: "var(--fondo)", "stroke-width": 2, visibility: "hidden" }));
-    const zona = s("rect", { x: M.l, y: M.t, width: Math.max(0, W - M.l - M.r), height: H - M.t - M.b, fill: "transparent" });
+    const zona = s("rect", { x: M.l, y: arriba, width: Math.max(0, W - M.l - M.r), height: abajo - arriba, fill: "transparent" });
     plot.append(guia, ...puntos, zona);
     const mover = (ev) => {
       const r = svg.getBoundingClientRect();
@@ -975,7 +1020,7 @@ function graficaPeriodo(cont, lista, series, e = 0) {
       series.forEach((se, j) => {
         const v = se.pts[i];
         if (v == null) puntos[j].setAttribute("visibility", "hidden");
-        else { puntos[j].setAttribute("cx", X(i)); puntos[j].setAttribute("cy", Y(v)); puntos[j].setAttribute("visibility", "visible"); }
+        else { puntos[j].setAttribute("cx", X(i)); puntos[j].setAttribute("cy", yDe.get(se)(v)); puntos[j].setAttribute("visibility", "visible"); }
         filas.push(h("div", {}, h("span", { class: "punto", style: { background: se.color } }), `${se.nombre}: `, h("b", {}, fmt(v))));
       });
       tip.mostrar(ev, filas);
@@ -988,6 +1033,13 @@ function graficaPeriodo(cont, lista, series, e = 0) {
       if (ev.pointerType === "touch") { tocado = { el: zona, limpiar: ocultarGuia }; return; }
       tip.ocultar(); ocultarGuia();
     });
+    // Si una serie es mucho más chica que otra, juntas se ve plana: se avisa.
+    if (separar) avisoEscala.replaceChildren("Cada serie tiene su propia escala vertical: compara cómo cambia cada una, no qué tan alta está.");
+    else if (veces >= 10) {
+      avisoEscala.replaceChildren(`${maximos[0][0].nombre} es ${NF0.format(Math.round(veces))} veces menor que ${maximos[maximos.length - 1][0].nombre}: con la misma escala casi no se ve cómo cambia. `,
+        h("button", { type: "button", class: "lnk texto-enlace", onclick: () => elegirEscala("separadas") }, "Ver cada una con su escala"));
+    }
+    avisoEscala.hidden = !(separar || veces >= 10);
   }
 
   /**
@@ -1062,7 +1114,7 @@ function graficaPeriodo(cont, lista, series, e = 0) {
 
   pintarBarra();
   dibujar();
-  cont.replaceChildren(h("div", { class: "periodo" }, h("div", { class: "periodo-cab" }, atajos, h("div", { class: "periodo-ops" }, cualGobierno, lineas)), h("div", { class: "grafica" }, svg), barraCont));
+  cont.replaceChildren(h("div", { class: "periodo" }, h("div", { class: "periodo-cab" }, atajos, h("div", { class: "periodo-ops" }, cualGobierno, escala, lineas)), h("div", { class: "grafica" }, svg), avisoEscala, barraCont));
 }
 
 /** Botones de las series elegidas (con ×) y "+ Agregar" con buscador. */
@@ -1090,6 +1142,7 @@ const leerGrafica = (e = 0) => leer("Cómo leer esta gráfica",
   "Cada línea es una serie; puedes comparar varias a la vez y quitarlas con la ×.",
   "Las líneas punteadas marcan cambios de metodología del SESNSP (2015 y 2026): pueden mover la serie sin que cambie el fenómeno.",
   "Los atajos fijan el periodo de cada sexenio; con las manijas de la barra inferior eliges cualquier otro tramo.",
+  "Si una serie es mucho más chica que otra, «Separadas» da a cada una su gráfica y su escala vertical.",
   ...(gobiernoEstatal(e) ? leerGobiernoEstatal(e, []) : conGobiernoEstatal(e) ? [`Con «Estatales», los atajos y las líneas son los gobiernos de ${entidad(e).nombre}.`] : []),
   "Pasa el cursor sobre la gráfica para ver el valor de cada periodo.");
 
@@ -1763,6 +1816,7 @@ async function vistaComparar(raiz) {
       leer("Cómo leer esta gráfica",
         "Algunos delitos están contenidos en otros (por ejemplo, el feminicidio forma parte del homicidio doloso): las series se comparan, no se suman.",
         "Los atajos fijan el periodo de cada sexenio; con las manijas de la barra eliges cualquier otro tramo.",
+        "Si un delito es mucho más chico que otro (secuestro frente a otros delitos contra la libertad, por ejemplo), «Separadas» da a cada uno su gráfica y su escala vertical: así se ve cómo cambia cada uno.",
         conGobiernoEstatal(e) ? `Con «Estatales», los atajos y las líneas son los gobiernos de ${entidad(e).nombre}, por periodo constitucional.` : null),
       usarDatos(() => descargarSeries(`comparar_${e}.csv`, lista, series, { entidad: nombreEntidad(e) })),
     ],
