@@ -820,7 +820,7 @@ function graficaPeriodo(cont, lista, series, e = 0) {
   if (!n) { cont.replaceChildren(h("p", { class: "aviso" }, "No hay datos para esta selección.")); return; }
   const movil = esMovil();
   const W = cont.clientWidth;
-  const H = movil ? 260 : Math.max(320, Math.min(460, innerHeight - 380));
+  let H = movil ? 260 : Math.max(320, Math.min(460, innerHeight - 380));
   const M = { l: 46, r: 14, t: 34, b: 30 };
   const minimo = Math.min(2, n - 1);
   const idxDesde = (k) => { const i = lista.findIndex((p) => p.k1 >= k); return i < 0 ? n - 1 : i; };
@@ -859,14 +859,13 @@ function graficaPeriodo(cont, lista, series, e = 0) {
   cualGobierno?.setAttribute("aria-label", `Sexenios federales o gobiernos de ${entidad(e).nombre}`);
   // Series de tamaños muy distintos: juntas, la chica se ve plana; separadas,
   // cada una va en su gráfica con su propia escala (escala=separadas en la URL).
-  // El botón solo aparece cuando hace falta: una serie 10 veces menor que otra.
   const maxDe = (se) => se.pts.reduce((m, v) => (v != null && (m == null || v > m) ? v : m), null);
   const maximos = series.map((se) => [se, maxDe(se)]).filter(([, m]) => m > 0).sort((a, b) => a[1] - b[1]);
   const veces = maximos.length > 1 ? maximos[maximos.length - 1][1] / maximos[0][1] : 1;
   const separadas = () => series.length > 1 && q.escala === "separadas";
   const botonesEscala = [["", "Juntas"], ["separadas", "Separadas"]].map(([v, t]) =>
     h("button", { type: "button", "data-escala": v, onclick: () => elegirEscala(v) }, t));
-  const escala = series.length > 1 && (veces >= 10 || separadas()) ? segmento(botonesEscala) : null;
+  const escala = series.length > 1 ? segmento(botonesEscala) : null;
   escala?.setAttribute("aria-label", "Series juntas con una escala, o separadas, cada una con la suya");
   const marcarEscala = () => botonesEscala.forEach((b) => {
     const on = b.dataset.escala === q.escala;
@@ -1112,9 +1111,13 @@ function graficaPeriodo(cont, lista, series, e = 0) {
     });
   }
 
+  const cab = h("div", { class: "periodo-cab" }, atajos, h("div", { class: "periodo-ops" }, cualGobierno, escala, lineas));
+  cont.replaceChildren(h("div", { class: "periodo" }, cab, h("div", { class: "grafica" }, svg), avisoEscala, barraCont));
+  // Si los controles ocupan dos renglones, la gráfica cede esa altura para que
+  // la barra del periodo siga a la vista (en computadora).
+  if (!movil) H = Math.max(280, H - Math.max(0, cab.offsetHeight - 50));
   pintarBarra();
   dibujar();
-  cont.replaceChildren(h("div", { class: "periodo" }, h("div", { class: "periodo-cab" }, atajos, h("div", { class: "periodo-ops" }, cualGobierno, escala, lineas)), h("div", { class: "grafica" }, svg), avisoEscala, barraCont));
 }
 
 /** Botones de las series elegidas (con ×) y "+ Agregar" con buscador. */
