@@ -234,6 +234,11 @@ body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0,
 .bienv-pay { width: 56px; height: 56px; flex-shrink: 0; }
 .bienv-nombre { font-family: var(--fuente-marca); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -.015em; white-space: nowrap; }
 .bienv-lema { font-family: var(--fuente-marca); font-weight: 700; font-size: 17px; line-height: 1.25; color: var(--banda-texto); white-space: nowrap; }
+/* En computadora, el logo del ONC, el de Delitos México y el contenido empiezan
+   en la misma línea: el ancho del menú lateral (76) más el margen del contenido (40). */
+@media (min-width: 1100px) {
+  body[data-ruta=""] .cab { padding-left: 116px; }
+}
 .bienv-buscar { max-width: 680px; }
 .bienv-frec { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 10px; font-size: 13px; color: var(--banda-texto); }
 .bienv-frec a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .35); text-underline-offset: 3px; }
