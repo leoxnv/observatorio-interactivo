@@ -1301,14 +1301,14 @@ async function vistaInicio(raiz) {
   const mini = miniaturas(cifras, dHom, dFem);
   // Si entre este mes y el del año anterior el SESNSP cambió de sistema, se avisa.
   const cambio = (META.periodos || []).find((p) => abs(p.desde) > CORTE - 12 && abs(p.desde) <= CORTE);
+  // El buscador va en la bienvenida (index.html); abajo, primero lo más
+  // reciente y después la consulta armada con una frase.
+  $("#bienv-buscar")?.replaceChildren(buscador());
   raiz.append(h("div", { class: "contenido inicio" },
-    h("section", { class: "pregunta" },
-      h("h1", {}, "¿Qué quieres saber?"),
-      frasePregunta(),
-      h("div", { class: "buscar-fila" }, h("span", {}, "o busca directo"), buscador()),
-      consultasPlegables()),
+    h("h1", { class: "sr" }, "Delitos México: la incidencia delictiva de México"),
     h("section", { class: "seccion" },
       h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, `Lo más reciente · ${fechaLarga(CORTE)}, en todo el país`),
+        h("span", { class: "mut fuente-inicio" }, "Cifras oficiales del SESNSP, revisadas por el ONC"),
         h("a", { class: "texto-enlace", href: urlDe("variacion", {}) }, "Los 20 delitos en la tabla de variación →")),
       h("div", { class: "cifras" }, dest.map((x) => h("a", { class: "cifra", href: urlDe("tendencia", { crime: x.d.codigo }) },
         h("div", { class: "cifra-cab" }, iconoDelito(x.d.codigo, true), h("span", {}, x.d.nombre)),
@@ -1317,6 +1317,10 @@ async function vistaInicio(raiz) {
         chispaAncha(x.historia)))),
       h("p", { class: "nota" }, `Carpetas de investigación en ${fechaLarga(CORTE)} en todo el país. La línea muestra los últimos 24 meses; el punto gris es ${mesCorto(CORTE - 12)}.`,
         cambio ? ` Desde ${fechaLarga(abs(cambio.desde))} el SESNSP reporta con un sistema nuevo (${cambio.nombre}), así que la comparación con ${anio(CORTE) - 1} cruza ese cambio.` : "")),
+    h("section", { class: "seccion" },
+      h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Arma tu consulta"),
+        h("span", { class: "mut", style: { fontSize: "13px" } }, "Elige qué ver, de qué delito y dónde")),
+      h("div", { class: "consulta" }, frasePregunta(), consultasPlegables())),
     h("section", { class: "seccion" },
       h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Herramientas")),
       h("div", { class: "vitrina" }, herramientas().map((t) => h("div", { class: "vit" },

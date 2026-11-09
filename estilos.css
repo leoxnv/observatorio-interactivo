@@ -228,13 +228,19 @@ body[data-ruta=""] .cab .btn:hover { border-color: #fff; }
 body[data-ruta=""] .cab .btn-ic:hover { background: rgba(255, 255, 255, .1); }
 body[data-ruta=""] .cab-sec a:not(.btn):hover, body[data-ruta=""] .cab-sec button.lnk:hover { color: #6fd25c; }
 body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 44px; align-items: center;
-  padding: 6px 40px 28px 116px; background: var(--banda); color: #fff; }
+  padding: 6px 40px 22px 116px; background: var(--banda); color: #fff; }
 .bienv-marca { display: flex; align-items: center; gap: 16px; padding-right: 44px; border-right: 1px solid rgba(255, 255, 255, .18); }
 .bienv-pay { width: 56px; height: 56px; flex-shrink: 0; }
 .bienv-nombre { font-family: var(--fuente-marca); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -.015em; white-space: nowrap; }
 .bienv-lema { font-family: var(--fuente-marca); font-weight: 700; font-size: 22px; line-height: 1.25; text-wrap: balance; }
-.bienv-texto p + p { color: var(--banda-texto); font-size: 15px; line-height: 1.5; margin-top: 6px; max-width: 46em; }
-.bienv-corto { display: none; }
+.bienv-buscar { margin-top: 14px; max-width: 640px; }
+.fuente-inicio { font-size: 13px; margin-right: auto; }
+.bienv-buscar:empty { display: none; }
+.bienv .buscar { max-width: none; color: var(--texto); }
+.bienv .buscar-caja { height: 50px; border-color: transparent; }
+body.oscuro .bienv .buscar-caja { border-color: rgba(255, 255, 255, .22); }
+.bienv .buscar-caja:focus-within { border-color: transparent; box-shadow: 0 0 0 3px #6fd25c; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .inicio { max-width: 1200px; }
 .inicio .seccion { margin-bottom: 44px; }
@@ -242,15 +248,12 @@ body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0,
 .btn-fuerte { background: var(--seleccion); color: var(--seleccion-texto); border-color: var(--seleccion); font-weight: 500; }
 .btn-fuerte:hover { opacity: .9; border-color: var(--seleccion); }
 
-/* ¿Qué quieres saber?: una frase con tres menús, el buscador y consultas hechas */
-.pregunta { padding: 4px 0 44px; }
-.pregunta h1 { font-family: var(--fuente-marca); font-weight: 700; font-size: 34px; letter-spacing: -.01em; }
-.frase { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 20px; font-size: 24px; color: var(--texto2); }
-.frase-sel { display: inline-flex; align-items: center; gap: 6px; border: 0; border-bottom: 2px solid var(--acento); background: none; padding: 2px 2px 3px; font-size: 24px; font-weight: 500; color: var(--texto); }
-.frase-sel:hover { background: var(--panel); }
-.frase .btn { height: 46px; font-size: 16px; margin-left: 8px; padding: 0 18px; }
-.buscar-fila { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
-.buscar-fila > span { font-size: 24px; color: var(--texto2); white-space: nowrap; }
+/* Arma tu consulta: una frase con tres menús y consultas hechas */
+.consulta { background: var(--panel); border-radius: 4px; padding: 18px 22px 20px; }
+.frase { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 18px; color: var(--texto2); }
+.frase-sel { display: inline-flex; align-items: center; gap: 4px; border: 0; border-bottom: 2px solid var(--acento); background: none; padding: 2px 2px 3px; font-size: 18px; font-weight: 500; color: var(--texto); }
+.frase-sel:hover { background: var(--fondo); }
+.frase .btn { height: 40px; font-size: 15px; margin-left: 6px; padding: 0 16px; }
 .buscar { position: relative; flex: 1; max-width: 640px; }
 .buscar-caja { display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 16px; border: 1px solid var(--borde-boton); border-radius: 4px; background: var(--fondo); color: var(--texto2); }
 .buscar-caja:focus-within { border-color: var(--texto); box-shadow: inset 0 0 0 1px var(--texto); }
@@ -260,12 +263,12 @@ body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0,
 .buscar-res a:hover, .buscar-res a.activo { background: var(--panel); }
 .buscar-res small { color: var(--texto2); font-size: 12px; white-space: nowrap; }
 .buscar-res .vacio { padding: 9px 16px; color: var(--texto2); }
-.frecuentes { margin-top: 26px; }
+.frecuentes { margin-top: 18px; }
 .frecuentes summary { list-style: none; display: flex; align-items: center; gap: 6px; }
 .frecuentes summary::-webkit-details-marker { display: none; }
 .frecuentes .frec-n, .frecuentes summary svg { display: none; }
 .frecuentes > div { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.frecuentes a { font-size: 14px; padding: 6px 12px; border: 1px solid var(--linea); border-radius: 4px; }
+.frecuentes a { font-size: 14px; padding: 6px 12px; border: 1px solid var(--linea); border-radius: 4px; background: var(--fondo); }
 .frecuentes a:hover { border-color: var(--texto); }
 
 /* Lo más reciente: seis cifras del mes */
@@ -378,7 +381,8 @@ body.iframe .contenido { padding: 16px; }
 
 /* ── Celular ── */
 @media (max-width: 760px) and (max-height: 640px) {
-  .bienv-texto p + p { display: none; }
+  /* Celulares bajos: la franja se queda en marca y buscador. */
+  .bienv-lema { display: none; }
 }
 @media (max-width: 760px) {
   body { font-size: 15px; padding-bottom: 64px; }
@@ -430,17 +434,14 @@ body.iframe .contenido { padding: 16px; }
   .bienv-nombre { font-size: 30px; }
   .cab-onc img { height: 34px; }
   .bienv-lema { font-size: 18px; }
-  .bienv-texto p + p { font-size: 14px; margin-top: 4px; }
-  .bienv-largo { display: none; }
-  .bienv-corto { display: inline; }
   .inicio .seccion { margin-bottom: 32px; }
-  .pregunta { padding-bottom: 32px; }
-  .pregunta h1 { font-size: 26px; }
-  .frase, .frase-sel { font-size: 19px; }
+  .bienv-buscar { margin-top: 12px; }
+  .fuente-inicio { display: none; }
+  .bienv .buscar-caja { height: 48px; }
+  .consulta { padding: 14px 14px 4px; }
+  .frase, .frase-sel { font-size: 16px; }
   .frase .btn { width: 100%; margin: 8px 0 0; }
-  .buscar-fila { flex-direction: column; align-items: stretch; gap: 8px; }
-  .buscar-fila > span { font-size: 19px; }
-  .frecuentes { margin-top: 20px; border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+  .frecuentes { margin-top: 14px; border-top: 1px solid var(--linea); }
   .frecuentes summary { min-height: 48px; cursor: pointer; }
   .frecuentes .frec-n { display: inline; font-size: 13px; color: var(--texto2); }
   .frecuentes summary svg { display: block; margin-left: auto; color: var(--texto2); transition: transform .15s; }
