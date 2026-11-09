@@ -1230,13 +1230,22 @@ function consultasFrecuentes() {
   ];
 }
 
-/** En celular las consultas frecuentes van plegadas y se abren con un toque; en computadora, abiertas. */
+/** En celular, las consultas frecuentes van plegadas bajo la frase y se abren con un toque. */
 function consultasPlegables() {
   const lista = consultasFrecuentes();
-  return h("details", { class: "frecuentes", open: !esMovil() },
-    h("summary", { onclick: (ev) => { if (!esMovil()) ev.preventDefault(); } },
-      h("span", { class: "etq" }, "Consultas frecuentes"), h("span", { class: "frec-n" }, `(${lista.length})`), ic("abajo", 18)),
+  return h("details", { class: "frecuentes" },
+    h("summary", {}, h("span", { class: "etq" }, "Consultas frecuentes"), h("span", { class: "frec-n" }, `(${lista.length})`), ic("abajo", 18)),
     h("div", {}, lista.map(([t, href]) => h("a", { href }, t))));
+}
+/**
+ * En computadora y tableta van bajo el buscador de la franja, con nombres
+ * cortos para que quepan en un renglón y la franja no crezca.
+ */
+function frecuentesBanda() {
+  const [hom, fem, subio, , , sexenio] = consultasFrecuentes().map(([, href]) => href);
+  const cortas = [["Homicidio, año por año", hom], ["Feminicidio por estado", fem],
+    [`Qué subió en ${MESES_LARGO[mes(CORTE)]}`, subio], ["Comparar sexenios", sexenio]];
+  return h("p", { class: "bienv-frec" }, h("span", {}, "Frecuentes:"), cortas.map(([t, href]) => h("a", { href }, t)));
 }
 
 function herramientas() {
@@ -1301,12 +1310,15 @@ async function vistaInicio(raiz) {
   const mini = miniaturas(cifras, dHom, dFem);
   // Si entre este mes y el del año anterior el SESNSP cambió de sistema, se avisa.
   const cambio = (META.periodos || []).find((p) => abs(p.desde) > CORTE - 12 && abs(p.desde) <= CORTE);
-  // El buscador va en la bienvenida (index.html); abajo, primero lo más
-  // reciente y después la consulta armada con una frase.
-  $("#bienv-buscar")?.replaceChildren(buscador());
+  // El buscador va en la bienvenida (index.html), con las búsquedas
+  // frecuentes. Abajo, la consulta armada con una frase y lo más reciente;
+  // en celular, primero lo más reciente (estilos.css, .ini-consulta).
+  $("#bienv-buscar")?.replaceChildren(buscador(), frecuentesBanda());
   raiz.append(h("div", { class: "contenido inicio" },
     h("h1", { class: "sr" }, "Delitos México: la incidencia delictiva de México"),
-    h("section", { class: "seccion" },
+    h("section", { class: "ini-consulta" },
+      h("div", { class: "consulta" }, h("h2", { class: "etq" }, "Arma tu consulta"), frasePregunta(), consultasPlegables())),
+    h("section", { class: "seccion ini-cifras" },
       h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, `Lo más reciente · ${fechaLarga(CORTE)}, en todo el país`),
         h("span", { class: "mut fuente-inicio" }, "Cifras oficiales del SESNSP, revisadas por el ONC"),
         h("a", { class: "texto-enlace", href: urlDe("variacion", {}) }, "Los 20 delitos en la tabla de variación →")),
@@ -1317,10 +1329,6 @@ async function vistaInicio(raiz) {
         chispaAncha(x.historia)))),
       h("p", { class: "nota" }, `Carpetas de investigación en ${fechaLarga(CORTE)} en todo el país. La línea muestra los últimos 24 meses; el punto gris es ${mesCorto(CORTE - 12)}.`,
         cambio ? ` Desde ${fechaLarga(abs(cambio.desde))} el SESNSP reporta con un sistema nuevo (${cambio.nombre}), así que la comparación con ${anio(CORTE) - 1} cruza ese cambio.` : "")),
-    h("section", { class: "seccion" },
-      h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Arma tu consulta"),
-        h("span", { class: "mut", style: { fontSize: "13px" } }, "Elige qué ver, de qué delito y dónde")),
-      h("div", { class: "consulta" }, frasePregunta(), consultasPlegables())),
     h("section", { class: "seccion" },
       h("div", { class: "etq-fila" }, h("h2", { class: "etq" }, "Herramientas")),
       h("div", { class: "vitrina" }, herramientas().map((t) => h("div", { class: "vit" },

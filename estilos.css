@@ -230,10 +230,14 @@ body[data-ruta=""] .cab-sec a:not(.btn):hover, body[data-ruta=""] .cab-sec butto
 body[data-ruta=""] .bienv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 44px; align-items: center;
   padding: 6px 40px 22px 116px; background: var(--banda); color: #fff; }
 .bienv-marca { display: flex; align-items: center; gap: 16px; padding-right: 44px; border-right: 1px solid rgba(255, 255, 255, .18); }
+.bienv-marca > div { display: flex; flex-direction: column; gap: 8px; }
 .bienv-pay { width: 56px; height: 56px; flex-shrink: 0; }
 .bienv-nombre { font-family: var(--fuente-marca); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -.015em; white-space: nowrap; }
-.bienv-lema { font-family: var(--fuente-marca); font-weight: 700; font-size: 22px; line-height: 1.25; text-wrap: balance; }
-.bienv-buscar { margin-top: 14px; max-width: 640px; }
+.bienv-lema { font-family: var(--fuente-marca); font-weight: 700; font-size: 17px; line-height: 1.25; color: var(--banda-texto); white-space: nowrap; }
+.bienv-buscar { max-width: 680px; }
+.bienv-frec { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 10px; font-size: 13px; color: var(--banda-texto); }
+.bienv-frec a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .35); text-underline-offset: 3px; }
+.bienv-frec a:hover { text-decoration-color: #6fd25c; }
 .fuente-inicio { font-size: 13px; margin-right: auto; }
 .bienv-buscar:empty { display: none; }
 .bienv .buscar { max-width: none; color: var(--texto); }
@@ -248,8 +252,11 @@ body.oscuro .bienv .buscar-caja { border-color: rgba(255, 255, 255, .22); }
 .btn-fuerte { background: var(--seleccion); color: var(--seleccion-texto); border-color: var(--seleccion); font-weight: 500; }
 .btn-fuerte:hover { opacity: .9; border-color: var(--seleccion); }
 
-/* Arma tu consulta: una frase con tres menús y consultas hechas */
-.consulta { background: var(--panel); border-radius: 4px; padding: 18px 22px 20px; }
+/* Arma tu consulta: una frase con tres menús; en computadora, una franja arriba de las cifras */
+.ini-consulta { margin-bottom: 36px; }
+.consulta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 24px; background: var(--panel); border-radius: 4px; padding: 14px 22px; }
+.consulta > .etq { white-space: nowrap; }
+.consulta .frecuentes { display: none; }
 .frase { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 18px; color: var(--texto2); }
 .frase-sel { display: inline-flex; align-items: center; gap: 4px; border: 0; border-bottom: 2px solid var(--acento); background: none; padding: 2px 2px 3px; font-size: 18px; font-weight: 500; color: var(--texto); }
 .frase-sel:hover { background: var(--fondo); }
@@ -355,7 +362,7 @@ body.iframe .contenido { padding: 16px; }
   .bienv-marca { gap: 12px; padding-right: 24px; }
   .bienv-pay { width: 44px; height: 44px; }
   .bienv-nombre { font-size: 34px; }
-  .bienv-lema { font-size: 19px; }
+  .bienv-lema { font-size: 15px; }
   .cifras, .vitrina { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pie-inicio { grid-template-columns: 1fr; gap: 0; }
   .dos-col { flex-direction: column; gap: 32px; }
@@ -433,9 +440,19 @@ body.iframe .contenido { padding: 16px; }
   .bienv-pay { width: 36px; height: 36px; }
   .bienv-nombre { font-size: 30px; }
   .cab-onc img { height: 34px; }
-  .bienv-lema { font-size: 18px; }
+  .bienv-lema { font-size: 15px; }
+  .bienv-marca > div { gap: 4px; }
   .inicio .seccion { margin-bottom: 32px; }
-  .bienv-buscar { margin-top: 12px; }
+  .bienv-buscar { margin-top: 2px; }
+  .bienv-frec { display: none; }
+  .bienv-lema { white-space: normal; }
+  .inicio { display: flex; flex-direction: column; }
+  .inicio > * { order: 2; }
+  .inicio > .ini-cifras { order: 0; }
+  .inicio > .ini-consulta { order: 1; margin-bottom: 32px; }
+  .consulta { display: block; }
+  .consulta > .etq { display: block; margin-bottom: 10px; }
+  .consulta .frecuentes { display: block; }
   .fuente-inicio { display: none; }
   .bienv .buscar-caja { height: 48px; }
   .consulta { padding: 14px 14px 4px; }
