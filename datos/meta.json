@@ -1,6 +1,6 @@
 {
- "corte": "2026-09",
- "generado": "2026-11-09T19:14:31Z",
+ "corte": "2026-10",
+ "generado": "2026-11-24T18:08:14Z",
  "delitos": [
   {
    "codigo": 0,
@@ -4384,10 +4384,10 @@
  "descargas": [
   {
    "archivo": "estatal_virk.csv",
-   "filas": 164637,
-   "bytes": 12372856,
+   "filas": 165198,
+   "bytes": 12424605,
    "desde": "1997-01",
-   "hasta": "2026-09"
+   "hasta": "2026-10"
   }
  ]
 }
